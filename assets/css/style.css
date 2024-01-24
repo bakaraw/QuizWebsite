@@ -1,0 +1,15 @@
+.navbar{
+    background-color: #6610f2;
+}
+
+.btn-primary{
+    background-color: #6610f2;
+}
+
+.btn-primary:hover {
+    background-color: #5605da;
+}
+
+.btn-primary:active{
+    background-color: #5605da;
+}
