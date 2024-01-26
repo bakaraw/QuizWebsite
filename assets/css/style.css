@@ -13,3 +13,7 @@
 .btn-primary:active{
     background-color: #6711f0;
 }
+
+.btn-light{
+    color: #6610f2;
+}
