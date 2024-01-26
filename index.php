@@ -3,9 +3,8 @@
 
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
-<div class="container m-5">
-     
-</div>
+
+<div class="container m-5"></div>
 <div class="container">
 <div class="card bg-dark text-light border-dark" style="width: 30rem;">
   <div class="pt-5" ">
@@ -17,9 +16,8 @@
   </div>
 </div>
 </div>
-<div class="container m-5">
-     
-</div>
+
+<div class="container m-5"></div>
 <div class="container">
 <div class="card bg-dark text-light border-dark ms-auto " style="width: 37rem;">
   <div class="pt-5 " ">
