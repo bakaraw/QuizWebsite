@@ -36,7 +36,7 @@ function updateLabel() {
     return false; // Prevent form submission (we'll handle it with JavaScript)
 }
 
-console.log('otin')
+console.log('log dol');
 </script>
 <?php require('assets/php/footer.inc.php'); ?>
 
