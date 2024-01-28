@@ -35,5 +35,8 @@ function updateLabel() {
     document.getElementById("questiontype_label").innerText = "Selected value: " + selectedValue;
     return false; // Prevent form submission (we'll handle it with JavaScript)
 }
+
+console.log('otin')
 </script>
 <?php require('assets/php/footer.inc.php'); ?>
+
