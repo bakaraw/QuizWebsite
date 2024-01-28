@@ -17,14 +17,13 @@
             <div class="input-group mb-3">
                 <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
                 <select onchange="updateLabel()" class="form-select bg-dark text-light border-light" id="questiontype" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype">
-                    <option selected>Choose...</option>
-                    <option value="iden">Identification</option>
+                    <option seelected value="iden">Identification</option>
                     <option value="mcq">Multiple Choice Question</option>
                     <option value="tof">True or False</option>
                 </select>
             </div>
             <div>
-                <label class="  text-light" id="questiontype_label"></label>
+                <label class="  text-light" id="questiontype_label">Selected value: iden</label>
             </div>
         </form>
     </div>

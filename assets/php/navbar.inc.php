@@ -31,7 +31,7 @@
 <form action="signup.php" method="post" class="d-flex" role="search">
     <?php include('assets/php/modalSignup.inc.php'); ?>
 
-    <button class="btn btn-outline-light me-2" type="button" data-bs-toggle="modal" data-bs-target="#modalSignup">Sign up</button>
+    <button class="btn btn-light me-2" type="button" data-bs-toggle="modal" data-bs-target="#modalSignup">Sign up</button>
 </form>
 
 
