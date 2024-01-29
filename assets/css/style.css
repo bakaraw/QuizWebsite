@@ -17,3 +17,7 @@
 .btn-light{
     color: #6610f2;
 }
+
+.form-control:focus + .form-label {
+    color: red;
+  }
