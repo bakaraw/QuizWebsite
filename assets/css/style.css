@@ -34,3 +34,7 @@
     color: white;
     opacity: 0.7; /* Firefox */
 }
+
+.add-btn:hover img {
+    filter: brightness(0.1) !important;
+}

@@ -8,31 +8,31 @@ const identHtml = [
 const mcqHtml = [
     "<p class=\"text-light\" style=\"--bs-text-opacity: .7;\">Input choices then select the answer</p>",
     "<div class=\"input-group mt-3\">",
-        "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
-            "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
-        "</div>",
-        "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice A\">",
+    "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
+    "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
+    "</div>",
+    "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice A\">",
     "</div>",
 
     "<div class=\"input-group mt-3\">",
-        "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
-            "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
-        "</div>",
-        "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice B\">",
+    "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
+    "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
+    "</div>",
+    "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice B\">",
     "</div>",
 
     "<div class=\"input-group mt-3\">",
-        "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
-            "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
-        "</div>",
-        "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice C\">",
+    "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
+    "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
     "</div>",
-    
+    "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice C\">",
+    "</div>",
+
     "<div class=\"input-group mt-3\">",
-        "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
-            "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
-        "</div>",
-        "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice D\">",
+    "<div class=\"input-group-text bg-dark border-light\" style=\"--bs-border-opacity: .2;\">",
+    "<input class=\"form-check-input mt-0\" type=\"radio\" value=\"\" aria-label=\"Radio button for following text input\" name=\"answer\">",
+    "</div>",
+    "<input type=\"text\" class=\"form-control bg-dark border-light text-light\" aria-label=\"Text input with radio button\" style=\"--bs-border-opacity: .2;\" placeholder=\"Choice D\">",
     "</div>",
 ];
 
@@ -40,20 +40,20 @@ const mcqHtml = [
 const tofHtml = [
     "<p class=\"text-light\" style=\"--bs-text-opacity: .7;\">Answer:</p>",
     "<div class=\"form-check form-check-inline\">",
-        "<input class=\"form-check-input\" type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio1\" value=\"option1\">",
-        "<label class=\"form-check-label text-light\" for=\"inlineRadio1\">True</label>",
+    "<input class=\"form-check-input\" type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio1\" value=\"option1\">",
+    "<label class=\"form-check-label text-light\" for=\"inlineRadio1\">True</label>",
     "</div>",
 
     "<div class=\"form-check form-check-inline\">",
-        "<input class=\"form-check-input\" type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio2\" value=\"option2\">",
-        "<label class=\"form-check-label text-light\" for=\"inlineRadio2\">False</label>",
+    "<input class=\"form-check-input\" type=\"radio\" name=\"inlineRadioOptions\" id=\"inlineRadio2\" value=\"option2\">",
+    "<label class=\"form-check-label text-light\" for=\"inlineRadio2\">False</label>",
     "</div>",
 ];
 
 
-function strCat(strArr){
+function strCat(strArr) {
     let result = "";
-    for(let i = 0; i < strArr.length; i++){
+    for (let i = 0; i < strArr.length; i++) {
         result += strArr[i];
     }
     return result;
@@ -76,10 +76,11 @@ function changeQuizType() {
             elementToChange.innerHTML = strCat(tofHtml);
             break;
         default:
-            elementToChange.innerHTML = "Something went wrong";
+            elementToChange.innerHTML = "<p class=\"text-light\">Something went wrong</p>";
     }
     return false;
 }
 
 
-
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

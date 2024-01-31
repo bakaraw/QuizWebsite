@@ -11,9 +11,8 @@
         <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz Title</span>
         <input type="text" class="form-control bg-dark text-light border-light" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;">
     </div>
-
-    <div class="bg-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .05;">
-        <form action="" method="post">
+    <form action="" method="post">
+        <div class="bg-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .05;">
 
             <!-- select option element (quiztype) -->
             <div class="input-group mb-3">
@@ -34,27 +33,28 @@
             <!-- changing div based on the quiz type -->
             <div id="questiontype_gui">
                 <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;">
-                <!-- temp -->
-                <!-- <div class="form-check form-check-inline mt-3"> -->
-                    <!-- <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> -->
-                    <!-- <label class="form-check-label text-light" for="inlineRadio1">True</label> -->
-                <!-- </div> -->
-                <!-- <div class="form-check form-check-inline mt-3"> -->
-                    <!-- <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> -->
-                    <!-- <label class="form-check-label text-light" for="inlineRadio2">False</label> -->
-                <!-- </div> -->
             </div>
 
             <!-- for the save and delete button -->
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                <button class="btn btn-warning text-dark border-dark" type="button" style="width: 5rem;">Save</button>
-                <button class="btn btn-danger bi bi-trash" type="button">
-                    <img src="assets/img/icons/trash-fill.svg" style="fill: white;"></i>
+                <button class="btn btn-warning text-dark border-dark btn-md" type="button">Save</button>
+                <button class="btn btn-danger bi bi-trash btn-md" type="button">
+                    <img src="assets/img/icons/trash-fill.svg" style="fill: white;">
                 </button>
             </div>
-        </form>
-    </div>
+        </div>
+
+        <div class="container-fluid mt-4">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-light add-btn"
+                data-bs-toggle="tooltip" data-bs-placement="top" 
+                data-bs-custom-class="custom-tooltip" 
+                data-bs-title="Add Question">
+                    <img src="assets/img/icons/plus-square-fill.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;">
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 
-<script src="./assets/js/createQuiz.js"></script>
 <?php require('assets/php/footer.inc.php'); ?>
