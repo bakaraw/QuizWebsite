@@ -1,23 +1,36 @@
 .navbar{
-    background-color: #6610f2;
+    background-color: #6610f2 !important;
 }
 
 .btn-primary{
-    background-color: #6610f2;
+    background-color: #6610f2 !important;
 }
 
 .btn-primary:hover {
-    background-color: #5605da;
+    background-color: #5605da !important;
 }
 
 .btn-primary:active{
-    background-color: #6711f0;
+    background-color: #4e06c2 !important;
 }
 
 .btn-light{
-    color: #6610f2;
+    color: #6610f2 !important;
 }
 
-.form-control:focus + .form-label {
-    color: red;
-  }
+.btn-warning{
+    background-color: white !important;
+}
+
+.btn-warning:hover{
+    background-color: #d3d4d5 !important;
+}
+
+.btn-warning:active{
+    background-color: #bbbcbd !important;
+}
+
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 0.7; /* Firefox */
+}

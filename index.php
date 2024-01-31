@@ -12,7 +12,7 @@
     <p class="card-text " style="width: 30rem;">
       QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
    </p>
-    <a href="#" class="btn btn-light">Start now</a>
+    <a href="#" class="btn btn-warning text-dark border-dark">Start now</a>
   </div>
 </div>
 </div>
