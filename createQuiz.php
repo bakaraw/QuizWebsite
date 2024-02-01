@@ -9,7 +9,8 @@
     <div class="container mt-5 mb-5"></div>
     <div class="input-group mb-3 border-light">
         <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz Title</span>
-        <input type="text" class="form-control bg-dark text-light border-light" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;">
+        <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;">
+        <button class="btn btn-success text-light border-dark btn-md" type="button">Publish</button>
     </div>
     <form action="" method="post">
         <div class="bg-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .05;">
@@ -22,6 +23,7 @@
                     <option value="mcq">Multiple Choice Question</option>
                     <option value="tof">True or False</option>
                 </select>
+                
             </div>
 
             <!-- for question text area -->
