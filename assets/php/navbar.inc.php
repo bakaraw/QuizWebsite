@@ -11,7 +11,7 @@
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="createQuiz.php">Make a Quiz</a>
+          <a class="nav-link" href="MakeQuiz.php">Make a Quiz</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Answer Quiz</a>
