@@ -84,3 +84,85 @@ function changeQuizType() {
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+// class Question{
+//     question;
+//     questionType;
+//     answer;
+//     choiceA;
+//     choiceB;
+//     choiceC;
+//     choiceD;
+
+//     setQuestion(question){
+//         this.question = question;
+//     }
+
+//     setQuestionType(questionType){
+//         this.questionType = questionType;
+//     }
+
+//     setAnswer(answer){
+//         this.answer = answer;
+//     }
+
+//     setChoiceA(choiceA){
+//         this.choiceA = choiceA;
+//     }
+
+//     setChoiceB(choiceB){
+//         this.choiceB = choiceB;
+//     }
+
+//     setChoiceC(choiceC){
+//         this.choiceC = choiceC;
+//     }
+
+//     setChoiceD(choiceD){
+//         this.choiceD = choiceD;
+//     }
+
+//     getQuestionType(){
+//         return this.questionType;
+//     }
+// }
+
+// // When save button is clicked
+// document.getElementById("save-btn").addEventListener("click", function() {
+//     // Disable the input elements
+//     let question = new Question();
+//     let questiontypeVal = document.getElementById("questiontype").value;
+
+//     question.setQuestionType(questiontypeVal);
+//     // document.getElementById("questiontype").disabled = true;
+
+//     console.log(question.getQuestionType()); // Now it should log the value set for questionType
+// });
+
+document.getElementById("create-btn").addEventListener("click", function () {
+    // 
+    // Disable the input elements
+    let quiztitle = document.getElementById("quiztitle").value;
+    let errormsg = document.getElementById("message");
+
+    if (quiztitle != ""){
+        $.ajax({
+            url: "MakeQuiz.php",
+            method: "POST",
+            data: {quiztitle: quiztitle },
+            success: function (response) {
+                console.log("Data sent successfully");
+                // window.location.href = "http://localhost/csthings/QuizWebsite/createQuiz.php";
+            }
+        });
+        // redirect page
+    } else {
+        errormsg.innerHTML = "Fill-up title" 
+        console.log('hello');
+        event.preventDefault();
+    }
+    
+     // Now it should log the value set for questionType
+});
+
+
