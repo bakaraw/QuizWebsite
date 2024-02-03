@@ -34,7 +34,5 @@
         </div>
     </div>
 </div>
-
-
-
+<script src="./assets/js/makeQuiz.js"></script>
 <?php require('assets/php/footer.inc.php'); ?>

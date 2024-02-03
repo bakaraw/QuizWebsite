@@ -81,9 +81,9 @@ function changeQuizType() {
     return false;
 }
 
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 // class Question{
 //     question;
@@ -139,30 +139,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 //     console.log(question.getQuestionType()); // Now it should log the value set for questionType
 // });
 
-document.getElementById("create-btn").addEventListener("click", function () {
-    // 
-    // Disable the input elements
-    let quiztitle = document.getElementById("quiztitle").value;
-    let errormsg = document.getElementById("message");
 
-    if (quiztitle != ""){
-        $.ajax({
-            url: "MakeQuiz.php",
-            method: "POST",
-            data: {quiztitle: quiztitle },
-            success: function (response) {
-                console.log("Data sent successfully");
-                // window.location.href = "http://localhost/csthings/QuizWebsite/createQuiz.php";
-            }
-        });
-        // redirect page
-    } else {
-        errormsg.innerHTML = "Fill-up title" 
-        console.log('hello');
-        event.preventDefault();
-    }
-    
-     // Now it should log the value set for questionType
-});
+
 
 
