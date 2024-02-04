@@ -10,7 +10,7 @@
             <!-- select option element (quiztype) -->
             <div class="input-group mb-3">
                 <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
-                <select onchange="changeQuizType()" class="form-select bg-dark text-light border-light" id="questiontype<?php echo $count; ?>" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype<?php echo $count; ?>">
+                <select onchange="changeQuizType<?php echo $count; ?>()" class="form-select bg-dark text-light border-light" id="questiontype<?php echo $count; ?>" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype<?php echo $count; ?>">
                     <option selected value="iden">Identification</option>
                     <option value="mcq">Multiple Choice Question</option>
                     <option value="tof">True or False</option>
@@ -42,7 +42,7 @@
 <script>
     // kailangan ni na html para dynamic ng webpage depende sa unsa ang gi select na quiztype
     // html for identification
-    var count = <?php echo $count; ?>;
+
 
     const identHtml<?php echo $count; ?> = [
         "<input class=\"form-control bg-dark text-light border-light\" type=\"text\" placeholder=\"Answer\" aria-label=\"default input example\" style=\"--bs-border-opacity: .2;\">"
@@ -104,11 +104,10 @@
     }
 
 
-    function changeQuizType() {
-        console.log(count);
-        var selectElement = document.getElementById("questiontype" + count);
+    function changeQuizType<?php echo $count; ?>() {
+        var selectElement = document.getElementById("questiontype"+<?php echo $count; ?>);
         var selectedValue = selectElement.value;
-        var elementToChange = document.getElementById("questiontype_gui" + count);
+        var elementToChange = document.getElementById("questiontype_gui"+<?php echo $count; ?>);
 
         switch (selectedValue) {
             case "iden":
