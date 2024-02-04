@@ -36,6 +36,7 @@ $quiztitle = $_SESSION['quiztitle'];
     </div>
 
 </div>
+
 <script>
     $(document).ready(function() {
         $("#add-question").click( function(e){
@@ -45,7 +46,7 @@ $quiztitle = $_SESSION['quiztitle'];
             if(count == null){
                 count = 1;
             }
-
+            
             $.ajax({
                 type: "GET",
                 url: "assets/ajax/createquiz_ajax.php",
@@ -58,7 +59,6 @@ $quiztitle = $_SESSION['quiztitle'];
                     count = response.count;
                     sessionStorage.setItem("count", count);
                     $(".questions").append(response.content);
-                    console.log('pressed');
                 }
             });
         });

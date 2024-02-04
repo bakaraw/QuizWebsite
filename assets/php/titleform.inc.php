@@ -13,11 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // generate unique code
             $quizcode = generateQuizCode($pdo);
 
-            // inserting into database
+            // inserting Quizcode and title into database
             $query = "INSERT INTO quizlisttable(code, title) VALUE (?, ?);";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$quizcode, $quiztitle]);
 
+            // creating separate table for every quizcode
             $query = "
             CREATE TABLE `$quizcode` (
                 `question` text NOT NULL,
@@ -36,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdo = null;
             $stmt = null;
 
-            // passing variable values to the create quiz page
+            // passing variable values to create quiz page
             session_start();
             $_SESSION['quizcode'] = $quizcode;
             $_SESSION['quiztitle'] = $quiztitle;
@@ -54,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // for generating random string
 function generateRandomString($length)
 {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
@@ -67,7 +68,7 @@ function generateRandomString($length)
 function generateQuizCode($pdo)
 {
     do {
-        $quizcode = generateRandomString(7);
+        $quizcode = "$" . generateRandomString(7);
         $stmt = $pdo->prepare("SELECT * FROM quizlisttable WHERE code = ?");
         $stmt->execute([$quizcode]);
     } while ($stmt->rowCount() > 0);
