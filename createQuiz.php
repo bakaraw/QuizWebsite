@@ -22,15 +22,14 @@ $quiztitle = $_SESSION['quiztitle'];
     <!-- div pang append sa questions -->
     <div class="questions">
         <!-- contents here -->
-        
+        <?php include('assets/php/question_form.inc.php');?>
     </div>
     <!-- question form -->
-    <?php include('assets/php/question_form.inc.php'); ?>
 
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-outline-light add-btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Add Question" id="add-question">
-                <img src="assets/img/icons/plus-square-fill.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;">
+                <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>
     </div>
@@ -39,22 +38,22 @@ $quiztitle = $_SESSION['quiztitle'];
 
 <script>
     $(document).ready(function() {
-        $("#add-question").click( function(e){
+        $("#add-question").click(function(e) {
             e.preventDefault();
-            
+
             var count = sessionStorage.getItem("count");
-            if(count == null){
+            if (count == null || count == undefined) {
                 count = 1;
             }
-            
+
             $.ajax({
                 type: "GET",
                 url: "assets/ajax/createquiz_ajax.php",
                 data: {
                     count
-                },  
+                },
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
 
                     count = response.count;
                     sessionStorage.setItem("count", count);

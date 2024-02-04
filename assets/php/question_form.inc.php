@@ -1,4 +1,8 @@
-    
+<?php 
+    if(!isset($count)){
+        $count = 1;
+    }
+?>
     <div>
     <form action="" method="get" id="questionform<?php echo $count; ?>">
         <div class="bg-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .05;">

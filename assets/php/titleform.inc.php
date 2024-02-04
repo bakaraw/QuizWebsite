@@ -30,6 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 `choiceD` text NOT NULL
               ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
               COMMIT;
+              ALTER TABLE $quizcode
+                ADD qid INT AUTO_INCREMENT PRIMARY KEY;
+
             ";
             $stmt = $pdo->prepare($query);
             $stmt->execute();
