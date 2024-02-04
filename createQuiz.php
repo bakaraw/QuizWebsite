@@ -28,7 +28,7 @@ $quiztitle = $_SESSION['quiztitle'];
 
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-outline-light add-btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Add Question" id="add-question">
+            <button type="button" class="btn btn-outline-light add-btn mb-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Add Question" id="add-question">
                 <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>

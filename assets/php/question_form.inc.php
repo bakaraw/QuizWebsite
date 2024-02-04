@@ -5,7 +5,7 @@
 ?>
     <div>
     <form action="" method="get" id="questionform<?php echo $count; ?>">
-        <div class="bg-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .05;">
+        <div class="shadow bg-black p-3 rounded-4 mt-5" style="--bs-bg-opacity: .2;">
 
             <!-- select option element (quiztype) -->
             <div class="input-group mb-3">
