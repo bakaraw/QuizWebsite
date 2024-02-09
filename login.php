@@ -14,25 +14,34 @@ if ($conn->connect_error) {
 }
 
 if (isset($_POST['login'])) { 
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $pass = mysqli_real_escape_string($conn, $_POST['pass']); 
-    $query = mysqli_query($conn, "SELECT * FROM account WHERE username = '$username'");
+    $username = $_POST['username'];
+    $pass = $_POST['pass']; 
+    // Using prepared statement
+    $stmt = $conn->prepare("SELECT * FROM account WHERE username = ?");
+    $stmt->bind_param("s", $username);
 
-    if ($result = mysqli_fetch_assoc($query)) {
-        $res_pass = $result['pass']; 
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($pass, $user['pass'])) {
+            
+                $_SESSION['username'] = $username;
+                header("Location: index.php"); 
 
-        if (password_verify($pass, $res_pass)) {
-            $_SESSION['username'] = $username;
-            header("Location: sample.php"); 
-            exit();
+                exit();
+            } else {
+                echo "<script>alert('Wrong Password'); window.location.href='index.php';</script>";
+            }
         } else {
             echo "<script>alert('Wrong Username'); window.location.href='index.php';</script>";
-
         }
     } else {
-        echo "<script>alert('Wrong Password'); window.location.href='index.php';</script>";
-
+        // Query failed to execute
+        echo "<script>alert('Login failed, please try again later.'); window.location.href='login.php';</script>";
     }
+    $stmt->close();
 }
+
 
 ?>

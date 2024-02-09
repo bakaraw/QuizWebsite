@@ -1,5 +1,17 @@
 <?php
-session_start(); 
+session_start();
+
+$servername = 'localhost';
+$dbUsername = 'root';
+$dbPassword = '';
+$database_name = 'web';
+
+$conn = new mysqli($servername, $dbUsername, $dbPassword, $database_name);
+
+if ($conn->connect_error) {
+    error_log("Connection failed: " . $conn->connect_error);
+    exit; 
+}
 ?>
 <style>
 .tinO {
@@ -12,7 +24,6 @@ session_start();
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-  
     background-clip: border-box;
     border: 0 solid transparent;
     border-radius: .25rem;
@@ -29,8 +40,18 @@ session_start();
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <div class="mt-3">
-                                <h4><?php echo ("sample"); ?></h4>
-                                <p class="text-secondary mb-1"><?php echo htmlspecialchars('Student'); ?></p>
+                            <?php
+                                $sql = "SELECT username FROM account";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    // Output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                        echo '<h4>' . htmlspecialchars($row["username"]) . '</h4><br>';
+                                    }
+                                } 
+                                $conn->close();
+                            ?>
                             </div>
                         </div>
                     </div>
