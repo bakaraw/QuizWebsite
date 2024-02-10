@@ -1,7 +1,10 @@
+
 <?php
+
 session_start();
 $quizcode = $_SESSION['quizcode'];
 $quiztitle = $_SESSION['quiztitle'];
+
 ?>
 
 <!-- header -->
@@ -22,47 +25,49 @@ $quiztitle = $_SESSION['quiztitle'];
     <!-- div pang append sa questions -->
     <div class="questions">
         <!-- contents here -->
-        <?php include('assets/php/question_form.inc.php');?>
-    </div>
-    <!-- question form -->
 
-    <div class="container-fluid mt-4">
-        <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-outline-light add-btn mb-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Add Question" id="add-question">
-                <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
-            </button>
+        <div>
+            <form action="" method="get" id="questionform" name="questionform">
+                <div class="shadow bg-black border border-light p-3 rounded-4 mt-5" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
+
+                    <!-- select option element (quiztype) -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
+                        <select onchange="changeQuizType()" class="form-select bg-dark text-light border-light" id="questiontype" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype">
+                            <option selected value="iden">Identification</option>
+                            <option value="mcq">Multiple Choice Question</option>
+                            <option value="tof">True or False</option>
+                        </select>
+
+                    </div>
+
+                    <!-- for question text area -->
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
+                        <textarea eype="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" require></textarea>
+                    </div>
+
+                    <!-- changing div based on the question type -->
+                    <div id="questiontype_gui">
+                        <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" require>
+                    </div>
+
+                    <!-- for the save and delete button -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                        <button class="btn btn-warning text-dark border-dark btn-md" type="button" name="save-btn" id="save-btn">Save</button>
+                    </div>
+                </div>
+
+                <div class="container-fluid mt-4">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
+                            <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+    <script src="./assets/js/createQuiz.js"></script>
 
-</div>
-
-<script>
-    $(document).ready(function() {
-        $("#add-question").click(function(e) {
-            e.preventDefault();
-
-            var count = sessionStorage.getItem("count");
-            if (count == null || count == undefined) {
-                count = 1;
-            }
-
-            $.ajax({
-                type: "GET",
-                url: "assets/ajax/createquiz_ajax.php",
-                data: {
-                    count
-                },
-                dataType: "json",
-                success: function(response) {
-
-                    count = response.count;
-                    sessionStorage.setItem("count", count);
-                    $(".questions").append(response.content);
-                }
-            });
-        });
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script src="./assets/js/createQuiz.js"></script>
-<?php require('assets/php/footer.inc.php'); ?>
+    <?php require('assets/php/footer.inc.php'); ?>

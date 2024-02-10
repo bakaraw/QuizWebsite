@@ -19,3 +19,4 @@ document.getElementById("create-btn").addEventListener("click", function () {
     
      // Now it should log the value set for questionType
 });
+
