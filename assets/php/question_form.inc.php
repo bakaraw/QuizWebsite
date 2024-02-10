@@ -5,7 +5,7 @@ if (!isset($count)) {
 ?>
 <div>
     <form action="" method="get" id="questionform<?php echo $count; ?>">
-        <div class="shadow bg-black border border-light p-3 rounded-4 mt-5" style="--bs-bg-opacity: .25; --bs-border-opacity: .2;">
+        <div class="shadow bg-black border border-light p-3 rounded-4 mt-5" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
 
             <!-- select option element (quiztype) -->
             <div class="input-group mb-3">
