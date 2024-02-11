@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -27,16 +26,16 @@ $quiztitle = $_SESSION['quiztitle'];
         <!-- contents here -->
 
         <div>
-            <form action="" method="get" id="questionform" name="questionform">
+            <form class="needs-validation" method="post" id="questionform" name="questionform">
                 <div class="shadow bg-black border border-light p-3 rounded-4 mt-5" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
 
                     <!-- select option element (quiztype) -->
                     <div class="input-group mb-3">
                         <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
                         <select onchange="changeQuizType()" class="form-select bg-dark text-light border-light" id="questiontype" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype">
-                            <option selected value="iden">Identification</option>
-                            <option value="mcq">Multiple Choice Question</option>
-                            <option value="tof">True or False</option>
+                            <option selected value="IDEN">Identification</option>
+                            <option value="MCQ">Multiple Choice Question</option>
+                            <option value="TOF">True or False</option>
                         </select>
 
                     </div>
@@ -44,17 +43,21 @@ $quiztitle = $_SESSION['quiztitle'];
                     <!-- for question text area -->
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
-                        <textarea eype="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" require></textarea>
+                        <textarea eype="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" required></textarea>
+                        <div class="invalid-feedback text-danger">
+                            Please enter a question.
+                        </div>
                     </div>
+
 
                     <!-- changing div based on the question type -->
                     <div id="questiontype_gui">
-                        <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" require>
+                        <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" required>
                     </div>
 
                     <!-- for the save and delete button -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                        <button class="btn btn-warning text-dark border-dark btn-md" type="button" name="save-btn" id="save-btn">Save</button>
+                        <button class="btn btn-warning text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
                     </div>
                 </div>
 
@@ -65,9 +68,77 @@ $quiztitle = $_SESSION['quiztitle'];
                         </button>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
+    <script>
+
+        // for form validation (kung dili butngan value ang mga textarea sa form kay mag warning)
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+
+                form.addEventListener('click', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        // pag send data sa database
+        $(document).ready(function() {
+            $('#questionform').submit(function(e) {
+                e.preventDefault();
+                
+                let questionform = $('#questionform').serialize();
+                questionform += '&quizcode=<?php echo $quizcode; ?>';
+
+                saveQuestion(questionform);
+            });
+
+            $('#add-question').click(function(e) {
+                e.preventDefault();
+                let questionform = $('#questionform').serialize();
+                questionform += '&quizcode=<?php echo $quizcode; ?>';
+
+                saveQuestion(questionform);
+
+            });
+        });
+
+        function saveQuestion(questionform){
+            $.ajax({
+                    type: "POST",
+                    url: "assets/ajax/questionform_dbh.php",
+                    data: questionform,
+                    success: function(response) {
+                        console.log('addque-pressed success');
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+        }
+    </script>
     <script src="./assets/js/createQuiz.js"></script>
 
     <?php require('assets/php/footer.inc.php'); ?>
