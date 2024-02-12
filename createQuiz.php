@@ -52,7 +52,10 @@ $quiztitle = $_SESSION['quiztitle'];
 
                     <!-- changing div based on the question type -->
                     <div id="questiontype_gui">
-                        <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" required>
+                        <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" required>
+                        <div class="invalid-feedback text-danger">
+                            Please enter the answer.
+                        </div>
                     </div>
 
                     <!-- for the save and delete button -->
@@ -73,7 +76,6 @@ $quiztitle = $_SESSION['quiztitle'];
         </div>
     </div>
     <script>
-
         // for form validation (kung dili butngan value ang mga textarea sa form kay mag warning)
         (() => {
             'use strict'
@@ -107,7 +109,7 @@ $quiztitle = $_SESSION['quiztitle'];
         $(document).ready(function() {
             $('#questionform').submit(function(e) {
                 e.preventDefault();
-                
+
                 let questionform = $('#questionform').serialize();
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
 
@@ -124,19 +126,46 @@ $quiztitle = $_SESSION['quiztitle'];
             });
         });
 
-        function saveQuestion(questionform){
+        function saveQuestion(questionform) {
             $.ajax({
-                    type: "POST",
-                    url: "assets/ajax/questionform_dbh.php",
-                    data: questionform,
-                    success: function(response) {
-                        console.log('addque-pressed success');
-                        console.log(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+                type: "POST",
+                url: "assets/ajax/questionform_dbh.php",
+                data: questionform,
+                success: function(response) {
+                    console.log('addque-pressed success');
+                    console.log(response);
+                    if (isFormFilled()) {
+                        clearForm();
+                    } 
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function clearForm() {
+            // Reset the form fields
+            var selectElement = document.getElementById("questiontype");
+            var currentQuestiontypeIndex = selectElement.selectedIndex;
+
+            $('#questionform')[0].reset();
+            selectElement.selectedIndex = currentQuestiontypeIndex;
+
+            $('#questionform').removeClass('was-validated');
+        }
+
+        function isFormFilled() {
+            var form = document.getElementById("questionform");
+            for (var i = 0; i < form.elements.length; i++) {
+                var element = form.elements[i];
+                if (element.type !== "button" && element.value.trim() === "" && element.type !== "submit") {
+                    // If any field is empty, return false
+                    return false;
+                }
+            }
+            // If all fields are filled, return true
+            return true;
         }
     </script>
     <script src="./assets/js/createQuiz.js"></script>
