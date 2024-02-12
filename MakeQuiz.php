@@ -1,4 +1,6 @@
-
+<?php 
+session_start();
+?>
 <!-- header -->
 <?php require('assets/php/head.inc.php'); ?>
 

@@ -16,12 +16,11 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        
+    
+<div class="collapse navbar-collapse" id="navbarText">
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">       
         <li class="nav-item">
-
-
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
@@ -31,8 +30,6 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
           <a class="nav-link" href="#">Answer Quiz</a>
         </li>
       </ul>
-
-
 
 <!-- Conditional display based on user login status -->
 <?php if (isset($_SESSION['username'])): ?>
@@ -54,6 +51,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
       <?php endif; ?>
 
 
+      
 
 
 
