@@ -3,9 +3,9 @@
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <h4 class="modal-title w-100 font-weight-bold">Login</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <a href="index.php" class="close" aria-label="Close" style="text-decoration: none; display: inline-block; color: inherit; background-color: transparent; border: none; cursor: pointer;">
+                    <span aria-hidden="true">&times;</span>
+                  </a>
                 </div>
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">

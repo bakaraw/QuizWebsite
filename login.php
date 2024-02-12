@@ -10,30 +10,38 @@ $conn = new mysqli($servername, $dbUsername, $dbPassword, $database_name);
 
 if ($conn->connect_error) {
     error_log("Connection failed: " . $conn->connect_error);
-    exit; // Redirect to an error page or display a user-friendly error message
+    exit; 
 }
 
-if (isset($_POST['login'])) { // Change 'submit' to 'login' to match the name attribute of your login button
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $pass = mysqli_real_escape_string($conn, $_POST['pass']); // Make sure this matches the name attribute in your form
+if (isset($_POST['login'])) { 
+    $username = $_POST['username'];
+    $pass = $_POST['pass']; 
+    // Using prepared statement
+    $stmt = $conn->prepare("SELECT * FROM account WHERE username = ?");
+    $stmt->bind_param("s", $username);
 
-    $query = mysqli_query($conn, "SELECT * FROM account WHERE username = '$username'");
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($pass, $user['pass'])) {
+            
+                $_SESSION['username'] = $username;
+                header("Location: index.php"); 
 
-    if ($result = mysqli_fetch_assoc($query)) {
-        $res_pass = $result['pass']; // Replace 'pass' with the actual field name of your password in the database
-
-        if ($pass == $res_pass) {
-            $_SESSION['username'] = $username;
-            header("Location: sample.php"); // Redirect to welcome page after successful login
-            exit();
+                exit();
+            } else {
+                echo "<script>alert('Wrong Password'); window.location.href='index.php';</script>";
+            }
         } else {
-            echo "<div class='message'><p>Wrong Username or Password</p></div><br>";
-            echo "<a href='index.php'><button class='btn'>Go Back</button>";
+            echo "<script>alert('Wrong Username'); window.location.href='index.php';</script>";
         }
     } else {
-        echo "<div class='message'><p>Wrong Username or Password</p></div><br>";
-        echo "<a href='index.php'><button class='btn'>Go Back</button>";
+        // Query failed to execute
+        echo "<script>alert('Login failed, please try again later.'); window.location.href='login.php';</script>";
     }
+    $stmt->close();
 }
+
 
 ?>
