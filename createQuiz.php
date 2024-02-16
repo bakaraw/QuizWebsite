@@ -195,7 +195,7 @@ $quiztitle = $_SESSION['quiztitle'];
                 }
             });
         }
-    
+        
         // loads saved questions
         function loadQuestions() {
             $('#questions').load("assets/ajax/loadquestions.php", {
