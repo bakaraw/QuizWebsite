@@ -358,6 +358,12 @@ INSERT INTO `$ymrv0uj` (`question`, `questiontype`, `answer`, `choiceA`, `choice
 CREATE TABLE `account` (
   `username` varchar(30) NOT NULL,
   `pass` varchar(64) DEFAULT NULL
+  `code` varchar(8) NOT NULL,
+  `title` text NOT NULL,
+  `thumbnail` varchar(255) NOT NULL,
+  `creator` varchar(255) NOT NULL,
+  `visibility` varchar(8) NOT NULL,
+  `ispublished` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
