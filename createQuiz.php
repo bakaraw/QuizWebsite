@@ -1,5 +1,5 @@
 <?php
-
+include "assets/php/dbh_quiz.inc.php";
 session_start();
 $quizcode = $_SESSION['quizcode'];
 $quiztitle = $_SESSION['quiztitle'];
@@ -21,59 +21,128 @@ $quiztitle = $_SESSION['quiztitle'];
         <button class="btn btn-success text-light border-dark btn-md" type="button">Publish</button>
     </div>
 
+    <hr class="border border-light">
+
     <!-- div pang append sa questions -->
-    <div class="questions">
-        <!-- contents here -->
+    <div class="row justify-content-center">
+        <div class="col" id="questions">
+            <?php
+            // Prepare the SQL query
+            $sql = "SELECT * FROM $quizcode";
 
-        <div>
-            <form class="needs-validation" method="post" id="questionform" name="questionform">
-                <div class="shadow bg-black border border-light p-3 rounded-4 mt-5" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
+            // Prepare the statement
+            $stmt = $pdo->prepare($sql);
 
-                    <!-- select option element (quiztype) -->
-                    <div class="input-group mb-3">
-                        <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
-                        <select onchange="changeQuizType()" class="form-select bg-dark text-light border-light" id="questiontype" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype">
-                            <option selected value="IDEN">Identification</option>
-                            <option value="MCQ">Multiple Choice Question</option>
-                            <option value="TOF">True or False</option>
-                        </select>
+            // Execute the statement
+            $stmt->execute();
 
-                    </div>
+            // Check if there are rows returned
+            if ($stmt->rowCount() > 0) {
+                // Fetch and display the results
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<div class='container ms-auto me-auto'>";
+                    echo "<div class='bg-black rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid' style='--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70;'>";
 
-                    <!-- for question text area -->
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
-                        <textarea eype="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" required></textarea>
-                        <div class="invalid-feedback text-danger">
-                            Please enter a question.
-                        </div>
-                    </div>
+                    switch ($row['questiontype']) {
+                        case "IDEN":
+                            echo "<h5><strong>Question type:</strong> Identification</h5>";
+                            break;
+                        case "MCQ":
+                            echo "<h5><strong>Question type:</strong> Multiple Choice Question</h5>";
+                            echo "<br>";
+                            break;
+                        case "TOF":
+                            echo "<h5><strong>Question type:</strong> True or False</h5>";
+                            break;
+                        default:
+                            echo "<h5>error in question type</h5>";
+                    }
 
+                    echo "<br>";
+                    echo "<p class='text-break'>";
+                    echo "<strong>Question:</strong> {$row['question']}";
 
-                    <!-- changing div based on the question type -->
-                    <div id="questiontype_gui">
-                        <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" required>
-                        <div class="invalid-feedback text-danger">
-                            Please enter the answer.
-                        </div>
-                    </div>
+                    if ($row['questiontype'] == "MCQ") {
+                        echo "<br>";
+                        echo "A. {$row['choiceA']} ";
+                        echo "<br>";
 
-                    <!-- for the save and delete button -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                        <button class="btn btn-warning text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
-                    </div>
-                </div>
+                        echo "B. {$row['choiceB']}";
+                        echo "<br>";
 
-                <div class="container-fluid mt-4">
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
-                            <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
-                        </button>
-                    </div>
-                </div>
+                        echo "C. {$row['choiceC']}";
+                        echo "<br>";
 
-            </form>
+                        echo "D. {$row['choiceD']}";
+                    }
+
+                    echo "<br>";
+                    echo "<br>";
+                    echo "<strong>Answer:</strong> {$row['answer']}";
+                    echo "</p>";
+                    echo '<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-warning me-md-1" type="button">
+                    Edit
+                </button>
+                <button class="btn btn-danger" type="button">
+                    <img src="assets/img/icons/trash-fill.svg" alt="Add Question" style="width: 18px; height: 18px; fill: white;">
+                </button>
+            </div>';
+                    echo "</div>";
+                    echo "</div>";
+                }
+            }
+            ?>
         </div>
+    </div>
+
+
+    <div class="form">
+        <form class="needs-validation" method="post" id="questionform" name="questionform">
+            <div class="shadow bg-black border border-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
+
+                <!-- select option element (quiztype) -->
+                <div class="input-group mb-3">
+                    <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
+                    <select onchange="changeQuizType()" class="form-select bg-dark text-light border-light" id="questiontype" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype">
+                        <option selected value="IDEN">Identification</option>
+                        <option value="MCQ">Multiple Choice Question</option>
+                        <option value="TOF">True or False</option>
+                    </select>
+
+                </div>
+
+                <!-- for question text area -->
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
+                    <textarea eype="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" required></textarea>
+                    <div class="invalid-feedback text-danger">
+                        Please enter a question.
+                    </div>
+                </div>
+
+
+                <!-- changing div based on the question type -->
+                <div id="questiontype_gui">
+                    <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" required>
+                    <div class="invalid-feedback text-danger">
+                        Please enter the answer.
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                    <button class="btn btn-warning text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
+                </div>
+            </div>
+
+            <div class="container-fluid mt-4">
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
+                        <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
     <script>
         // for form validation (kung dili butngan value ang mga textarea sa form kay mag warning)
@@ -122,7 +191,6 @@ $quiztitle = $_SESSION['quiztitle'];
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
 
                 saveQuestion(questionform);
-
             });
         });
 
@@ -136,7 +204,12 @@ $quiztitle = $_SESSION['quiztitle'];
                     console.log(response);
                     if (isFormFilled()) {
                         clearForm();
-                    } 
+                        loadQuestions();
+                    }
+                    window.scrollTo({
+                        top: document.body.scrollHeight,
+                        behavior: 'smooth' // Smooth scrolling
+                    });
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
@@ -144,8 +217,19 @@ $quiztitle = $_SESSION['quiztitle'];
             });
         }
 
+        // loads saved questions
+        function loadQuestions() {
+            $('#questions').load("assets/ajax/loadquestions.php", {
+                quizcode: '<?php echo $quizcode; ?>'
+            }, function(response, status, xhr) {
+                console.log("Response:", response);
+                console.log("Status:", status);
+                console.log("XHR:", xhr);
+            });
+        }
+
+        // Reset the form fields
         function clearForm() {
-            // Reset the form fields
             var selectElement = document.getElementById("questiontype");
             var currentQuestiontypeIndex = selectElement.selectedIndex;
 
