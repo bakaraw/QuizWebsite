@@ -41,7 +41,7 @@ $quiztitle = $_SESSION['quiztitle'];
                 // Fetch and display the results
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<div class='container ms-auto me-auto'>";
-                    echo "<div class='bg-black rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid' style='--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70;'>";
+                    echo "<div class='bg-black rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid' style='--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70;' id='{$row['qid']}'>";
 
                     switch ($row['questiontype']) {
                         case "IDEN":
@@ -80,18 +80,24 @@ $quiztitle = $_SESSION['quiztitle'];
                     echo "<br>";
                     echo "<strong>Answer:</strong> {$row['answer']}";
                     echo "</p>";
-                    echo '<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-warning me-md-1" type="button">
-                    Edit
-                </button>
-                <button class="btn btn-danger" type="button">
-                    <img src="assets/img/icons/trash-fill.svg" alt="Add Question" style="width: 18px; height: 18px; fill: white;">
-                </button>
+                    echo '<div class="d-grid gap-2 d-md-flex justify-content-md-end update-btns">
+                <form method="post">
+                    <input type="hidden"  name="quizcode" value="' . $quizcode . '">
+                    <input type="hidden"  name="qid" value="' . $row['qid'] . '">
+                    <button class="btn btn-warning me-md-1" type="button" name="edit-' . $row['qid'] . '" id="edit-' . $row['qid'] . '">
+                        Edit
+                    </button>
+                    <button class="btn btn-danger" type="button" name="delete-' . $row['qid'] . '" id="' . $row['qid'] . '">
+                        <img src="assets/img/icons/trash-fill.svg" alt="Add Question" style="width: 20px; height: 20px; fill: white;">
+                    </button>
+                </form>
             </div>';
                     echo "</div>";
                     echo "</div>";
                 }
             }
+
+
             ?>
         </div>
     </div>
@@ -145,35 +151,6 @@ $quiztitle = $_SESSION['quiztitle'];
         </form>
     </div>
     <script>
-        // for form validation (kung dili butngan value ang mga textarea sa form kay mag warning)
-        (() => {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-
-                form.addEventListener('click', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-
         // pag send data sa database
         $(document).ready(function() {
             $('#questionform').submit(function(e) {
@@ -193,6 +170,8 @@ $quiztitle = $_SESSION['quiztitle'];
                 saveQuestion(questionform);
             });
         });
+
+        
 
         function saveQuestion(questionform) {
             $.ajax({
@@ -216,15 +195,11 @@ $quiztitle = $_SESSION['quiztitle'];
                 }
             });
         }
-
+    
         // loads saved questions
         function loadQuestions() {
             $('#questions').load("assets/ajax/loadquestions.php", {
                 quizcode: '<?php echo $quizcode; ?>'
-            }, function(response, status, xhr) {
-                console.log("Response:", response);
-                console.log("Status:", status);
-                console.log("XHR:", xhr);
             });
         }
 
@@ -251,6 +226,7 @@ $quiztitle = $_SESSION['quiztitle'];
             // If all fields are filled, return true
             return true;
         }
+
     </script>
     <script src="./assets/js/createQuiz.js"></script>
 
