@@ -161,7 +161,7 @@ $quiztitle = $_SESSION['quiztitle'];
                 <!-- for question text area -->
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
-                    <textarea eype="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" required></textarea>
+                    <textarea type="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" required></textarea>
                     <div class="invalid-feedback text-danger">
                         Please enter a question.
                     </div>
