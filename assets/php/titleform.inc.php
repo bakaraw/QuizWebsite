@@ -1,58 +1,61 @@
-
 <?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // Redirect to login page or show an error
+    header("Location: login.php");
+    exit;
+}
+
+
+
 $quiztitle = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['quiztitle'])) {
 
-        $quiztitle = $_POST['quiztitle'];
-        $quizcode = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
 
-        try {
-            // include dtabase connector
-            require_once "dbh_quiz.inc.php";
-            // generate unique code
-            $quizcode = generateQuizCode($pdo);
+    $quiztitle = $_POST['quiztitle'];
+    $username = $_SESSION['username']; // Assuming the username is stored in the session upon login
 
-            // inserting Quizcode and title into database
-            $query = "INSERT INTO quizlisttable(code, title) VALUE (?, ?);";
-            $stmt = $pdo->prepare($query);
-            $stmt->execute([$quizcode, $quiztitle]);
+    try {
+        // Include database connector
+        require_once "dbh_quiz.inc.php";
 
-            // creating separate table for every quizcode
-            $query = "
-            CREATE TABLE `$quizcode` (
-                `question` text NOT NULL,
-                `questiontype` text NOT NULL,
-                `answer` text NOT NULL,
-                `choiceA` text NOT NULL,
-                `choiceB` text NOT NULL,
-                `choiceC` text NOT NULL,
-                `choiceD` text NOT NULL
-              ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-              COMMIT;
-              ALTER TABLE $quizcode
-                ADD qid INT AUTO_INCREMENT PRIMARY KEY;
+        // Generate unique code
+        $quizcode = generateQuizCode($pdo);
 
-            ";
-            $stmt = $pdo->prepare($query);
-            $stmt->execute();
+        // Inserting Quizcode, title, and username into database
+        $query = "INSERT INTO quizlisttable(code, title, username) VALUES (?, ?, ?);";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$quizcode, $quiztitle, $username]);
 
-            $pdo = null;
-            $stmt = null;
+        // Creating separate table for every quizcode
+        // Note: Dynamically creating tables like this is generally not recommended. Consider storing all questions in a single table with a reference to the quiz code instead.
+        $query = "CREATE TABLE `$quizcode` (
+                    `qid` INT AUTO_INCREMENT PRIMARY KEY,
+                    `question` TEXT NOT NULL,
+                    `questiontype` TEXT NOT NULL,
+                    `answer` TEXT NOT NULL,
+                    `choiceA` TEXT NOT NULL,
+                    `choiceB` TEXT NOT NULL,
+                    `choiceC` TEXT NOT NULL,
+                    `choiceD` TEXT NOT NULL
+                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
 
-            // passing variable values to create quiz page
-            session_start();
-            $_SESSION['quizcode'] = $quizcode;
-            $_SESSION['quiztitle'] = $quiztitle;
+        // Passing variable values to create quiz page
+        $_SESSION['quizcode'] = $quizcode;
+        $_SESSION['quiztitle'] = $quiztitle;
 
-            header("Location: ../../createQuiz.php");
-            die();
-        } catch (PDOException $e) {
-            die("Query failed" . $e->getMessage());
-        }
+        header("Location: ../../createQuiz.php");
+        exit;
+    } catch (PDOException $e) {
+        die("Query failed: " . $e->getMessage());
     }
 } else {
     header("Location: ../../MakeQuiz.php");
+    exit;
 }
 
 // for generating random string

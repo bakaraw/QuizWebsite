@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Password and Username are required'); window.location.href='index.php';</script>";
         } else {
         // Check if username already exists
-        $stmt = $conn->prepare("SELECT username FROM account WHERE username = ?");
+        $stmt = $conn->prepare("SELECT username FROM quizlisttable WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->store_result();

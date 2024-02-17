@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Feb 12, 2024 at 02:29 PM
+-- Host: 127.0.0.1
+-- Generation Time: Feb 16, 2024 at 10:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -104,6 +104,30 @@ CREATE TABLE `$5bhjokc` (
   `choiceD` text NOT NULL,
   `qid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$6rdrqkd`
+--
+
+CREATE TABLE `$6rdrqkd` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$6rdrqkd`
+--
+
+INSERT INTO `$6rdrqkd` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
+('lami ang bilat?', 'TOF', 'FALSE', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -231,10 +255,70 @@ CREATE TABLE `$87h1swa` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$b1djkvr`
+--
+
+CREATE TABLE `$b1djkvr` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$b1djkvr`
+--
+
+INSERT INTO `$b1djkvr` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
+('okay', 'TOF', 'FALSE', '', '', '', '', 1),
+('Some some', 'TOF', 'TRUE', '', '', '', '', 2),
+('Otin', 'TOF', 'FALSE', '', '', '', '', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `$h5tgrnj`
 --
 
 CREATE TABLE `$h5tgrnj` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$h66aqn6`
+--
+
+CREATE TABLE `$h66aqn6` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$hh8wbod`
+--
+
+CREATE TABLE `$hh8wbod` (
   `question` text NOT NULL,
   `questiontype` text NOT NULL,
   `answer` text NOT NULL,
@@ -277,6 +361,79 @@ CREATE TABLE `$l6m2ego` (
   `choiceD` text NOT NULL,
   `qid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$lbv08h1`
+--
+
+CREATE TABLE `$lbv08h1` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$lbv08h1`
+--
+
+INSERT INTO `$lbv08h1` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
+('Sometrinhf', 'IDEN', 'yawels', '', '', '', '', 1),
+('yawels', 'IDEN', 'pisti', '', '', '', '', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$sjsotrg`
+--
+
+CREATE TABLE `$sjsotrg` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$sjsotrg`
+--
+
+INSERT INTO `$sjsotrg` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
+('yameteeee', 'TOF', 'FALSE', '', '', '', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$smdrifv`
+--
+
+CREATE TABLE `$smdrifv` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$smdrifv`
+--
+
+INSERT INTO `$smdrifv` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
+('This is something', 'TOF', 'TRUE', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -327,6 +484,47 @@ CREATE TABLE `$u3zufn8` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$x087p5c`
+--
+
+CREATE TABLE `$x087p5c` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$x087p5c`
+--
+
+INSERT INTO `$x087p5c` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
+('Lami ba ang bilat?', 'TOF', 'TRUE', '', '', '', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$yd4qxq3`
+--
+
+CREATE TABLE `$yd4qxq3` (
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL,
+  `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `$ymrv0uj`
 --
 
@@ -352,40 +550,44 @@ INSERT INTO `$ymrv0uj` (`question`, `questiontype`, `answer`, `choiceA`, `choice
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$zw1qh6z`
+--
+
+CREATE TABLE `$zw1qh6z` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$zw1qh6z`
+--
+
+INSERT INTO `$zw1qh6z` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(1, 'is it bilat good?', 'TOF', 'TRUE', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `account`
 --
 
 CREATE TABLE `account` (
-  `username` varchar(30) NOT NULL,
-  `pass` varchar(64) DEFAULT NULL
+  `pass` varchar(64) DEFAULT NULL,
+  `username` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`username`, `pass`) VALUES
-('Leandro', '$2y$10$pT6un6.d5fHb6BbluWJfEOy'),
-('lean', '$2y$10$dssOUYZ.j7avQD9qKB22geA'),
-('pupa', 'paninsoro'),
-('pupa', 'paninsoro'),
-('laiton', '$2y$10$aVbQR7jCtPdRIUwJtwijL.o'),
-('ernest', '$2y$10$LCMDrd5CxJ/ETPyWkpIoa.u'),
-('asdas', '$2y$10$GBsErAL.NbQQ.V.lQ1iuTe9'),
-('asdasasdasd', '$2y$10$wN0ccRYUVA/Ac1AHyi4a4.Q'),
-('asdasdasd', '$2y$10$IaeF21miH23gQoyPxxBncep'),
-('asdasdasdasdasd', '$2y$10$LaXAUVRI4AoS1LOYLM29nen'),
-('leanlean', '$2y$10$W31JSqiVImFDvo6VYetwdeV'),
-('rey', '$2y$10$6g.jHRMQ5WX4f0zEnjSotOy'),
-('cumming', '$2y$10$cqOJOtxQZO0ban902asEpOy'),
-('long', '$2y$10$NUqhG8bwuIbegkdfjLasTOa'),
-('otin', '$2y$10$SEsqt.8opv8zhLn7xTQTQ.P'),
-('otindaku', 'otindaku'),
-('lai', '$2y$10$AJ40R3MUVl9Eu.dcNz5A8.O'),
-('laigh', '$2y$10$NwmSUIzUcaV0C/KHnS8NUuH'),
-('laighton', '$2y$10$ERDO3g.FA1jBZzS8ekpov.v'),
-('ss', '$2y$10$7ErHVYo4Wp6tAzZUDnjRzeL'),
-('supahero', '$2y$10$BV1nGrldN4p956QaYDwSCOVseBiN1tZzQFzTnkfwz1JKzVFtRQEpO');
+INSERT INTO `account` (`pass`, `username`) VALUES
+('$2y$10$acqaqUc8g82Vw5iTbcVYiem/z21wdyNF1MFd9S8r35q6sVfURsJ2i', 'otindako');
 
 -- --------------------------------------------------------
 
@@ -394,34 +596,20 @@ INSERT INTO `account` (`username`, `pass`) VALUES
 --
 
 CREATE TABLE `quizlisttable` (
-  `code` varchar(8) NOT NULL,
-  `title` text NOT NULL,
+  `code` varchar(7) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `thumbnail` varchar(255) NOT NULL,
-  `creator` varchar(255) NOT NULL,
   `visibility` varchar(8) NOT NULL,
-  `ispublished` tinyint(1) NOT NULL
+  `creator` varchar(255) NOT NULL,
+  `username` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `quizlisttable`
 --
 
-INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `creator`, `visibility`, `ispublished`) VALUES
-('$13qyo97', 'jems', '', '', '', 0),
-('$48grc54', 'barbecue', '', '', '', 0),
-('$4h4wjow', 'jakoltv', '', '', '', 0),
-('$5bhjokc', 'jak', '', '', '', 0),
-('$85m4g49', 'boss dogs', '', '', '', 0),
-('$87h1swa', 'shirogane', '', '', '', 0),
-('$8doz9wy', 'salsalero', '', '', '', 0),
-('$9jk6kh3', 'lols', '', '', '', 0),
-('$9puahu8', 'salsalero', '', '', '', 0),
-('$h5tgrnj', 'george', '', '', '', 0),
-('$j6l2d0f', 'dura', '', '', '', 0),
-('$l6m2ego', 'salsalani', '', '', '', 0),
-('$t0em9ok', 'bain', '', '', '', 0),
-('$u3zufn8', 'wowser', '', '', '', 0),
-('$ymrv0uj', 'lols', '', '', '', 0);
+INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `visibility`, `creator`, `username`) VALUES
+('$zw1qh6', 'yawels', '', '', '', 'otindako');
 
 --
 -- Indexes for dumped tables
@@ -437,6 +625,12 @@ ALTER TABLE `$4h4wjow`
 -- Indexes for table `$5bhjokc`
 --
 ALTER TABLE `$5bhjokc`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$6rdrqkd`
+--
+ALTER TABLE `$6rdrqkd`
   ADD PRIMARY KEY (`qid`);
 
 --
@@ -476,15 +670,51 @@ ALTER TABLE `$87h1swa`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$b1djkvr`
+--
+ALTER TABLE `$b1djkvr`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$h5tgrnj`
 --
 ALTER TABLE `$h5tgrnj`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$h66aqn6`
+--
+ALTER TABLE `$h66aqn6`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$hh8wbod`
+--
+ALTER TABLE `$hh8wbod`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$l6m2ego`
 --
 ALTER TABLE `$l6m2ego`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$lbv08h1`
+--
+ALTER TABLE `$lbv08h1`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$sjsotrg`
+--
+ALTER TABLE `$sjsotrg`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$smdrifv`
+--
+ALTER TABLE `$smdrifv`
   ADD PRIMARY KEY (`qid`);
 
 --
@@ -500,16 +730,42 @@ ALTER TABLE `$u3zufn8`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$x087p5c`
+--
+ALTER TABLE `$x087p5c`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$yd4qxq3`
+--
+ALTER TABLE `$yd4qxq3`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$ymrv0uj`
 --
 ALTER TABLE `$ymrv0uj`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$zw1qh6z`
+--
+ALTER TABLE `$zw1qh6z`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `username_2` (`username`);
+
+--
 -- Indexes for table `quizlisttable`
 --
 ALTER TABLE `quizlisttable`
-  ADD PRIMARY KEY (`code`);
+  ADD PRIMARY KEY (`code`),
+  ADD KEY `fk_username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -526,6 +782,12 @@ ALTER TABLE `$4h4wjow`
 --
 ALTER TABLE `$5bhjokc`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `$6rdrqkd`
+--
+ALTER TABLE `$6rdrqkd`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `$8doz9wy`
@@ -558,40 +820,68 @@ ALTER TABLE `$85m4g49`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `$87h1swa`
+-- AUTO_INCREMENT for table `$b1djkvr`
 --
-ALTER TABLE `$87h1swa`
+ALTER TABLE `$b1djkvr`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `$h66aqn6`
+--
+ALTER TABLE `$h66aqn6`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `$h5tgrnj`
+-- AUTO_INCREMENT for table `$hh8wbod`
 --
-ALTER TABLE `$h5tgrnj`
+ALTER TABLE `$hh8wbod`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `$l6m2ego`
+-- AUTO_INCREMENT for table `$lbv08h1`
 --
-ALTER TABLE `$l6m2ego`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `$t0em9ok`
---
-ALTER TABLE `$t0em9ok`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `$u3zufn8`
---
-ALTER TABLE `$u3zufn8`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `$ymrv0uj`
---
-ALTER TABLE `$ymrv0uj`
+ALTER TABLE `$lbv08h1`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `$sjsotrg`
+--
+ALTER TABLE `$sjsotrg`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `$smdrifv`
+--
+ALTER TABLE `$smdrifv`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `$x087p5c`
+--
+ALTER TABLE `$x087p5c`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `$yd4qxq3`
+--
+ALTER TABLE `$yd4qxq3`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `$zw1qh6z`
+--
+ALTER TABLE `$zw1qh6z`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `quizlisttable`
+--
+ALTER TABLE `quizlisttable`
+  ADD CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `account` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
