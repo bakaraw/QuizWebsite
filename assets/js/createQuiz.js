@@ -18,21 +18,21 @@ const mcqHtml= [
 
     '<div class="input-group mt-3">',
     '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
-    '<input class="form-check-input mt-0" type="radio" value="choiceB" aria-label="Radio button for following text input" name="answerMCQ" >',
+    '<input class="form-check-input mt-0" type="radio" value="choiceB" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
     '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice B" name="choiceB"  required>',
     '</div>',
 
     '<div class="input-group mt-3">',
     '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
-    '<input class="form-check-input mt-0" type="radio" value="choiceC" aria-label="Radio button for following text input" name="answerMCQ" >',
+    '<input class="form-check-input mt-0" type="radio" value="choiceC" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
     '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice C" name="choiceC" required>',
     '</div>',
 
     '<div class="input-group mt-3">',
     '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
-    '<input class="form-check-input mt-0" type="radio" value="choiceD" aria-label="Radio button for following text input" name="answerMCQ" >',
+    '<input class="form-check-input mt-0" type="radio" value="choiceD" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
     '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice D" name="choiceD" required>',
     '</div>',
@@ -82,3 +82,32 @@ function changeQuizType() {
     }
     return false;
 }
+
+// for form validation (kung dili butngan value ang mga textarea sa form kay mag warning)
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+
+                form.addEventListener('click', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
