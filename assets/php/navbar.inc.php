@@ -45,7 +45,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
 <?php if (isset($_SESSION['username'])): ?>
         <div class="navbar-text">
           Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>!
-          <a href="?logout=1" class="btn btn-outline-danger">Logout</a>
+          <a href="?logout=1" class="btn btn-outline-light ms-3">Logout</a>
         </div>
       <?php else: ?>
         <!-- Button to trigger Login Modal -->

@@ -252,6 +252,7 @@ $checkD = "";
         $('#questionform<?php echo $qid; ?>').submit(function(e) {
             e.preventDefault();
             let questionform<?php echo $qid; ?> = $("#questionform<?php echo $qid; ?>").serialize();
+
             $.ajax({
                 type: "POST",
                 url: "assets/ajax/update_save_question.php",
@@ -262,6 +263,7 @@ $checkD = "";
                     //answer: ,
                 },
                 success: function(response) {
+
                     $('#question-<?php echo $qid; ?>').load("assets/ajax/load_edited_question.php", {
                         qid: '<?php echo $qid ?>',
                         quizcode: '<?php echo $quizcode; ?>',

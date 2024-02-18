@@ -144,7 +144,7 @@ $quiztitle = $_SESSION['quiztitle'];
     </div>
 
 
-    <div class="form">
+    <div class="form" id="questionform-div">
         <form class="needs-validation" method="post" id="questionform" name="questionform">
             <div class="shadow bg-black border border-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
 
@@ -181,26 +181,32 @@ $quiztitle = $_SESSION['quiztitle'];
                     <button class="btn btn-warning text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
                 </div>
             </div>
-
-            <div class="container-fluid mt-4">
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
-                        <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
-                    </button>
-                </div>
-            </div>
         </form>
+    </div>
+    <div class="container-fluid mt-4">
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
+                <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
+            </button>
+        </div>
     </div>
     <script>
         // pag send data sa database
+        const questionFormDiv = document.getElementById('questionform-div');
+
         $(document).ready(function() {
             $('#questionform').submit(function(e) {
                 e.preventDefault();
-
                 let questionform = $('#questionform').serialize();
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
-
                 saveQuestion(questionform);
+
+                if (questionFormDiv.style.display === 'none') {
+                    questionFormDiv.style.display = 'block';
+                } else {
+                    questionFormDiv.style.display = 'none';
+                }
+
             });
 
             $('#add-question').click(function(e) {
@@ -209,6 +215,9 @@ $quiztitle = $_SESSION['quiztitle'];
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
 
                 saveQuestion(questionform);
+                if (questionFormDiv.style.display === 'none') {
+                    questionFormDiv.style.display = 'block';
+                }
             });
         });
 
@@ -228,6 +237,9 @@ $quiztitle = $_SESSION['quiztitle'];
                         top: document.body.scrollHeight,
                         behavior: 'smooth' // Smooth scrolling
                     });
+
+
+
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);

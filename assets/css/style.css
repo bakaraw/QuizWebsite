@@ -1,8 +1,8 @@
-.navbar{
+.navbar {
     background-color: #6610f2 !important;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #6610f2 !important;
 }
 
@@ -10,28 +10,30 @@
     background-color: #5605da !important;
 }
 
-.btn-primary:active{
+.btn-primary:active {
     background-color: #4e06c2 !important;
 }
 
-.btn-light{
+.btn-light {
     color: #6610f2 !important;
 }
 
-.btn-warning{
+.btn-warning {
     background-color: white !important;
 }
 
-.btn-warning:hover{
+.btn-warning:hover {
     background-color: #d3d4d5 !important;
 }
 
-.btn-warning:active{
+.btn-warning:active {
     background-color: #bbbcbd !important;
 }
 
-.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    opacity: 1; /* Firefox */
+.form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    opacity: 1;
+    /* Firefox */
     color: #6c757d;
 
 }
@@ -40,3 +42,15 @@
     filter: brightness(0.1) !important;
 }
 
+input::placeholder {
+    color: red;
+    /* Change placeholder color to red */
+}
+
+.btn-outline-light:hover{
+    color: black  !important;
+}
+
+#questionform-div{
+    display: block;
+}
