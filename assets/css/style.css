@@ -33,8 +33,11 @@
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: white;
     opacity: 0.7; /* Firefox */
+    color: #6c757d; /* Adjust this color as needed for visibility */
+
 }
 
 .add-btn:hover img {
     filter: brightness(0.1) !important;
 }
+
