@@ -1,29 +1,31 @@
-    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="LoginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Login</h4>
-                    <a href="index.php" class="close" aria-label="Close" style="text-decoration: none; display: inline-block; color: inherit; background-color: transparent; border: none; cursor: pointer;">
-                    <span aria-hidden="true">&times;</span>
-                  </a>
-                </div>
-                <div class="modal-body mx-3">
-                    <div class="md-form mb-5">
-                        <i class="fas fa-user prefix grey-text"></i>
-                        <input type="text" id="username" name="username" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="username">Username</label>
-                    </div>
+<!-- Enhanced Modern Login Modal -->
+<link rel="stylesheet" href="styles.css">
 
-                    <div class="md-form mb-4">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input type="password" id="pass" name="pass" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="pass">Password</label>
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title text-center w-100" id="LoginModalLabel   ">Sign In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
                     </div>
+                    <div class="mb-4">
+                    <input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" name="login" class="btn btn-primary w-100">Log In</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+               
+    <p class="text-muted">Don't have an account? <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#modalSignup">Sign up</a></p>
 
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="submit" name="login" class="btn btn-default">Login</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+</div>

@@ -24,10 +24,20 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
           <a class="nav-link active" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
+        <?php if (isset($_SESSION['username'])): ?>
+
           <a class="nav-link" href="MakeQuiz.php">Make a Quiz</a>
+          <?php else: ?>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Make a Quiz</a>
+        <?php endif; ?>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Answer Quiz</a>
+        <?php if (isset($_SESSION['username'])): ?>
+
+          <a class="nav-link" href="index.php">Create a Quiz</a>
+          <?php else: ?>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Create a Quiz</a>
+        <?php endif; ?>
         </li>
       </ul>
 
