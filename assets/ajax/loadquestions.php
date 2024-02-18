@@ -62,12 +62,12 @@ if ($stmt->rowCount() > 0) {
                 <form method="post" id="question-' . $row['qid'] . '">
                     <input type="hidden"  name="quizcode" value="' . $quizcode . '">
                     <input type="hidden"  name="qid" value="' . $row['qid'] . '">
-                    <div id="' . 'question' . $row['qid'] . '">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="' . 'question' . $row['qid'] . '">
                     <button class="btn btn-warning me-md-1 border border-light" type="submit" name="edit-' . $row['qid'] . '" id="edit-' . $row['qid'] . '" style="--bs-border-opacity: 0;">
                         Edit
                     </button>
                     <button class="btn btn-danger" type="submit" name="delete-' . $row['qid'] . '" id="delete-' . $row['qid'] . '">
-                        <img src="assets/img/icons/trash-fill.svg" alt="Add Question" style="width: 20px; height: 20px; fill: white;">
+                        <img src="assets/img/icons/trash-fill.svg" alt="Delete" style="width: 20px; height: 20px; fill: white;">
                     </button>
                     </div>
                 </form>
