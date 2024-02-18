@@ -201,11 +201,9 @@ $quiztitle = $_SESSION['quiztitle'];
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
                 saveQuestion(questionform);
 
-                if (questionFormDiv.style.display === 'none') {
-                    questionFormDiv.style.display = 'block';
-                } else {
-                    questionFormDiv.style.display = 'none';
-                }
+                $('#questionform-div').hide();
+                
+                $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
 
             });
 
@@ -218,6 +216,7 @@ $quiztitle = $_SESSION['quiztitle'];
                 if (questionFormDiv.style.display === 'none') {
                     questionFormDiv.style.display = 'block';
                 }
+                $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
             });
         });
 

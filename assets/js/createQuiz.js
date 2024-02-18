@@ -80,6 +80,10 @@ function changeQuizType() {
         default:
             elementToChange.innerHTML = "<p class=\"text-light\">Something went wrong</p>";
     }
+    $(document).ready(function () {
+        $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+    });
+    
     return false;
 }
 
