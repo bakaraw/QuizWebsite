@@ -249,19 +249,18 @@ $checkD = "";
     })()
 
     $(document).ready(function() {
-        $('#questionform<?php echo $qid ?>').submit(function(e) {
+        $('#questionform<?php echo $qid; ?>').submit(function(e) {
             e.preventDefault();
-            console.log('save<?php echo $qid ?>');
-            console.log($("#question<?php echo $qid ?>").val());
-            let questionform =  $("#questionform<?php echo $qid ?>").serialize();
-
+            console.log('<?php echo $quizcode;?>');
+            let questionform<?php echo $qid; ?> =  $("#questionform<?php echo $qid; ?>").serialize();   
             $.ajax({
                 type: "POST",
                 url: "assets/ajax/update_save_question.php",
                 data: {
-                    qid: '<?php echo $qid ?>',
-                    quizcode: '<?php echo $quizcode ?>',
-                    question: $("#question<?php echo $qid ?>").val()
+                    qid: '<?php echo $qid; ?>',
+                    quizcode: '<?php echo $quizcode;?>',
+                    questionform: questionform<?php echo $qid; ?>
+                    //answer: ,
                 },
                 success: function(response) {
                     console.log(response);
