@@ -135,7 +135,7 @@ $checkD = "";
     </div>
 </form>
 <script>
-    const identHtml<?php echo $qid; ?> = [
+    var identHtml<?php echo $qid; ?> = [
         '<input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" value="<?php echo $answer; ?>" required>',
         '<div class="invalid-feedback text-danger">',
         'Please enter a question.',
@@ -143,7 +143,7 @@ $checkD = "";
     ];
 
     //html for mcq
-    const mcqHtml<?php echo $qid; ?> = [
+    var mcqHtml<?php echo $qid; ?> = [
         '<p class="text-light" style="--bs-text-opacity: .7;">Input choices then select the answer</p>',
         '<div class="input-group mt-3">',
         '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
@@ -175,7 +175,7 @@ $checkD = "";
     ];
 
     // html for true or false
-    const tofHtml<?php echo $qid; ?> = [
+    var tofHtml<?php echo $qid; ?> = [
         '<p class="text-light" style="--bs-text-opacity: .7;">Answer:</p>',
         '<div class="form-check form-check-inline">',
         '<input class="form-check-input" type="radio" name="answerTOF" id="inlineRadio1" value="TRUE" <?php echo $checkTrue ?> required>',
@@ -251,19 +251,21 @@ $checkD = "";
     $(document).ready(function() {
         $('#questionform<?php echo $qid; ?>').submit(function(e) {
             e.preventDefault();
-            console.log('<?php echo $quizcode;?>');
-            let questionform<?php echo $qid; ?> =  $("#questionform<?php echo $qid; ?>").serialize();   
+            let questionform<?php echo $qid; ?> = $("#questionform<?php echo $qid; ?>").serialize();
             $.ajax({
                 type: "POST",
                 url: "assets/ajax/update_save_question.php",
                 data: {
                     qid: '<?php echo $qid; ?>',
-                    quizcode: '<?php echo $quizcode;?>',
+                    quizcode: '<?php echo $quizcode; ?>',
                     questionform: questionform<?php echo $qid; ?>
                     //answer: ,
                 },
                 success: function(response) {
-                    console.log(response);
+                    $('#question-<?php echo $qid; ?>').load("assets/ajax/load_edited_question.php", {
+                        qid: '<?php echo $qid ?>',
+                        quizcode: '<?php echo $quizcode; ?>',
+                    });
                 }
             });
         });
