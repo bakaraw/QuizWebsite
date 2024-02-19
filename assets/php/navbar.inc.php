@@ -26,15 +26,15 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
         <li class="nav-item">
         <?php if (isset($_SESSION['username'])): ?>
 
-          <a class="nav-link" href="MakeQuiz.php">Create quiz</a>
+          <a class="nav-link" href="MakeQuiz.php">Create Quiz</a>
           <?php else: ?>
-          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Quiz List</a>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Create Quiz</a>
         <?php endif; ?>
         </li>
         <li class="nav-item">
         <?php if (isset($_SESSION['username'])): ?>
 
-          <a class="nav-link" href="index.php">Create Quiz</a>
+          <a class="nav-link" href="#">Quiz List</a>
           <?php else: ?>
           <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Quiz List</a>
         <?php endif; ?>
@@ -59,15 +59,6 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
             <button class="btn btn-light me-2" type="button" data-bs-toggle="modal" data-bs-target="#modalSignup">Sign up</button>
         </form>
       <?php endif; ?>
-
-
-      
-
-
-
-
-
-
     </div>
   </div>
 </nav>
