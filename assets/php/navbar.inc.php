@@ -28,7 +28,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
 
           <a class="nav-link" href="MakeQuiz.php">Quiz List</a>
           <?php else: ?>
-          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Make a Quiz</a>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Quiz List</a>
         <?php endif; ?>
         </li>
         <li class="nav-item">
@@ -36,7 +36,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
 
           <a class="nav-link" href="index.php">Create Quiz</a>
           <?php else: ?>
-          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Create a Quiz</a>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Create Quiz</a>
         <?php endif; ?>
         </li>
       </ul>
