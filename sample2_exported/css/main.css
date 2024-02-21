@@ -1,0 +1,309 @@
+/* Layout Elements */
+
+body > .row > [class*='col-xs-'].header-cover {
+  padding-right: 0;
+  padding-left: 0;
+  min-height: 50px;
+}
+
+body > .row > [class*='col-xs-'].activities-column {
+  padding-right: 0;
+  padding-left: 0;
+  height: 100%;
+}
+
+body > .row.activities-buttons.small-width {
+  margin-bottom: 30px;
+}
+
+body > .row > [class*='col-xs-'].activities-column.buttons {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+body > .row.activities.small-width {
+  display: none;
+}
+
+body > .row.sticky-header {
+  position: -webkit-sticky;
+  position:         sticky;
+  top: 10px;
+  z-index: 1;
+}
+
+div.responsive-picture.activities-image {
+  max-width: none;
+}
+
+a.link-button-image.btn {
+  margin: 15px auto 7px;
+  padding: 5px 10px 10px;
+  max-width: 100%;
+  background-color: #f3774f;
+}
+
+div.image-for-button.activities-button-icon {
+  position: static;
+  display: block;
+  overflow: visible;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 60px;
+  vertical-align: baseline;
+}
+
+span.link-button-text.activities-button-text {
+  display: block;
+  float: none;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+}
+
+a.link-button-image.btn.camping {
+  background-color: #61897f;
+}
+
+a.link-button-image.btn.siting {
+  background-color: #b18d79;
+}
+
+a.link-button-image.activities-button.btn {
+  border-radius: 8px;
+}
+
+div.image-for-button {
+  opacity: .75;
+}
+
+a.link-button-image.activities-button.btn.siting {
+  display: block;
+  max-width: 100px;
+  width: 100%;
+  -webkit-transition-duration: .5s;
+     -moz-transition-duration: .5s;
+       -o-transition-duration: .5s;
+          transition-duration: .5s;
+}
+
+a.link-button-image.activities-button.btn.camping {
+  display: block;
+  max-width: 100px;
+  width: 100%;
+  -webkit-transition-duration: .5s;
+     -moz-transition-duration: .5s;
+       -o-transition-duration: .5s;
+          transition-duration: .5s;
+}
+
+a.link-button-image.activities-button.btn.hiking {
+  display: block;
+  max-width: 100px;
+  width: 100%;
+  -webkit-transition-duration: .5s;
+     -moz-transition-duration: .5s;
+       -o-transition-duration: .5s;
+          transition-duration: .5s;
+}
+
+a.link-button-image.activities-button.btn:hover {
+  opacity: .64;
+  -webkit-transform: rotate(2deg);
+     -moz-transform: rotate(2deg);
+       -o-transform: rotate(2deg);
+          transform: rotate(2deg);
+}
+
+a.link-button-image.activities-button.btn.hiking:hover {
+  position: relative;
+  z-index: 500;
+  margin-top: -15px;
+  opacity: 1;
+  -webkit-transition-duration: .5s;
+     -moz-transition-duration: .5s;
+       -o-transition-duration: .5s;
+          transition-duration: .5s;
+}
+
+a.link-button-image:hover {
+  opacity: 1;
+}
+
+a.link-button-image.activities-button.btn.camping:hover {
+  opacity: 1;
+  -webkit-transition-duration: .5s;
+     -moz-transition-duration: .5s;
+       -o-transition-duration: .5s;
+          transition-duration: .5s;
+  -webkit-transform: rotate(-3deg) translateY(-25px);
+     -moz-transform: rotate(-3deg) translateY(-25px);
+       -o-transform: rotate(-3deg) translateY(-25px);
+          transform: rotate(-3deg) translateY(-25px);
+}
+
+a.link-button-image.activities-button.btn.siting:hover {
+  opacity: 1;
+  -webkit-transform: rotate(4deg) translateY(-25px);
+     -moz-transform: rotate(4deg) translateY(-25px);
+       -o-transform: rotate(4deg) translateY(-25px);
+          transform: rotate(4deg) translateY(-25px);
+}
+
+@media screen and (min-width: 36rem) {
+  /* Layout Elements */
+
+  body > .row.activities.small-width {
+    display: block;
+    margin-top: 40px;
+  }
+
+  body > .row > [class*='col-xs-'].activities-column {
+    z-index: 0;
+    overflow: hidden;
+    min-height: 50px;
+  }
+
+  body > .row > [class*='col-xs-'].activities-column.buttons {
+    z-index: auto;
+    overflow: visible;
+  }
+
+  a.link-button-image.activities-button.btn.hiking {
+    position: relative;
+    z-index: 500;
+    margin-top: -50px;
+  }
+
+  a.link-button-image.activities-button.btn.camping {
+    margin-top: -50px;
+  }
+
+  a.link-button-image.activities-button.btn.siting {
+    margin-top: -50px;
+  }
+
+  div.responsive-picture.activities-image {
+    position: static;
+    z-index: 0;
+    float: none;
+    overflow: auto;
+    border-width: 0;
+    border-style: solid;
+    -webkit-transition-duration: .35s;
+       -moz-transition-duration: .35s;
+         -o-transition-duration: .35s;
+            transition-duration: .35s;
+  }
+
+  div.responsive-picture.activities-image:hover {
+    border-style: solid;
+    -webkit-transition-delay: 0s;
+       -moz-transition-delay: 0s;
+         -o-transition-delay: 0s;
+            transition-delay: 0s;
+    -webkit-transition-timing-function: linear;
+       -moz-transition-timing-function: linear;
+         -o-transition-timing-function: linear;
+            transition-timing-function: linear;
+    -webkit-transition-duration: .5s;
+       -moz-transition-duration: .5s;
+         -o-transition-duration: .5s;
+            transition-duration: .5s;
+    -webkit-transition-property: all;
+       -moz-transition-property: all;
+         -o-transition-property: all;
+            transition-property: all;
+    -webkit-transform: scale(1.1);
+       -moz-transform: scale(1.1);
+         -o-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+
+  div.responsive-picture.activities-image:hover > picture {
+    margin: 0;
+  }
+
+  a.link-button-image.activities-button.btn.hiking:hover {
+    margin-top: -50px;
+    -webkit-transform: rotate(2deg) translateY(-25px);
+       -moz-transform: rotate(2deg) translateY(-25px);
+         -o-transform: rotate(2deg) translateY(-25px);
+            transform: rotate(2deg) translateY(-25px);
+  }
+}
+
+@media screen and (min-width: 62rem) {
+  a.link-button-image.activities-button {
+    position: relative;
+    z-index: 101;
+  }
+}
+
+@media screen and (min-width: 75rem) {
+  /* Layout Elements */
+
+  body > .row.activities.small-width {
+    max-width: 1200px;
+  }
+
+  body > .row.activities-buttons.small-width {
+    max-width: 1200px;
+  }
+
+  a.link-button-image.activities-button.btn.camping {
+    -webkit-transition-duration: .5s;
+       -moz-transition-duration: .5s;
+         -o-transition-duration: .5s;
+            transition-duration: .5s;
+  }
+
+  a.link-button-image.activities-button.btn.siting {
+    -webkit-transition-duration: .5s;
+       -moz-transition-duration: .5s;
+         -o-transition-duration: .5s;
+            transition-duration: .5s;
+  }
+
+  a.link-button-image.activities-button.btn.hiking {
+    -webkit-transition-duration: .5s;
+       -moz-transition-duration: .5s;
+         -o-transition-duration: .5s;
+            transition-duration: .5s;
+  }
+
+  a.link-button-image.activities-button.btn.hiking:hover {
+    z-index: 0;
+    margin-top: -50px;
+    opacity: 1;
+    -webkit-transform: rotate(2deg) scale(1) translateX(0px) translateY(-25px);
+       -moz-transform: rotate(2deg) scale(1) translateX(0px) translateY(-25px);
+         -o-transform: rotate(2deg) scale(1) translateX(0px) translateY(-25px);
+            transform: rotate(2deg) scale(1) translateX(0px) translateY(-25px);
+  }
+
+  a.link-button-image.activities-button.btn.camping:hover {
+    margin-top: -50px;
+    opacity: 1;
+    -webkit-transform: rotate(-3deg) translateY(-25px);
+       -moz-transform: rotate(-3deg) translateY(-25px);
+         -o-transform: rotate(-3deg) translateY(-25px);
+            transform: rotate(-3deg) translateY(-25px);
+  }
+
+  a.link-button-image.activities-button.btn.siting:hover {
+    margin-top: -50px;
+    opacity: 1;
+    -webkit-transition-duration: .5s;
+       -moz-transition-duration: .5s;
+         -o-transition-duration: .5s;
+            transition-duration: .5s;
+    -webkit-transform: rotate(4deg) translateY(-25px);
+       -moz-transform: rotate(4deg) translateY(-25px);
+         -o-transform: rotate(4deg) translateY(-25px);
+            transform: rotate(4deg) translateY(-25px);
+  }
+}
