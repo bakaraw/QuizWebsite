@@ -15,7 +15,7 @@ $quiztitle = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
 
     $quiztitle = $_POST['quiztitle'];
-    $username = $_SESSION['username']; // Assuming the username is stored in the session upon login
+    $creator = $_SESSION['username']; // Assuming the username is stored in the session upon login
 
     try {
         // Include database connector
@@ -25,9 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
         $quizcode = generateQuizCode($pdo);
 
         // Inserting Quizcode, title, and username into database
-        $query = "INSERT INTO quizlisttable(code, title, username) VALUES (?, ?, ?);";
+        $query = "INSERT INTO quizlisttable(code, title, creator) VALUES (?, ?, ?);";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([$quizcode, $quiztitle, $username]);
+        $stmt->execute([$quizcode, $quiztitle, $creator]);
 
         // Creating separate table for every quizcode
         // Note: Dynamically creating tables like this is generally not recommended. Consider storing all questions in a single table with a reference to the quiz code instead.
