@@ -39,8 +39,15 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
           <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modalLogin">Quiz List</a>
         <?php endif; ?>
         </li>
-      </ul>
-
+      
+      <li class="nav-item">
+        <?php if (isset($_SESSION['username'])): ?>
+          <a class="nav-link" href="answerQuiz.php">Create Quiz</a>
+          <?php else: ?>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Create Quiz</a>
+        <?php endif; ?>
+        </li>
+        </ul>
 <!-- Conditional display based on user login status -->
 <?php if (isset($_SESSION['username'])): ?>
         <div class="navbar-text">
