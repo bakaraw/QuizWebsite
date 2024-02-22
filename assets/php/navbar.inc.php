@@ -34,9 +34,9 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
         <li class="nav-item">
         <?php if (isset($_SESSION['username'])): ?>
 
-          <a class="nav-link" href="#">Quiz List</a>
+          <a class="nav-link" href="List.php">Quiz List</a>
           <?php else: ?>
-          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Quiz List</a>
+          <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modalLogin">Quiz List</a>
         <?php endif; ?>
         </li>
       </ul>
