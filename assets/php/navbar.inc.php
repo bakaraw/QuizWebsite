@@ -59,15 +59,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
             <button class="btn btn-light me-2" type="button" data-bs-toggle="modal" data-bs-target="#modalSignup">Sign up</button>
         </form>
       <?php endif; ?>
-
-
-      
-
-
-
-
-
-
+   
     </div>
   </div>
 </nav>
