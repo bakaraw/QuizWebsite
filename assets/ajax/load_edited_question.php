@@ -3,7 +3,7 @@ include "../php/dbh_quiz.inc.php";
 $qid = $_POST['qid'];
 $quizcode = $_POST['quizcode'];
 
-$sql = "SELECT * FROM $quizcode WHERE qid = :qid";
+$sql = "SELECT * FROM `questions` WHERE qid = :qid";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':qid', $qid);
 
