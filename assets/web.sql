@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2024 at 10:41 AM
+-- Generation Time: Feb 22, 2024 at 12:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `web`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$0l62o66`
+--
+
+CREATE TABLE `$0l62o66` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$0l62o66`
+--
+
+INSERT INTO `$0l62o66` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(1, 'Windows 7 is the latest OS', 'TOF', 'FALSE', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -104,6 +128,31 @@ CREATE TABLE `$5bhjokc` (
   `choiceD` text NOT NULL,
   `qid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$5q7d5dq`
+--
+
+CREATE TABLE `$5q7d5dq` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$5q7d5dq`
+--
+
+INSERT INTO `$5q7d5dq` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(2, 'What is the latest OS for windows users?', 'IDEN', 'Windows 11', '', '', '', ''),
+(3, 'The oldest operating system for Windows?', 'MCQ', 'choiceA', 'Windows 1.0', 'Windows XP', 'Windows VISTA', 'Windows ni Laiton');
 
 -- --------------------------------------------------------
 
@@ -255,6 +304,30 @@ CREATE TABLE `$87h1swa` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$89kxotk`
+--
+
+CREATE TABLE `$89kxotk` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$89kxotk`
+--
+
+INSERT INTO `$89kxotk` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(1, 'asff', 'TOF', 'FALSE', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `$b1djkvr`
 --
 
@@ -348,6 +421,23 @@ CREATE TABLE `$j6l2d0f` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$l0zquqs`
+--
+
+CREATE TABLE `$l0zquqs` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `$l6m2ego`
 --
 
@@ -386,6 +476,30 @@ CREATE TABLE `$lbv08h1` (
 INSERT INTO `$lbv08h1` (`question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`, `qid`) VALUES
 ('Sometrinhf', 'IDEN', 'yawels', '', '', '', '', 1),
 ('yawels', 'IDEN', 'pisti', '', '', '', '', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$qdri909`
+--
+
+CREATE TABLE `$qdri909` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$qdri909`
+--
+
+INSERT INTO `$qdri909` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(1, 'asdasda', 'MCQ', 'choiceD', 'asdasd', 'asda', 'sdasd', 'fff');
 
 -- --------------------------------------------------------
 
@@ -467,6 +581,23 @@ INSERT INTO `$t0em9ok` (`question`, `questiontype`, `answer`, `choiceA`, `choice
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$txiomua`
+--
+
+CREATE TABLE `$txiomua` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `$u3zufn8`
 --
 
@@ -479,6 +610,48 @@ CREATE TABLE `$u3zufn8` (
   `choiceC` text NOT NULL,
   `choiceD` text NOT NULL,
   `qid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$w1lodxa`
+--
+
+CREATE TABLE `$w1lodxa` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$w1lodxa`
+--
+
+INSERT INTO `$w1lodxa` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(1, 'Otin', 'TOF', 'FALSE', '', '', '', ''),
+(2, 'otik dako', 'TOF', 'TRUE', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `$whvpqil`
+--
+
+CREATE TABLE `$whvpqil` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -550,6 +723,33 @@ INSERT INTO `$ymrv0uj` (`question`, `questiontype`, `answer`, `choiceA`, `choice
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `$za7oqhg`
+--
+
+CREATE TABLE `$za7oqhg` (
+  `qid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `questiontype` text NOT NULL,
+  `answer` text NOT NULL,
+  `choiceA` text NOT NULL,
+  `choiceB` text NOT NULL,
+  `choiceC` text NOT NULL,
+  `choiceD` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `$za7oqhg`
+--
+
+INSERT INTO `$za7oqhg` (`qid`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
+(1, 'asdasda', 'TOF', 'TRUE', '', '', '', ''),
+(2, 'otind dako', 'TOF', 'FALSE', '', '', '', ''),
+(3, 'dd', 'TOF', 'TRUE', '', '', '', ''),
+(4, 'asdasd', 'TOF', 'FALSE', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `$zw1qh6z`
 --
 
@@ -587,7 +787,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`pass`, `username`) VALUES
-('$2y$10$acqaqUc8g82Vw5iTbcVYiem/z21wdyNF1MFd9S8r35q6sVfURsJ2i', 'otindako');
+('$2y$10$gUXmDYLGxbTW4p5B8HSuJuPGaB0ckpTXEgMGihpJTFpgvtDJpql/u', 'otin');
 
 -- --------------------------------------------------------
 
@@ -600,20 +800,25 @@ CREATE TABLE `quizlisttable` (
   `title` varchar(255) NOT NULL,
   `thumbnail` varchar(255) NOT NULL,
   `visibility` varchar(8) NOT NULL,
-  `creator` varchar(255) NOT NULL,
-  `username` varchar(300) NOT NULL
+  `creator` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `quizlisttable`
 --
 
-INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `visibility`, `creator`, `username`) VALUES
-('$zw1qh6', 'yawels', '', '', '', 'otindako');
+INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `visibility`, `creator`) VALUES
+('$qdri90', 'otni', '', '', 'otin');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `$0l62o66`
+--
+ALTER TABLE `$0l62o66`
+  ADD PRIMARY KEY (`qid`);
 
 --
 -- Indexes for table `$4h4wjow`
@@ -625,6 +830,12 @@ ALTER TABLE `$4h4wjow`
 -- Indexes for table `$5bhjokc`
 --
 ALTER TABLE `$5bhjokc`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$5q7d5dq`
+--
+ALTER TABLE `$5q7d5dq`
   ADD PRIMARY KEY (`qid`);
 
 --
@@ -670,6 +881,12 @@ ALTER TABLE `$87h1swa`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$89kxotk`
+--
+ALTER TABLE `$89kxotk`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$b1djkvr`
 --
 ALTER TABLE `$b1djkvr`
@@ -694,6 +911,12 @@ ALTER TABLE `$hh8wbod`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$l0zquqs`
+--
+ALTER TABLE `$l0zquqs`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$l6m2ego`
 --
 ALTER TABLE `$l6m2ego`
@@ -703,6 +926,12 @@ ALTER TABLE `$l6m2ego`
 -- Indexes for table `$lbv08h1`
 --
 ALTER TABLE `$lbv08h1`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$qdri909`
+--
+ALTER TABLE `$qdri909`
   ADD PRIMARY KEY (`qid`);
 
 --
@@ -724,9 +953,27 @@ ALTER TABLE `$t0em9ok`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$txiomua`
+--
+ALTER TABLE `$txiomua`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$u3zufn8`
 --
 ALTER TABLE `$u3zufn8`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$w1lodxa`
+--
+ALTER TABLE `$w1lodxa`
+  ADD PRIMARY KEY (`qid`);
+
+--
+-- Indexes for table `$whvpqil`
+--
+ALTER TABLE `$whvpqil`
   ADD PRIMARY KEY (`qid`);
 
 --
@@ -748,6 +995,12 @@ ALTER TABLE `$ymrv0uj`
   ADD PRIMARY KEY (`qid`);
 
 --
+-- Indexes for table `$za7oqhg`
+--
+ALTER TABLE `$za7oqhg`
+  ADD PRIMARY KEY (`qid`);
+
+--
 -- Indexes for table `$zw1qh6z`
 --
 ALTER TABLE `$zw1qh6z`
@@ -757,7 +1010,6 @@ ALTER TABLE `$zw1qh6z`
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `username_2` (`username`);
 
 --
@@ -765,11 +1017,17 @@ ALTER TABLE `account`
 --
 ALTER TABLE `quizlisttable`
   ADD PRIMARY KEY (`code`),
-  ADD KEY `fk_username` (`username`);
+  ADD KEY `fk_username` (`creator`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `$0l62o66`
+--
+ALTER TABLE `$0l62o66`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `$4h4wjow`
@@ -782,6 +1040,12 @@ ALTER TABLE `$4h4wjow`
 --
 ALTER TABLE `$5bhjokc`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `$5q7d5dq`
+--
+ALTER TABLE `$5q7d5dq`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `$6rdrqkd`
@@ -820,6 +1084,12 @@ ALTER TABLE `$85m4g49`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `$89kxotk`
+--
+ALTER TABLE `$89kxotk`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `$b1djkvr`
 --
 ALTER TABLE `$b1djkvr`
@@ -838,10 +1108,22 @@ ALTER TABLE `$hh8wbod`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `$l0zquqs`
+--
+ALTER TABLE `$l0zquqs`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `$lbv08h1`
 --
 ALTER TABLE `$lbv08h1`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `$qdri909`
+--
+ALTER TABLE `$qdri909`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `$sjsotrg`
@@ -856,6 +1138,24 @@ ALTER TABLE `$smdrifv`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `$txiomua`
+--
+ALTER TABLE `$txiomua`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `$w1lodxa`
+--
+ALTER TABLE `$w1lodxa`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `$whvpqil`
+--
+ALTER TABLE `$whvpqil`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `$x087p5c`
 --
 ALTER TABLE `$x087p5c`
@@ -866,6 +1166,12 @@ ALTER TABLE `$x087p5c`
 --
 ALTER TABLE `$yd4qxq3`
   MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `$za7oqhg`
+--
+ALTER TABLE `$za7oqhg`
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `$zw1qh6z`
@@ -881,7 +1187,7 @@ ALTER TABLE `$zw1qh6z`
 -- Constraints for table `quizlisttable`
 --
 ALTER TABLE `quizlisttable`
-  ADD CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `account` (`username`);
+  ADD CONSTRAINT `fk_username` FOREIGN KEY (`creator`) REFERENCES `account` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
