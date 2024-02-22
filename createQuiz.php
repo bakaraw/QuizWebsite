@@ -15,10 +15,57 @@ $quiztitle = $_SESSION['quiztitle'];
 <div class="container">
     <!-- title box -->
     <div class="container mt-5 mb-5"></div>
-    <div class="input-group mb-3 border-light">
-        <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz title</span>
-        <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;" value="<?php echo $quiztitle; ?>">
-        <button class="btn btn-success text-light border-dark btn-md" type="button">Publish</button>
+    <form action="" method="post" id="share-form">
+        <div class="input-group mb-3 border-light">
+            <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz title</span>
+            <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;" value="<?php echo $quiztitle; ?>" name="title-input">
+            <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">Share</button>
+        </div>
+    </form>
+
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="text-break mb-3" id="title-modal">
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="new-title">
+                    <label class="fw-medium ms-3 mb-0">General access</label>
+                    <div class="mt-0 access-div">
+                        <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
+                            <div class="text-dark">
+                                <i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
+                            </div>
+                            <a class="btn btn-light dropdown-toggle border border-dark fs-6 p-1 m-1 transparent-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-border-opacity: 0;">
+                                <strong class="fw-semibold">Private</strong>
+                            </a>
+
+                            <p class="mt-3">Anyone can access with link/code</p>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Public</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-3 ms-3 me-3">
+                        <label for="formFile" class="form-label fw-medium" accept=".jpeg, .jpg, .png">Quiz Thumbnail (Optional)</label>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;">
+                        <i class="fa-regular fa-copy"></i> Copy code
+                    </button>
+                    <button type="button" class="btn btn-success">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr class="border border-light">
@@ -37,9 +84,7 @@ $quiztitle = $_SESSION['quiztitle'];
             // Bind the parameter
             $stmt->bindParam(':quizcode', $quizcode);
 
-            // Execute the statement
             $stmt->execute();
-
 
             // Check if there are rows returned
             if ($stmt->rowCount() > 0) {
@@ -189,17 +234,26 @@ $quiztitle = $_SESSION['quiztitle'];
     </div>
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-outline-light add-btn mb-3 validate-button" id="add-question" name="add-question">
+            <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
                 <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>
     </div>
-   
     <script>
         // pag send data sa database
         const questionFormDiv = document.getElementById('questionform-div');
 
         $(document).ready(function() {
+
+            $('#share-form').submit(function(e) {
+                e.preventDefault();
+                var title = $('input[name="title-input"]').val();
+                var pubtxt = "Publish \"" + title + "\""; // Get the value of title-input
+                $('#title-modal').text(pubtxt);
+                $('#new-title').val(title);
+                $('#publishModal').modal('show');
+            });
+
             $('#questionform').submit(function(e) {
                 e.preventDefault();
                 let questionform = $('#questionform').serialize();

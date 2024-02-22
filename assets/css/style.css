@@ -55,6 +55,23 @@ input::placeholder {
     display: block;
 }
 
+.access-div:hover{
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+
+.dropdown-toggle-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem; /* Adjust as needed */
+}
+
+.transparent-btn{
+    background-color: transparent !important;
+    color:  #212529 !important;
+}
+
 
 
  
