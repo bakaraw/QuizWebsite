@@ -72,6 +72,16 @@ input::placeholder {
     color:  #212529 !important;
 }
 
+.access-option:focus {
+    outline: none;
+    box-shadow: none; /* Optional: Removes any box shadow */
+}
+
+.access-option:hover {
+    background-color: #d6d6d6;
+}
+
+
 
 
  

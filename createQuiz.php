@@ -27,24 +27,26 @@ $quiztitle = $_SESSION['quiztitle'];
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-
+                    <input type="text" value="<?php echo $quizcode; ?>" id="quizcode-copy" style="display: none;">
                     <h4 class="text-break mb-3" id="title-modal">
                     </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="new-title">
+                    <input type="hidden" id="access-option">
                     <label class="fw-medium ms-3 mb-0">General access</label>
                     <div class="mt-0 access-div">
                         <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
                             <div class="text-dark">
-                                <i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
+                                <i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
                             </div>
-                            <a class="btn btn-light dropdown-toggle border border-dark fs-6 p-1 m-1 transparent-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-border-opacity: 0;">
-                                <strong class="fw-semibold">Private</strong>
-                            </a>
+                            <select class="form-select transparent-btn border border-dark fw-semibold access-option" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;">
+                                <option selected value="PRIVATE">Private</option>
+                                <option value="PUBLIC">Public</option>
+                            </select>
 
-                            <p class="mt-3">Anyone can access with link/code</p>
+                            <p class="mt-3">People can only access with link/code</p>
 
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Public</a></li>
@@ -59,9 +61,11 @@ $quiztitle = $_SESSION['quiztitle'];
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;">
+                    
+                    <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;" id="copy-code" onclick="buttonC()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied">
                         <i class="fa-regular fa-copy"></i> Copy code
                     </button>
+
                     <button type="button" class="btn btn-success">Save changes</button>
                 </div>
             </div>
@@ -344,6 +348,25 @@ $quiztitle = $_SESSION['quiztitle'];
             }
             // If all fields are filled, return true
             return true;
+        }
+
+        var text = document.getElementById("quizcode-copy");
+
+        function buttonC() {
+            text.select();
+            navigator.clipboard.writeText(text.value.trim())
+                .then(() => {
+                    console.log('Copied')
+                })
+                .catch(err => {
+                    console.log('Something went wrong', err);
+                })
+            
+            var copyBtn = document.querySelector("#copy-code");
+            copyBtn.classList.add("active");
+            setTimeout(function(){
+                copyBtn.classList.remove("active");
+            }, 2500);
         }
     </script>
     <script src="./assets/js/createQuiz.js"></script>
