@@ -34,7 +34,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
         <li class="nav-item">
         <?php if (isset($_SESSION['username'])): ?>
 
-          <a class="nav-link" href="index.php">Create Quiz</a>
+          <a class="nav-link" href="answerQuiz.php">Create Quiz</a>
           <?php else: ?>
           <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Create a Quiz</a>
         <?php endif; ?>
