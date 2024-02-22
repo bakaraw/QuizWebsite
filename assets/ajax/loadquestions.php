@@ -5,13 +5,14 @@ include "../php/dbh_quiz.inc.php";
 
 $quizcode = $_POST['quizcode'];
 
-// Prepare the SQL query
-$sql = "SELECT * FROM $quizcode";
+$sql = "SELECT * FROM `questions` WHERE quizcode = :quizcode";
 
 // Prepare the statement
 $stmt = $pdo->prepare($sql);
 
-// Execute the statement
+// Bind the parameter
+$stmt->bindParam(':quizcode', $quizcode);
+
 $stmt->execute();
 
 // Check if there are rows returned
