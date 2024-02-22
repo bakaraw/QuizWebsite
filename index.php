@@ -2,13 +2,11 @@
 session_start();
 ?>
 
-
 <!-- header -->
 <?php require('assets/php/head.inc.php'); ?>
 
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
-
 
 <div class="container m-5"></div>
 <div class="container">
