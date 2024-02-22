@@ -12,13 +12,15 @@ $query = null;
 switch ($question_type) {
     case "IDEN":
         $answer = $_POST['answerIden'];
-        $query = "INSERT INTO $quizcode (question,questiontype,answer) VALUES (:question, :questiontype, :answer)";
+        $query = "INSERT INTO `questions` (quizcode, question, questiontype, answer) VALUES (:quizcode, :question, :questiontype, :answer)";
         $stmt = $pdo->prepare($query);
-
+        
         // Bind parameters
+        $stmt->bindParam(':quizcode', $quizcode);
         $stmt->bindParam(':question', $question);
         $stmt->bindParam(':questiontype', $question_type);
         $stmt->bindParam(':answer', $answer);
+        
         break;
 
     case "MCQ":
@@ -31,12 +33,13 @@ switch ($question_type) {
         ];
 
         $query = "
-            INSERT INTO $quizcode (question, questiontype, answer, choiceA, choiceB, choiceC, choiceD) 
-            VALUES (:question, :questiontype, :answer, :choiceA, :choiceB, :choiceC, :choiceD)
+            INSERT INTO `questions` (quizcode, question, questiontype, answer, choiceA, choiceB, choiceC, choiceD) 
+            VALUES (:quizcode, :question, :questiontype, :answer, :choiceA, :choiceB, :choiceC, :choiceD)
         ";
         $stmt = $pdo->prepare($query);
 
         // Bind parameters
+        $stmt->bindParam(':quizcode', $quizcode);
         $stmt->bindParam(':question', $question);
         $stmt->bindParam(':questiontype', $question_type);
         $stmt->bindParam(':answer', $answer);
@@ -49,9 +52,10 @@ switch ($question_type) {
 
     case "TOF";
         $answer = $_POST['answerTOF'];
-        $query = "INSERT INTO $quizcode (question,questiontype,answer) VALUES (:question, :questiontype, :answer)";
+        $query = "INSERT INTO `questions` (quizcode, question,questiontype,answer) VALUES (:quizcode, :question, :questiontype, :answer)";
         $stmt = $pdo->prepare($query);
 
+        $stmt->bindParam(':quizcode', $quizcode);
         $stmt->bindParam(':question', $question);
         $stmt->bindParam(':questiontype', $question_type);
         $stmt->bindParam(':answer', $answer);
@@ -63,7 +67,7 @@ switch ($question_type) {
         break;
 }
 
-if ($question != "" && $answer != null) {
+if ($question != "" && $answer != "") {
     if ($stmt->execute()) {
         echo "Data inserted successfully!";
     } else {

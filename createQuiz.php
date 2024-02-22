@@ -29,13 +29,17 @@ $quiztitle = $_SESSION['quiztitle'];
             <?php
 
             // Prepare the SQL query
-            $sql = "SELECT * FROM $quizcode";
+            $sql = "SELECT * FROM `questions` WHERE quizcode = :quizcode";
 
             // Prepare the statement
             $stmt = $pdo->prepare($sql);
 
+            // Bind the parameter
+            $stmt->bindParam(':quizcode', $quizcode);
+
             // Execute the statement
             $stmt->execute();
+
 
             // Check if there are rows returned
             if ($stmt->rowCount() > 0) {
@@ -185,11 +189,12 @@ $quiztitle = $_SESSION['quiztitle'];
     </div>
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
+            <button type="submit" class="btn btn-outline-light add-btn mb-3 validate-button" id="add-question" name="add-question">
                 <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>
     </div>
+   
     <script>
         // pag send data sa database
         const questionFormDiv = document.getElementById('questionform-div');
@@ -202,8 +207,10 @@ $quiztitle = $_SESSION['quiztitle'];
                 saveQuestion(questionform);
 
                 $('#questionform-div').hide();
-                
-                $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, 'fast');
 
             });
 
@@ -216,7 +223,9 @@ $quiztitle = $_SESSION['quiztitle'];
                 if (questionFormDiv.style.display === 'none') {
                     questionFormDiv.style.display = 'block';
                 }
-                $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, 'fast');
             });
         });
 
