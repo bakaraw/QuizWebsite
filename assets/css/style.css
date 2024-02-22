@@ -55,45 +55,6 @@ input::placeholder {
     display: block;
 }
 
-.card {
-    transition: transform 0.5s linear, box-shadow 0.3s ease; 
-    width: 20rem; 
-    padding: 15px; 
-    border: 1px solid #bd1717; 
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-    background-color: purple;
-    color: #2f11f2; /* Light text color for better contrast with purple background */
-    text-align: center; /* Center align the text */
-    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
-    margin-bottom: 10px; /* Adjust the space between cards */
-    margin-left: 50px; /* Adjust the space between cards */
 
-  }
-
-  .card:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Enhanced shadow on hover for a "lifting" effect */
-  }
-
-  .card-body {
-    padding: 10px;
-  }
-
-  .card-title, .card-subtitle {
-    margin: 5px 0; /* Add spacing between title, subtitle, and content */
-  }
-
-  .card-title {
-    font-size: 1.25rem; /* Larger title font size */
-    font-weight: bold; /* Make title bold */
-    
-    
-  }
-
-  .card-subtitle {
-    font-size: 1rem; /* Subtitle font size */
-    color: #000000; /* Lighter shade for subtitle for differentiation */
-  }
 
  
