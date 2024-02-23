@@ -16,15 +16,18 @@
   }
 
   .card:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Enhanced shadow on hover for a "lifting" effect */
+    transform: scale(1.00); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Enhanced shadow on hover for a "lifting" effect */
+    color: #FFFFFF;
+	  background-color: #dddddd;
+
   }
 
   .card-body {
     padding: 10px;
   }
 
-  .card-title, .card-subtitle {
+  .card-title, .card-subtitle, .card-text{
     margin: 5px 0; 
     /* Add spacing between title, subtitle, and content */
   }
@@ -39,6 +42,10 @@
   .card-subtitle {
     font-size: 1rem; /* Subtitle font size */
     color: #FFFFFF; /* Lighter shade for subtitle for differentiation */
+  }
+  .card-text {
+    font-size: 1rem; /* Subtitle font size */
+    color: #000000; /* Lighter shade for subtitle for differentiation */
   }
   </style>
 
@@ -82,6 +89,7 @@
                           element.addEventListener('mouseout', function() {
                             this.style.transform = 'scale(1)';
                           });
+                        
                         });
                       });
                     </script>
@@ -91,6 +99,7 @@
         <input class="form-control me-2" style="width: 15rem;" type="search" name="quizCode" placeholder="Quiz Code" aria-label="Search">
         <button class="btn btn-primary border-dark" type="submit">Search</button>
         </form>
+        
       
             <?php
 
@@ -107,23 +116,23 @@
 
         if ($result->num_rows > 0) {
           while($row = $result->fetch_assoc()) {
-            echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
+            echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
             echo '<br>';
             echo '<div class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">Quiz Found</h5></div>';
       
-              echo '<div class="card" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">'
+              echo '<div class="card" style="border: 2px solid blue;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">'
               . '<div class="card-body">'
               . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
               . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
               . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
               . '</div>'
               . '</div>';
-              echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
+              echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
               unset($_SESSION['quizCode']);
 
             }
       } else {
-        echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
+        echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
         echo '<br>';
         echo '<div class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">No quiz found with code: ' . $quizCode . '</h5></div>';
         echo '<br>';
@@ -140,27 +149,52 @@
 ?>
 
 <?php
-$sql = "SELECT * FROM quizlisttable";
+
+$itemsPerPage = 5; // Number of items you want per page
+$sql = "SELECT COUNT(*) as count FROM quizlisttable";
 $result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$totalItems = $row['count'];
+$totalPages = ceil($totalItems / $itemsPerPage);
+echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz List</h5></div>';
 
-if ($result->num_rows > 0) {
-  while($row = $result->fetch_assoc()) {
-
-
-    echo '<div class="card" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">'
-    . '<div class="card-body">'
-    . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-    . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-    . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-    . '</div>'
-    . '</div>';
-    
-}
+if (isset($_GET['page']) && is_numeric($_GET['page'])) { 
+    $currentPage = (int) $_GET['page'];
 } else {
-  echo "0 results";
+    $currentPage = 1; 
 }
+
+$offset = ($currentPage - 1) * $itemsPerPage;
+
+$sql = "SELECT * FROM quizlisttable LIMIT $itemsPerPage OFFSET $offset";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) { 
+        echo '<div class="card" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">'
+        . '<div class="card-body">'
+        . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+        . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+        . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+        . '</div>'
+        . '</div>';
+    }
+} else {
+    echo "0 results";
+}
+    echo '<div class="card-body" class="d-flex justify-content-center">';
+
+        for ($i = 1; $i <= $totalPages; $i++) {
+            if ($i == $currentPage) {
+                echo "<b>$i asdasd</b> ";
+            } else {
+                echo "<a href='?page=$i'>$i asdsd</a> "; 
+            }
+        }
+
+    echo '</div>'; 
 $conn->close();
 
 ?>
 
 <?php require('assets/php/footer.inc.php'); ?>
+
