@@ -1,12 +1,12 @@
 <?php
 include "assets/php/dbh_quiz.inc.php";
 session_start();
-$quizcode = $_SESSION['quizcode'];
-$quiztitle = $_SESSION['quiztitle'];
+$quizcode = '2P8j9VB';
 
 // Fetch questions from the database
-$sql = "SELECT * FROM $quizcode";
+$sql = "SELECT * FROM `questions` WHERE quizcode=:quizcode";
 $stmt = $pdo->prepare($sql);
+$stmt->bindParam(':quizcode', $quizcode);
 $stmt->execute();
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
