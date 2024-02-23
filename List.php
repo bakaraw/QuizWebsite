@@ -19,7 +19,6 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Enhanced shadow on hover for a "lifting" effect */
     color: #FFFFFF;
     background-color: #dddddd;
-
     transition: transform 0.05s linear, box-shadow 0.5s ease;
 
   }
@@ -110,10 +109,7 @@
                               });
                           });
                           });
-                          element.addEventListener('click', function() {
-                            var quizCode = this.getAttribute('data-quiz-code');
-                            window.location.href = 'answerQuiz.php?quizCode=' + quizCode;
-                          });
+                        
                         });
                       });
                     </script>
@@ -144,7 +140,6 @@
             echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz found</h5></div>';
 
 
-
             echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
             . '<div class="card-body">'
                   . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
@@ -152,7 +147,6 @@
                   . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
                   . '</div>'
                   . '</div>';
-
               echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
               unset($_SESSION['quizCode']);
 
@@ -196,10 +190,7 @@ $offset = ($currentPage - 1) * $itemsPerPage;
 $sql = "SELECT * FROM quizlisttable LIMIT $itemsPerPage OFFSET $offset";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-      
-      
-
+    while($row = $result->fetch_assoc()) { 
       echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
       . '<div class="card-body">'
       . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
@@ -207,7 +198,6 @@ if ($result->num_rows > 0) {
       . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
       . '</div>'
       . '</div>';
-
     }
 } else {
     echo "0 results";
@@ -229,3 +219,4 @@ $conn->close();
 ?>
 
 <?php require('assets/php/footer.inc.php'); ?>
+
