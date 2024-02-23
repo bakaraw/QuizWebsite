@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
         $quizcode = generateQuizCode($pdo);
 
         // Inserting Quizcode, title, and username into database
-        $query = "INSERT INTO quizlisttable(code, title, creator, visibility) VALUES (?, ?, ?, ?);";
+        $query = "INSERT INTO quizlisttable(code, title, creator, accessibility) VALUES (?, ?, ?, ?);";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$quizcode, $quiztitle, $creator, "PRIVATE"]);
 
@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
 
         // Passing variable values to create quiz page
         $_SESSION['quizcode'] = $quizcode;
-        $_SESSION['quiztitle'] = $quiztitle;
 
         $pdo = null;
         header("Location: ../../createQuiz.php");
