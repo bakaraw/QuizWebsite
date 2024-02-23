@@ -97,7 +97,7 @@ function changeQuizType() {
     // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
+            if (!form.checkValidity(forms)) {
                 event.preventDefault()
                 event.stopPropagation()
             }
@@ -106,7 +106,7 @@ function changeQuizType() {
         }, false)
 
         form.addEventListener('click', event => {
-            if (!form.checkValidity()) {
+            if (!form.checkValidity(forms)) {
                 event.preventDefault()
                 event.stopPropagation()
             }
@@ -115,4 +115,5 @@ function changeQuizType() {
         }, false)
     })
 })()
+
 

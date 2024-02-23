@@ -2,7 +2,29 @@
 include "assets/php/dbh_quiz.inc.php";
 session_start();
 $quizcode = $_SESSION['quizcode'];
-$quiztitle = $_SESSION['quiztitle'];
+
+$sql = "SELECT * FROM `quizlisttable` WHERE code = :quizcode";
+
+$private_selected = "";
+$public_selected = "";
+
+// for access option
+// Prepare the statement
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':quizcode', $quizcode);
+$stmt->execute();
+if ($stmt->rowCount() > 0) {
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $acces_option = $row['accessibility'];
+    $quiztitle = $row['title'];
+
+    if ($acces_option == "PRIVATE") {
+        $private_selected = "selected";
+    } else {
+        $public_selected = "selected";
+    }
+}
+
 
 ?>
 
@@ -15,11 +37,77 @@ $quiztitle = $_SESSION['quiztitle'];
 <div class="container">
     <!-- title box -->
     <div class="container mt-5 mb-5"></div>
-    <div class="input-group mb-3 border-light">
-        <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz title</span>
-        <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;" value="<?php echo $quiztitle; ?>">
-        <button class="btn btn-success text-light border-dark btn-md" type="button">Publish</button>
+    <form action="" method="post" id="share-form">
+        <div class="input-group mb-3 border-light">
+            <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz title</span>
+            <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;" value="<?php echo $quiztitle; ?>" name="title-input">
+            <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">Share</button>
+        </div>
+    </form>
+
+
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="text" value="<?php echo $quizcode; ?>" id="quizcode-copy" style="display: none;">
+                    <h4 class="text-break mb-3" id="title-modal">
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="assets/php/quiz_finalization.php" method="post" enctype="multipart/form-data" id="quiz-settings-form">
+                    <div class="modal-body">
+                        <input type="hidden" id="new-title" name="new-title">
+                        <label class="fw-medium ms-3 mb-0">General access</label>
+                        <div class="mt-0 access-div">
+                            <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
+                                <div class="text-dark" id="access-icon">
+                                    <?php
+                                    if ($acces_option == "PRIVATE") {
+                                        echo '<i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
+                                    } else {
+                                        echo '<i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
+                                    }
+
+                                    ?>
+                                </div>
+
+                                <select class="form-select transparent-btn border border-dark fw-semibold access-option" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;" onchange="changeAccess()" id="access-option" name="access-option">
+                                    <option <?php echo $private_selected; ?> value="PRIVATE">Private</option>
+                                    <option <?php echo $public_selected; ?> value="PUBLIC">Public</option>
+                                </select>
+
+                                <?php
+                                if ($acces_option == "PRIVATE") {
+                                    echo '<p class="mt-3" id="access-desc">People with link/code can access</p>';
+                                } else {
+                                    echo '<p class="mt-3" id="access-desc">Anyone can access</p>';
+                                }
+
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mb-3 ms-3 me-3">
+                            <label for="formFile" class="form-label fw-medium">Quiz Thumbnail (Optional)</label>
+                            <input class="form-control" type="file" id="file" name="file" accept=".jpeg, .jpg, .png">
+                            <label class="text-danger mt-2" id="upload-status"></label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;" id="copy-code" onclick="buttonC()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied">
+                            <i class="fa-regular fa-copy"></i> Copy code
+                        </button>
+
+                        <button type="submit" class="btn btn-success" name="submit" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
 
     <hr class="border border-light">
 
@@ -29,12 +117,14 @@ $quiztitle = $_SESSION['quiztitle'];
             <?php
 
             // Prepare the SQL query
-            $sql = "SELECT * FROM $quizcode";
+            $sql = "SELECT * FROM `questions` WHERE quizcode = :quizcode";
 
             // Prepare the statement
             $stmt = $pdo->prepare($sql);
 
-            // Execute the statement
+            // Bind the parameter
+            $stmt->bindParam(':quizcode', $quizcode);
+
             $stmt->execute();
 
             // Check if there are rows returned
@@ -195,15 +285,57 @@ $quiztitle = $_SESSION['quiztitle'];
         const questionFormDiv = document.getElementById('questionform-div');
 
         $(document).ready(function() {
+
+            $('#quiz-settings-form').submit(function(e) {
+                e.preventDefault(); // prevent the default form submission behavior
+
+                // get the form data
+                var formData = new FormData(this);
+                formData.append('quizcode', '<?php echo $quizcode; ?>');
+
+                $.ajax({
+                    url: 'assets/php/quiz_finalization.php', // path to your PHP file
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    type: 'post',
+                    success: function(response) {
+                        // handle the response from your PHP file here
+                        console.log(response);
+                        $('#upload-status').text(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // handle any errors here
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
+
+
+            $('#share-form').submit(function(e) {
+                e.preventDefault();
+
+                var title = $('input[name="title-input"]').val();
+                var pubtxt = "Share \"" + title + "\""; // Get the value of title-input
+                $('#title-modal').text(pubtxt);
+                $('#new-title').val(title);
+                $('#publishModal').modal('show');
+            });
+
             $('#questionform').submit(function(e) {
                 e.preventDefault();
                 let questionform = $('#questionform').serialize();
+
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
                 saveQuestion(questionform);
 
                 $('#questionform-div').hide();
-                
-                $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, 'fast');
 
             });
 
@@ -216,7 +348,9 @@ $quiztitle = $_SESSION['quiztitle'];
                 if (questionFormDiv.style.display === 'none') {
                     questionFormDiv.style.display = 'block';
                 }
-                $('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, 'fast');
             });
         });
 
@@ -225,6 +359,7 @@ $quiztitle = $_SESSION['quiztitle'];
                 type: "POST",
                 url: "assets/ajax/questionform_dbh.php",
                 data: questionform,
+
                 success: function(response) {
                     console.log('addque-pressed success');
                     console.log(response);
@@ -281,6 +416,28 @@ $quiztitle = $_SESSION['quiztitle'];
             }
             // If all fields are filled, return true
             return true;
+        }
+
+        var text = document.getElementById("quizcode-copy");
+
+        function buttonC() {
+            text.select();
+            navigator.clipboard.writeText(text.value.trim())
+                .catch(err => {
+                    console.log('Something went wrong', err);
+                })
+        }
+
+        function changeAccess() {
+            var selectedOption = document.getElementById('access-option').value;
+            // Perform action based on the selected option
+            if (selectedOption == 'PRIVATE') {
+                document.getElementById('access-icon').innerHTML = '<i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
+                document.getElementById('access-desc').innerHTML = "People with link/code can access";
+            } else {
+                document.getElementById('access-desc').innerHTML = "Anyone can access";
+                document.getElementById('access-icon').innerHTML = '<i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
+            }
         }
     </script>
     <script src="./assets/js/createQuiz.js"></script>

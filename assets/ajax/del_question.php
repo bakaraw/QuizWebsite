@@ -3,7 +3,7 @@ include "../php/dbh_quiz.inc.php";
 
 $qid = $_POST['qid'];
 $quizcode = $_POST['quizcode'];
-$sql = "DELETE FROM $quizcode WHERE qid = :qid";
+$sql = "DELETE FROM `questions` WHERE qid = :qid";
 
 // Prepare the SQL statement
 $stmt = $pdo->prepare($sql);

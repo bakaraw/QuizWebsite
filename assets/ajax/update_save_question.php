@@ -28,7 +28,7 @@ switch ($questiontype) {
 }
 
 try {
-    $stmt = $pdo->prepare("UPDATE $quizcode SET question=:question, questiontype=:questiontype, answer=:answer, choiceA=:choiceA, choiceB=:choiceB, choiceC=:choiceC, choiceD=:choiceD WHERE qid=:qid");
+    $stmt = $pdo->prepare("UPDATE `questions` SET question=:question, questiontype=:questiontype, answer=:answer, choiceA=:choiceA, choiceB=:choiceB, choiceC=:choiceC, choiceD=:choiceD WHERE qid=:qid");
 
     // Bind parameters
     $stmt->bindParam(':question', $question);
