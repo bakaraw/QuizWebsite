@@ -1,7 +1,9 @@
 <?php
 include "assets/php/dbh_quiz.inc.php";
 session_start();
-$quizcode = '2P8j9VB';
+
+// Retrieve quiz code from URL parameter
+$quizcode = isset($_GET['quizCode']) ? $_GET['quizCode'] : '';
 
 // Fetch questions from the database
 $sql = "SELECT * FROM `questions` WHERE quizcode=:quizcode";
@@ -18,7 +20,7 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include('assets/php/navbar.inc.php'); ?>
 
 <div class="container">
-    <h2 class="mt-5 mb-3"><?php echo $quiztitle; ?></h2>
+    <h2 class="mt-5 mb-3">Quiz Code: <?php echo $quizcode; ?></h2>
 
     <form action="submit_quiz.php" method="post">
         <?php foreach ($questions as $question): ?>
