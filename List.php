@@ -137,7 +137,8 @@
         if ($result->num_rows > 0) {
           while($row = $result->fetch_assoc()) {
             echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
-            echo '<br>';
+            echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz found</h5></div>';
+
 
             echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
             . '<div class="card-body">'
