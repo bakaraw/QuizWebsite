@@ -1,7 +1,6 @@
 <?php
 include "assets/php/dbh_quiz.inc.php";
 session_start();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['isAjaxRequest']) && $_POST['isAjaxRequest'] == 'true') {
     if (isset($_POST['code_for_quiz'])) {
         $_SESSION['code_for_quiz'] = $_POST['code_for_quiz'];
@@ -17,13 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['isAjaxRequest']) && $_
 if (isset($_GET['code_for_quiz'])) {
     $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
-
 // Fetch questions from the database
 $sql = "SELECT * FROM `questions` WHERE quizcode=:quizcode";
 $stmt = $pdo->prepare($sql);
-
 $stmt->bindParam(':quizcode', $quizCode); // Corrected to use $quizCode
-
 $stmt->execute();
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -38,9 +34,6 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <div class="container">
-
-
-
 
     <form action="submit_quiz.php" method="post">
         <?php foreach ($questions as $question): ?>
