@@ -11,6 +11,7 @@ if (!isset($_SESSION['username'])) {
 
 
 $quiztitle = "";
+$default_thmb = "default_img.jpg";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
 
@@ -25,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
         $quizcode = generateQuizCode($pdo);
 
         // Inserting Quizcode, title, and username into database
-        $query = "INSERT INTO quizlisttable(code, title, creator, accessibility) VALUES (?, ?, ?, ?);";
+        $query = "INSERT INTO quizlisttable(code, title, creator, accessibility, thumbnail) VALUES (?, ?, ?, ?, ?);";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([$quizcode, $quiztitle, $creator, "PRIVATE"]);
+        $stmt->execute([$quizcode, $quiztitle, $creator, "PRIVATE", $default_thmb]);
 
         // Creating separate table for every quizcode
 
@@ -68,5 +69,3 @@ function generateQuizCode($pdo)
 
     return $quizcode;
 }
-
-?>
