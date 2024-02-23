@@ -47,6 +47,13 @@
     font-size: 1rem; /* Subtitle font size */
     color: #000000; /* Lighter shade for subtitle for differentiation */
   }
+  .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* For vertical centering, if needed */
+        color: #FFFFFF;
+
+    }
   </style>
 
 
@@ -88,6 +95,19 @@
                           });
                           element.addEventListener('mouseout', function() {
                             this.style.transform = 'scale(1)';
+                            element.addEventListener('click', function() {
+                            var code_for_quiz = this.getAttribute('data-quiz-code');
+                            fetch('answerQuiz.php', { // Make sure this points to the correct file
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                              },
+                              body: 'code_for_quiz=' + code_for_quiz + '&isAjaxRequest=true'
+                            })
+                            .then(response => response.text())
+                            .then(data => {
+                              });
+                          });
                           });
                           element.addEventListener('click', function() {
                             var quizCode = this.getAttribute('data-quiz-code');
@@ -121,29 +141,29 @@
           while($row = $result->fetch_assoc()) {
             echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
             echo '<br>';
-            echo '<div class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">Quiz Found</h5></div>';
-      
-              echo '<a href="answerQuiz.php?quizCode=' . $row["code"] . '" style="text-decoration: none; color: inherit;">';
-              echo '<div class="card" style="border: 2px solid blue;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" data-quiz-code="' . $row["code"] . '">'
-              . '<div class="card-body">'
-              . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-              . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-              . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-              . '</div>'
-              . '</div>';
-              echo '</a>';
+
+
+            echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
+            . '<div class="card-body">'
+                  . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+                  . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+                  . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+                  . '</div>'
+                  . '</div>';
+
               echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
               unset($_SESSION['quizCode']);
 
             }
       } else {
+        unset($_SESSION['quizCode']);
+
         echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
         echo '<br>';
-        echo '<div class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">No quiz found with code: ' . $quizCode . '</h5></div>';
+        echo '<div data-quiz-code class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">No quiz found with code: ' . $quizCode . '</h5></div>';
         echo '<br>';
         echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
            
-        unset($_SESSION['quizCode']);
 
       }
     }
@@ -155,7 +175,7 @@
 
 <?php
 
-$itemsPerPage = 5; // Number of items you want per page
+$itemsPerPage = 4;
 $sql = "SELECT COUNT(*) as count FROM quizlisttable";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -174,30 +194,33 @@ $offset = ($currentPage - 1) * $itemsPerPage;
 $sql = "SELECT * FROM quizlisttable LIMIT $itemsPerPage OFFSET $offset";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) { 
-        echo '<a href="answerQuiz.php?quizCode=' . $row["code"] . '" style="text-decoration: none; color: inherit;">';
-        echo '<div class="card" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" data-quiz-code="' . $row["code"] . '">'
-        . '<div class="card-body">'
-        . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-        . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-        . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-        . '</div>'
-        . '</div>';
-        echo '</a>';
+    while($row = $result->fetch_assoc()) {
+      
+      
+
+      echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
+      . '<div class="card-body">'
+      . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+      . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+      . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+      . '</div>'
+      . '</div>';
+
     }
 } else {
     echo "0 results";
 }
-    echo '<div class="card-body" class="d-flex justify-content-center">';
+echo    '<div class="pagination-container">';
+echo         '<div class="card-body d-flex justify-content-center">';
 
         for ($i = 1; $i <= $totalPages; $i++) {
             if ($i == $currentPage) {
-                echo "<b>$i asdasd</b> ";
+                echo "<b>$i</b> ";
             } else {
-                echo "<a href='?page=$i'>$i asdsd</a> "; 
+                echo "<a href='?page=$i'>$i</a> "; 
             }
         }
-
+        echo '</div>'; 
     echo '</div>'; 
 $conn->close();
 
