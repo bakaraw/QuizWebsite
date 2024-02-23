@@ -23,6 +23,7 @@ $quiztitle = $_SESSION['quiztitle'];
         </div>
     </form>
 
+
     <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -32,45 +33,48 @@ $quiztitle = $_SESSION['quiztitle'];
                     </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <input type="hidden" id="new-title">
-                    <input type="hidden" id="access-option">
-                    <label class="fw-medium ms-3 mb-0">General access</label>
-                    <div class="mt-0 access-div">
-                        <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
-                            <div class="text-dark">
-                                <i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
+                <form action="assets/php/quiz_finalization.php" method="post" enctype="multipart/form-data" id="quiz-settings-form">
+                    <div class="modal-body">
+                        <input type="hidden" id="new-title">
+                        <input type="hidden" id="access-option">
+                        <label class="fw-medium ms-3 mb-0">General access</label>
+                        <div class="mt-0 access-div">
+                            <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
+                                <div class="text-dark">
+                                    <i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
+                                </div>
+                                <select class="form-select transparent-btn border border-dark fw-semibold access-option" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;">
+                                    <option selected value="PRIVATE">Private</option>
+                                    <option value="PUBLIC">Public</option>
+                                </select>
+
+                                <p class="mt-3">People can only access with link/code</p>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Public</a></li>
+                                </ul>
                             </div>
-                            <select class="form-select transparent-btn border border-dark fw-semibold access-option" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;">
-                                <option selected value="PRIVATE">Private</option>
-                                <option value="PUBLIC">Public</option>
-                            </select>
+                        </div>
 
-                            <p class="mt-3">People can only access with link/code</p>
-
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Public</a></li>
-                            </ul>
+                        <div class="mt-4 mb-3 ms-3 me-3">
+                            <label for="formFile" class="form-label fw-medium">Quiz Thumbnail (Optional)</label>
+                            <input class="form-control" type="file" id="file" name="file" accept=".jpeg, .jpg, .png">
                         </div>
                     </div>
 
-                    <div class="mt-4 mb-3 ms-3 me-3">
-                        <label for="formFile" class="form-label fw-medium" accept=".jpeg, .jpg, .png">Quiz Thumbnail (Optional)</label>
-                        <input class="form-control" type="file" id="formFile">
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;" id="copy-code" onclick="buttonC()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied">
+                            <i class="fa-regular fa-copy"></i> Copy code
+                        </button>
+
+                        <button type="submit" class="btn btn-success" name="submit">Save changes</button>
                     </div>
-                </div>
-
-                <div class="modal-footer">
-                    
-                    <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;" id="copy-code" onclick="buttonC()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied">
-                        <i class="fa-regular fa-copy"></i> Copy code
-                    </button>
-
-                    <button type="button" class="btn btn-success">Save changes</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+
 
     <hr class="border border-light">
 
@@ -249,10 +253,38 @@ $quiztitle = $_SESSION['quiztitle'];
 
         $(document).ready(function() {
 
+            $('#quiz-settings-form').submit(function(e) {
+                e.preventDefault(); // prevent the default form submission behavior
+
+                // get the form data
+                var formData = new FormData(this);
+                formData.append('quizcode', '<?php echo $quizcode; ?>');
+
+                $.ajax({
+                    url: 'assets/php/quiz_finalization.php', // path to your PHP file
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    type: 'post',
+                    success: function(response) {
+                        // handle the response from your PHP file here
+                        console.log(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // handle any errors here
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
+
+
             $('#share-form').submit(function(e) {
                 e.preventDefault();
+
                 var title = $('input[name="title-input"]').val();
-                var pubtxt = "Publish \"" + title + "\""; // Get the value of title-input
+                var pubtxt = "Share \"" + title + "\""; // Get the value of title-input
                 $('#title-modal').text(pubtxt);
                 $('#new-title').val(title);
                 $('#publishModal').modal('show');
@@ -261,6 +293,7 @@ $quiztitle = $_SESSION['quiztitle'];
             $('#questionform').submit(function(e) {
                 e.preventDefault();
                 let questionform = $('#questionform').serialize();
+
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
                 saveQuestion(questionform);
 
@@ -292,6 +325,7 @@ $quiztitle = $_SESSION['quiztitle'];
                 type: "POST",
                 url: "assets/ajax/questionform_dbh.php",
                 data: questionform,
+
                 success: function(response) {
                     console.log('addque-pressed success');
                     console.log(response);
@@ -355,18 +389,9 @@ $quiztitle = $_SESSION['quiztitle'];
         function buttonC() {
             text.select();
             navigator.clipboard.writeText(text.value.trim())
-                .then(() => {
-                    console.log('Copied')
-                })
                 .catch(err => {
                     console.log('Something went wrong', err);
                 })
-            
-            var copyBtn = document.querySelector("#copy-code");
-            copyBtn.classList.add("active");
-            setTimeout(function(){
-                copyBtn.classList.remove("active");
-            }, 2500);
         }
     </script>
     <script src="./assets/js/createQuiz.js"></script>
