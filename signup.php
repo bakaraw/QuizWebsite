@@ -30,7 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-            echo "Username is already taken.";
+            echo "<script>alert(' Username is already taken'); window.location.href='index.php';</script>";
+
         } else {
             // Hash the password
             $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
