@@ -1,6 +1,5 @@
 <style>
 .card {
-    transition: transform 0.5s linear, box-shadow 0.3s ease; 
     width: 50rem; 
     padding: 15px;
     border: 1px solid #bd1717;
@@ -16,10 +15,12 @@
   }
 
   .card:hover {
-    transform: scale(1.00); 
+    transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Enhanced shadow on hover for a "lifting" effect */
     color: #FFFFFF;
     background-color: #dddddd;
+
+    transition: transform 0.05s linear, box-shadow 0.5s ease;
 
   }
 
@@ -97,7 +98,7 @@
                             this.style.transform = 'scale(1)';
                             element.addEventListener('click', function() {
                             var code_for_quiz = this.getAttribute('data-quiz-code');
-                            fetch('answerQuiz.php', { // Make sure this points to the correct file
+                            fetch('answerQuiz.php', { 
                               method: 'POST',
                               headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -140,7 +141,8 @@
         if ($result->num_rows > 0) {
           while($row = $result->fetch_assoc()) {
             echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
-            echo '<br>';
+            echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz found</h5></div>';
+
 
 
             echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
