@@ -1,14 +1,28 @@
 <?php
 include "assets/php/dbh_quiz.inc.php";
 session_start();
-$quizcode = $_SESSION['quizcode'];
-$quiztitle = $_SESSION['quiztitle'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['isAjaxRequest']) && $_POST['isAjaxRequest'] == 'true') {
+    if (isset($_POST['code_for_quiz'])) {
+        $_SESSION['code_for_quiz'] = $_POST['code_for_quiz'];
+        echo "Quiz code set in session"; // Response back to the AJAX call
+        exit; // Stop further script execution for AJAX request
+    }
+}
+
+
+
+
+
+if (isset($_GET['code_for_quiz'])) {
+    $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
 // Fetch questions from the database
-$sql = "SELECT * FROM $quizcode";
+$sql = "SELECT * FROM `questions` WHERE quizcode=:quizcode";
 $stmt = $pdo->prepare($sql);
+$stmt->bindParam(':quizcode', $quizCode); // Corrected to use $quizCode
 $stmt->execute();
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!-- header -->
@@ -17,8 +31,9 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
 
+
+
 <div class="container">
-    <h2 class="mt-5 mb-3"><?php echo $quiztitle; ?></h2>
 
     <form action="submit_quiz.php" method="post">
         <?php foreach ($questions as $question): ?>
