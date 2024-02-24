@@ -82,7 +82,7 @@ input::placeholder {
 }
 
 .my-quiz:hover{
-    background-color: #212529 !important;
+    background-color:rgba(0, 0, 0,0.3) !important;
 }
 
 .image-container {

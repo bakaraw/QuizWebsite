@@ -5,7 +5,7 @@ $quiztitle = $_POST['new-title'];
 $access_option = $_POST['access-option'];
 
 // Check if a file is uploaded
-if(isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
+if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
     $thmb_img = $_FILES['file'];
 
     $thmb_name = $_FILES['file']['name'];  // get the original file name of thumnail image.
@@ -31,7 +31,6 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
                 move_uploaded_file($thmb_tmp, $file_destination);
 
                 updateQuizWithThmb($pdo, $quiztitle, $access_option, $new_file_name, $quizcode);
-                
             } else {
                 echo "Image too large";
             }
@@ -43,12 +42,39 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
     }
 } else {
     //if file input is empty
-    updateQuizAccess($pdo, $quiztitle ,$access_option, $quizcode);
+    updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode);
 }
 
 function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizcode)
 {
+    // deletes first the thumbnail in file if the thumbnail is not = 'default_img.jpg'
+    // then uploads a new thumbnail image
+    
     try {
+
+        $stmt = $pdo->prepare("SELECT thumbnail FROM quizlisttable WHERE code = ?");
+        $stmt->execute([$quizcode]);
+
+        $result = $stmt->fetch();
+        if ($result && $result['thumbnail'] !== 'default_img.jpg') {
+            $thumbnailFilename = $result['thumbnail'];
+            $filePath = '../img/uploads/' . $thumbnailFilename;
+
+            // Check if the file exists before attempting to delete it
+            if (file_exists($filePath)) {
+                // Attempt to delete the file
+                if (unlink($filePath)) {
+                    
+                } else {
+                    echo "Failed to delete file $thumbnailFilename.";
+                }
+            } else {
+                // File does not exist
+                echo "File $thumbnailFilename does not exist.";
+            }
+        }
+
+
         $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility, thumbnail=:thumbnail WHERE code=:quizcode");
 
         // // Bind parameters
@@ -78,4 +104,3 @@ function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode)
         echo "Error: " . $e->getMessage();
     }
 }
-?>
