@@ -96,5 +96,7 @@ input::placeholder {
     color: black !important;
 }
 
-
+.text-bg-primary{
+    background-color: #6610f2 !important;
+}
  

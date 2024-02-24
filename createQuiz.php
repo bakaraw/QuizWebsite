@@ -301,7 +301,6 @@ if ($stmt->rowCount() > 0) {
         const questionFormDiv = document.getElementById('questionform-div');
 
         $(document).ready(function() {
-
             $('#quiz-settings-form').submit(function(e) {
                 e.preventDefault(); // prevent the default form submission behavior
 
