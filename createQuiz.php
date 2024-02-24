@@ -81,7 +81,7 @@ if ($stmt->rowCount() > 0) {
 
                                 <?php
                                 if ($access_option == "PRIVATE") {
-                                    echo '<p class="mt-3" id="access-desc">People with link/code can access</p>';
+                                    echo '<p class="mt-3" id="access-desc">Only people with link/code can access</p>';
                                 } else {
                                     echo '<p class="mt-3" id="access-desc">Anyone can access</p>';
                                 }
@@ -449,7 +449,7 @@ if ($stmt->rowCount() > 0) {
             // Perform action based on the selected option
             if (selectedOption == 'PRIVATE') {
                 document.getElementById('access-icon').innerHTML = '<i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
-                document.getElementById('access-desc').innerHTML = "People with link/code can access";
+                document.getElementById('access-desc').innerHTML = "Only people with link/code can access";
             } else {
                 document.getElementById('access-desc').innerHTML = "Anyone can access";
                 document.getElementById('access-icon').innerHTML = '<i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
