@@ -1,13 +1,13 @@
 <style>
 .card {
-    width: 50rem; 
-    padding: 15px;
+    width: 20rem; 
+    padding: 5px;
     border: 1px solid #bd1717;
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     background-color: purple;
     color: #2f11f2; /* Light text color for better contrast with purple background */
-    text-align: center; /* Center align the text */
+    text-align: left; /* Center align the text */
     cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
     margin: 20px auto; /* Center the element horizontally and add space between cards */
     width: 58%;
@@ -24,36 +24,55 @@
   }
 
   .card-body {
-    padding: 10px;
-  }
+    padding: 20px;
+    display: flex; /* Add flex display to align items in a row */
+    align-items: center; /* Align items vertically */
+}
 
-  .card-title, .card-subtitle, .card-text{
-    margin: 5px 0; 
-    /* Add spacing between title, subtitle, and content */
-  }
+.card-title, .card-subtitle, .card-text {
+    margin: 5px 0; /* Existing spacing */
+}
 
-  .card-title {
+.card-title {
     font-size: 1.25rem; /* Larger title font size */
     font-weight: bold; /* Make title bold */
-    color: #A020F0; /* Lighter shade for subtitle for differentiation */
+    color: #A020F0; /* Custom color for title */
+}
 
-    
-  }
-  .card-subtitle {
+.card-subtitle {
     font-size: 1rem; /* Subtitle font size */
-    color: #FFFFFF; /* Lighter shade for subtitle for differentiation */
-  }
-  .card-text {
-    font-size: 1rem; /* Subtitle font size */
-    color: #000000; /* Lighter shade for subtitle for differentiation */
-  }
-  .pagination-container {
-        display: flex;
-        justify-content: center;
-        align-items: center; /* For vertical centering, if needed */
-        color: #FFFFFF;
+    color: #FFFFFF; /* White color for subtitle */
+}
 
-    }
+.card-text {
+    font-size: 1rem; /* Regular font size for text */
+    color: #000000; /* Black color for text */
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertical centering */
+    color: #FFFFFF; /* White color for pagination text */
+}
+
+/* New styles for image container and image */
+.img-container {
+    flex: 0 0 50px; /* Fixed width, no flex-grow, no flex-shrink */
+    height: 50px; /* Fixed height */
+    overflow: hidden; /* Hide overflow */
+    margin-right: 15px; /* Space between image and text */
+}
+
+.img-container img {
+    width: 100%; /* Make image fill the container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Adjust the text container to fill remaining space if needed */
+.text-content {
+    flex: 1; /* Allow text content to grow and fill available space */
+}
   </style>
 
 
@@ -127,24 +146,32 @@
 
       if (isset($_SESSION['quizCode'])) {
         $quizCode = $_SESSION['quizCode'];
-        $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE code = ?");
+
+        $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE code = ? AND accessibility <> 'PRIVATE'");
         $stmt->bind_param("s", $quizCode);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-          while($row = $result->fetch_assoc()) {
+          while ($row = $result->fetch_assoc()) {           
             echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
             echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz found</h5></div>';
-
-
-            echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
-            . '<div class="card-body">'
-                  . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-                  . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-                  . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-                  . '</div>'
-                  . '</div>';
+            $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
+            if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
+                $thumbnailPath = 'assets/img/uploads/default_img.jpg'; 
+            }
+            echo '<div class="card quiz-card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\';">'
+            . '<div class="card-body d-flex align-items-center">'
+            . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">' // Adjusted for flex layout
+            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">' // Image styling
+            . '</div>'
+            . '<div style="flex: 1;">' // Flex container for text
+            . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+            . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+            . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+            . '</div>' // Close text container
+            . '</div>' // Close card-body
+            . '</div>'; // Close card
               echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
               unset($_SESSION['quizCode']);
 
@@ -184,21 +211,33 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 }
 
 $offset = ($currentPage - 1) * $itemsPerPage;
+$sql = "SELECT * FROM quizlisttable WHERE accessibility = 'PRIVATE' LIMIT $itemsPerPage OFFSET $offset";
 
-$sql = "SELECT * FROM quizlisttable LIMIT $itemsPerPage OFFSET $offset";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) { 
-      echo '<div class="card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\'" ... >'
-      . '<div class="card-body">'
-      . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-      . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-      . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-      . '</div>'
-      . '</div>';
-    }
+  while ($row = $result->fetch_assoc()) {
+      // Define the path for the thumbnail
+      $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
+      if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
+          $thumbnailPath = 'assets/img/uploads/default_img.jpg'; // Default image
+      }
+
+      // Generate the card for each quiz
+      echo '<div class="card quiz-card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\';">'
+          . '<div class="card-body d-flex align-items-center">'
+          . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">' // Adjusted for flex layout
+          . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">' // Image styling
+          . '</div>'
+          . '<div style="flex: 1;">' // Flex container for text
+          . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+          . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+          . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+          . '</div>' // Close text container
+          . '</div>' // Close card-body
+          . '</div>'; // Close card
+  }
 } else {
-    echo "0 results";
+  echo "0 results";
 }
 echo    '<div class="pagination-container">';
 echo         '<div class="card-body d-flex justify-content-center">';

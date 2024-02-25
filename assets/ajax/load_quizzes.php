@@ -18,7 +18,7 @@ if ($stmt->rowCount() > 0) :
 ?>
         <a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action bg-dark border border-light text-light d-flex align-items-center" aria-current="true" style="--bs-border-opacity: 0.15;">
             <div class="img-parent-container me-3">
-                <div class="image-container rounded-1 " style="background-image: url('assets/img/uploads/<?php echo $row['thumbnail'] ?>');"></div>
+            <div class="image-container rounded-1 me-3" style="width: 100px; height: 100px; background-image: url('assets/img/uploads/<?php echo $row['thumbnail'] ?>'); background-size: cover;"></div>
             </div>
             <div>
                 <h5 class="mb-1 text-light text-break"><?php echo $row['title'] ?></h5>
