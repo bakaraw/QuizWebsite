@@ -13,15 +13,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['isAjaxRequest']) && $_
 
 
 
+
+
+
+
 if (isset($_GET['code_for_quiz'])) {
     $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
-// Fetch questions from the database
-$sql = "SELECT * FROM `questions` WHERE quizcode=:quizcode";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':quizcode', $quizCode); // Corrected to use $quizCode
-$stmt->execute();
-$questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Assuming $pdo is your PDO database connection instance
+
+    // First, update the view count
+    $updateSql = "UPDATE quizlisttable SET views = views + 1 WHERE code = ?";
+    $updateStmt = $pdo->prepare($updateSql);
+    $updateStmt->execute([$quizCode]); // Execute with an array of parameters
+
+    // Then, fetch questions related to the quiz
+    $fetchSql = "SELECT * FROM `questions` WHERE quizcode = ?";
+    $fetchStmt = $pdo->prepare($fetchSql);
+    $fetchStmt->execute([$quizCode]); // Execute with an array of parameters
+    $questions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 

@@ -28,6 +28,14 @@
     display: flex; /* Add flex display to align items in a row */
     align-items: center; /* Align items vertically */
 }
+.left-content {
+    display: flex;
+    align-items: center;
+}
+
+.right-content {
+    text-align: right; /* Aligns the "Views" text to the right */
+}
 
 .card-title, .card-subtitle, .card-text {
     margin: 5px 0; /* Existing spacing */
@@ -82,6 +90,8 @@
     if (!isset($_SESSION['username'])) {
       header("Location: login.php");
       exit;
+
+     
     }
 
     $servername = 'localhost';
@@ -92,10 +102,7 @@
     // Create connection
     $conn = new mysqli($servername, $dbUsername, $dbPassword, $database_name);
 
-    // Check connection
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
+ 
       ?>
 
 <!-- header -->
@@ -103,33 +110,18 @@
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
 
-                    <script>
-                      document.addEventListener('DOMContentLoaded', function() {
-                        var elements = document.querySelectorAll('.card');
-                        elements.forEach(function(element) {
-                          element.addEventListener('mouseover', function() {
-                            this.style.transform = 'scale(1.05)';
-                          });
-                          element.addEventListener('mouseout', function() {
-                            this.style.transform = 'scale(1)';
-                            element.addEventListener('click', function() {
-                            var code_for_quiz = this.getAttribute('data-quiz-code');
-                            fetch('answerQuiz.php', { 
-                              method: 'POST',
-                              headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                              },
-                              body: 'code_for_quiz=' + code_for_quiz + '&isAjaxRequest=true'
-                            })
-                            .then(response => response.text())
-                            .then(data => {
-                              });
-                          });
-                          });
-                        
-                        });
-                      });
-                    </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var quizCards = document.querySelectorAll('.card.quiz-card');
+    quizCards.forEach(function(card) {
+        card.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action
+            var code_for_quiz = this.getAttribute('data-quiz-code');
+            window.location.href = 'answerQuiz.php?code_for_quiz=' + code_for_quiz;
+        });
+    });
+});
+</script>
         <br>
 
         <form class="d-flex justify-content-center" role="search" method="post">
@@ -160,18 +152,20 @@
             if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
                 $thumbnailPath = 'assets/img/uploads/default_img.jpg'; 
             }
-            echo '<div class="card quiz-card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\';">'
-            . '<div class="card-body d-flex align-items-center">'
-            . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">' // Adjusted for flex layout
-            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">' // Image styling
-            . '</div>'
-            . '<div style="flex: 1;">' // Flex container for text
-            . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-            . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-            . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-            . '</div>' // Close text container
-            . '</div>' // Close card-body
-            . '</div>'; // Close card
+            echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
+      . '<div class="card-body d-flex align-items-center">'
+      . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">'
+      . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+      . '</div>'
+      . '<div style="flex: 1;">'
+      . '<h5 class="card-title">' . htmlspecialchars($row["title"]) . '</h5>'
+      . '<p class="card-text">'
+      . 'Creator: ' . htmlspecialchars($row["creator"]) . '<br>'
+      . 'Code: ' . htmlspecialchars($row["code"])
+      . '</p>'
+      . '</div>' // Close text container
+      . '</div>' // Close card-body
+      . '</div>'; // Close card
               echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
               unset($_SESSION['quizCode']);
 
@@ -211,7 +205,7 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 }
 
 $offset = ($currentPage - 1) * $itemsPerPage;
-$sql = "SELECT * FROM quizlisttable WHERE accessibility = 'PRIVATE' LIMIT $itemsPerPage OFFSET $offset";
+$sql = "SELECT * FROM quizlisttable WHERE accessibility != 'PRIVATE' LIMIT $itemsPerPage OFFSET $offset";
 
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -223,19 +217,26 @@ if ($result->num_rows > 0) {
       }
 
       // Generate the card for each quiz
-      echo '<div class="card quiz-card" onclick="window.location.href=\'answerQuiz.php?code_for_quiz=' . htmlspecialchars($row["code"]) . '\';">'
-          . '<div class="card-body d-flex align-items-center">'
-          . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">' // Adjusted for flex layout
-          . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">' // Image styling
-          . '</div>'
-          . '<div style="flex: 1;">' // Flex container for text
-          . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-          . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-          . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-          . '</div>' // Close text container
-          . '</div>' // Close card-body
-          . '</div>'; // Close card
-  }
+      echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
+      . '<div class="card-body d-flex align-items-center justify-content-between">'
+      . '<div class="left-content d-flex align-items-center">'
+      . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">'
+      . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+      . '</div>'
+      . '<div>'
+      . '<h5 class="card-title">' . htmlspecialchars($row["title"]) . '</h5>'
+      . '<p class="card-text">'
+      . 'Creator: ' . htmlspecialchars($row["creator"]) . '<br>'
+      . 'Code: ' . htmlspecialchars($row["code"])
+      . '</p>'
+      . '</div>' // Close text container
+      . '</div>' // Close left content
+      . '<div class="right-content">'
+      . '<p class="views-text">Views: ' . htmlspecialchars($row["views"]) . '</p>'
+      . '</div>' // Close right content
+      . '</div>' // Close card-body
+      . '</div>'; // Close card
+    }
 } else {
   echo "0 results";
 }
@@ -255,5 +256,6 @@ $conn->close();
 
 ?>
 
-<?php require('assets/php/footer.inc.php'); ?>
+
+<?php require('assets/php/footer.inc.php'); 
 
