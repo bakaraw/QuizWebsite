@@ -27,9 +27,9 @@ session_start();
     <div class="pt-5 " ">
     <h5 class=" card-title h1 pb-3 d-flex justify-content-end " >Test your knowledge</h5>
     <p class=" card-text text-end">Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase your brilliance!</p>
-      <form class="d-flex justify-content-end" role="search">
+      <form class="d-flex justify-content-end" role="search" id="search-form">
         <input class="form-control me-2" style="width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search" id="quizcode-search">
-        <button class="btn btn-primary border-dark" type="button" id="search-btn">Search</button>
+        <button class="btn btn-primary border-dark" type="submit" id="search-btn">Search</button>
       </form>
     </div>
   </div>
@@ -39,7 +39,6 @@ session_start();
   <div id="no-quiz-found" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <strong class="me-auto">QuizHero</strong>
-      <small>11 mins ago</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body">
@@ -50,7 +49,7 @@ session_start();
 
 <script>
   $(document).ready(function() {
-    $('#search-btn').click(function(e) {
+    $('#search-form').submit(function(e) {
       e.preventDefault();
       var quizcode = $('#quizcode-search').val();
 
