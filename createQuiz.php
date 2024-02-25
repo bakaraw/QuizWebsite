@@ -15,10 +15,10 @@ $stmt->bindParam(':quizcode', $quizcode);
 $stmt->execute();
 if ($stmt->rowCount() > 0) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $acces_option = $row['accessibility'];
+    $access_option = $row['accessibility'];
     $quiztitle = $row['title'];
 
-    if ($acces_option == "PRIVATE") {
+    if ($access_option == "PRIVATE") {
         $private_selected = "selected";
     } else {
         $public_selected = "selected";
@@ -41,7 +41,9 @@ if ($stmt->rowCount() > 0) {
         <div class="input-group mb-3 border-light">
             <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz title</span>
             <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;" value="<?php echo $quiztitle; ?>" name="title-input">
-            <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">Share</button>
+            <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">
+                Share
+            </button>
         </div>
     </form>
 
@@ -63,7 +65,7 @@ if ($stmt->rowCount() > 0) {
                             <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
                                 <div class="text-dark" id="access-icon">
                                     <?php
-                                    if ($acces_option == "PRIVATE") {
+                                    if ($access_option == "PRIVATE") {
                                         echo '<i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
                                     } else {
                                         echo '<i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
@@ -78,8 +80,8 @@ if ($stmt->rowCount() > 0) {
                                 </select>
 
                                 <?php
-                                if ($acces_option == "PRIVATE") {
-                                    echo '<p class="mt-3" id="access-desc">People with link/code can access</p>';
+                                if ($access_option == "PRIVATE") {
+                                    echo '<p class="mt-3" id="access-desc">Only people with link/code can access</p>';
                                 } else {
                                     echo '<p class="mt-3" id="access-desc">Anyone can access</p>';
                                 }
@@ -101,9 +103,23 @@ if ($stmt->rowCount() > 0) {
                             <i class="fa-regular fa-copy"></i> Copy code
                         </button>
 
-                        <button type="submit" class="btn btn-success" name="submit" data-bs-dismiss="modal">Save changes</button>
+                        <button type="submit" class="btn btn-success" id="save-changes" name="save-changes" data-bs-dismiss="modal">Save changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- alerting he user when share settings is saved -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <strong class="ms-2 me-auto">QuizHero</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Share settings saved!
             </div>
         </div>
     </div>
@@ -285,7 +301,6 @@ if ($stmt->rowCount() > 0) {
         const questionFormDiv = document.getElementById('questionform-div');
 
         $(document).ready(function() {
-
             $('#quiz-settings-form').submit(function(e) {
                 e.preventDefault(); // prevent the default form submission behavior
 
@@ -433,7 +448,7 @@ if ($stmt->rowCount() > 0) {
             // Perform action based on the selected option
             if (selectedOption == 'PRIVATE') {
                 document.getElementById('access-icon').innerHTML = '<i class="fa-solid fa-lock" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';
-                document.getElementById('access-desc').innerHTML = "People with link/code can access";
+                document.getElementById('access-desc').innerHTML = "Only people with link/code can access";
             } else {
                 document.getElementById('access-desc').innerHTML = "Anyone can access";
                 document.getElementById('access-icon').innerHTML = '<i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>';

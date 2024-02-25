@@ -81,7 +81,22 @@ input::placeholder {
     background-color: #d6d6d6;
 }
 
+.my-quiz:hover{
+    background-color:rgba(0, 0, 0,0.3) !important;
+}
 
+.image-container {
+    width: 125px; /* Set the width of the container */
+    height: 70.31px; /* Calculate the height based on a 16:9 aspect ratio */
+    background-size: cover;
+    background-position: center;
+}
 
+.copy-btn{
+    color: black !important;
+}
 
+.text-bg-primary{
+    background-color: #6610f2 !important;
+}
  

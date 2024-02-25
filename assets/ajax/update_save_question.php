@@ -57,8 +57,3 @@ try {
 
 $pdo = null; // Close the connection
 
-echo $quizcode;
-echo "<br>";
-echo $questiontype;
-echo "<br>";
-echo $answer;
