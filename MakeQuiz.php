@@ -13,6 +13,8 @@ $sql = "SELECT * FROM quizlisttable WHERE creator=:creator";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':creator', $_SESSION['username']);
 $stmt->execute();
+
+$quiz_per_page = 10;
 ?>
 <style></style>
 <div class="container">
@@ -102,22 +104,6 @@ $stmt->execute();
         </div>
     </div>
 
-
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <nav aria-label="Page navigation example" class="mt-4 d-flex justify-content-center">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
 </div>
 <script>
     $(document).ready(function() {
