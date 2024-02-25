@@ -47,15 +47,15 @@ input::placeholder {
     /* Change placeholder color to red */
 }
 
-.btn-outline-light:hover{
-    color: black  !important;
+.btn-outline-light:hover {
+    color: black !important;
 }
 
-#questionform-div{
+#questionform-div {
     display: block;
 }
 
-.access-div:hover{
+.access-div:hover {
     background-color: #f8f8f8;
     border-radius: 5px;
 }
@@ -64,39 +64,47 @@ input::placeholder {
 .dropdown-toggle-container {
     display: flex;
     flex-direction: column;
-    margin-left: 0.5rem; /* Adjust as needed */
+    margin-left: 0.5rem;
+    /* Adjust as needed */
 }
 
-.transparent-btn{
+.transparent-btn {
     background-color: transparent !important;
-    color:  #212529 !important;
+    color: #212529 !important;
 }
 
 .access-option:focus {
     outline: none;
-    box-shadow: none; /* Optional: Removes any box shadow */
+    box-shadow: none;
+    /* Optional: Removes any box shadow */
 }
 
 .access-option:hover {
     background-color: #d6d6d6;
 }
 
-.my-quiz:hover{
-    background-color:rgba(0, 0, 0,0.3) !important;
+.my-quiz:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.img-parent-container {
+    width: 125px;
+    /* Set the width of the container */
+    height: 70.31px;
 }
 
 .image-container {
-    width: 125px; /* Set the width of the container */
-    height: 70.31px; /* Calculate the height based on a 16:9 aspect ratio */
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
+    transition: all .2s;
 }
 
-.copy-btn{
+.copy-btn {
     color: black !important;
 }
 
-.text-bg-primary{
+.text-bg-primary {
     background-color: #6610f2 !important;
 }
- 

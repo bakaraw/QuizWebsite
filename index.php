@@ -30,11 +30,13 @@ session_start();
     <form class="d-flex justify-content-end" role="search">
         <input class="form-control me-2" style="width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search">
         <button class="btn btn-primary border-dark" type="submit">Search</button>
-      </form>
+    </form>
   </div>
 </div>
 </div>
-
+<script>
+  
+</script>
 <!-- footer -->
 <?php require('assets/php/footer.inc.php'); ?>
 
