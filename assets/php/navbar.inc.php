@@ -10,18 +10,18 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
 ?>
 
 <section>
-  <nav class="navbar navbar-expand-lg navbar-light nav-shadow font-moon-bold">
-    <div class="container ">
+  <nav class="navbar navbar-expand-lg navbar-light nav-shadow">
+    <div class="container">
       <a class="navbar-brand me-4" href="index.php">
-        <img src="assets/img/icons/logo.svg" style="width: 110px; height: auto; overflow: visible" alt="QuizHero">
+        <img src="assets/img/icons/logo.svg" style="width: 120px; height: auto; overflow: visible" alt="QuizHero">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse d-flex justify-content-between align-items-end" id="navbarText">
+      <div class="collapse navbar-collapse align-items-end" id="navbarText">
 
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 font-moon-bold">
           <li class="nav-item me-3">
             <?php if (isset($_SESSION['username'])) : ?>
 
@@ -39,9 +39,16 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
             <?php endif; ?>
           </li>
         </ul>
+
+        <div class="navbar-text invisible">
+          &nbsp; <!-- Empty placeholder element -->
+        </div>
+        <div class="navbar-text invisible">
+          &nbsp; <!-- Empty placeholder element -->
+        </div>
         <!-- Conditional display based on user login status -->
         <?php if (isset($_SESSION['username'])) : ?>
-          <div class="navbar-text">
+          <div class="navbar-text font-moon-bold">
             Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>!
             <a href="?logout=1" class="btn btn-primary ms-3">Logout</a>
           </div>
