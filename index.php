@@ -47,37 +47,48 @@ session_start();
   </div>
 </div>
 
+<?php include('assets/php/modalLogin.inc.php'); ?>
+
 <script>
   $(document).ready(function() {
     $('#search-form').submit(function(e) {
       e.preventDefault();
       var quizcode = $('#quizcode-search').val();
+      var session_username = '<?php if (isset($_SESSION['username'])){echo $_SESSION['username'];} ?>';
 
       // Send an AJAX request to check if the quizcode exists
-      if (quizcode != "") {
+      if (session_username !== "") {
+        if (quizcode !== "") {
 
-        $.ajax({
-          type: "POST",
-          url: "assets/ajax/checkQuizCode.php", // PHP file to handle the AJAX request
-          data: {
-            quizcode: quizcode
-          },
-          success: function(response) {
+          $.ajax({
+            type: "POST",
+            url: "assets/ajax/checkQuizCode.php", // PHP file to handle the AJAX request
+            data: {
+              quizcode: quizcode
+            },
+            success: function(response) {
 
-            if (response === 'exists') {
+             
 
-              var url = "answerQuiz.php?code_for_quiz=" + quizcode;
-              window.location.href = url;
-            } else {
-              $('.toast-body').text('Quiz not found :(');
-              $('#no-quiz-found').toast('show');
+              if (response === 'exists') {
+                var url = "answerQuiz.php?code_for_quiz=" + quizcode;
+                window.location.href = url;
+              } else {
+                $('.toast-body').text('Quiz not found :(');
+                $('#no-quiz-found').toast('show');
+              }
+
+
             }
-          }
-        });
+          });
 
+        } else {
+          $('.toast-body').text('Please input code');
+          $('#no-quiz-found').toast('show');
+        }
       } else {
-        $('.toast-body').text('Please input code');
-        $('#no-quiz-found').toast('show');
+        console.log('uten');
+        $('#modalLogin').modal('show');
       }
     });
   });
