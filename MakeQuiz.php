@@ -44,7 +44,7 @@ $quiz_per_page = 10;
     <div class="container mt-4 mb-4">
         <div class="row align-items-center">
             <div class="col">
-                <p class="h3 text-light">My Quizzes</p>
+                <p class="h3 text-dark font-moon-bold">My Quizzes</p>
             </div>
             <div class="col-auto">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -81,7 +81,7 @@ $quiz_per_page = 10;
     <div class="container">
         <div class="row rounded-3">
             <div class="col rounded-3">
-                <div class="scroll-div scrollable-div rounded-3 border border-light shadow" style="height: 700px; overflow-y: auto; --bs-border-opacity: 0.15; --bs-text-opacity: 0.01;">
+                <div class="scroll-div scrollable-div rounded-3 border border-dark shadow" style="height: 700px; overflow-y: auto; --bs-border-opacity: 0.15; --bs-text-opacity: 0.01;">
                     <div class="list-group" id="quizzes">
 
                         <!-- Other list items -->
