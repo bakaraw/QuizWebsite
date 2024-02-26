@@ -103,7 +103,7 @@ if ($stmt->rowCount() > 0) {
                             <i class="fa-regular fa-copy"></i> Copy code
                         </button>
 
-                        <button type="submit" class="btn btn-success" id="save-changes" name="save-changes" data-bs-dismiss="modal">Save changes</button>
+                        <button type="submit" class="btn btn-success" id="save-changes" name="save-changes">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -317,12 +317,16 @@ if ($stmt->rowCount() > 0) {
                     data: formData,
                     type: 'post',
                     success: function(response) {
-                        // handle the response from your PHP file here
-                        console.log(response);
-                        $('#upload-status').text(response);
+                        
+                        if (response == "successful") {
+                            $('#shareModal').modal('hide');
+                            $('#liveToast').toast('show');
+                        } else {
+                            $('#upload-status').text(response);
+                        }
+
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        // handle any errors here
                         console.log(textStatus, errorThrown);
                     }
                 });
@@ -401,12 +405,6 @@ if ($stmt->rowCount() > 0) {
             $('#questions').load("assets/ajax/loadquestions.php", {
                 quizcode: '<?php echo $quizcode; ?>'
             });
-        }
-
-        function removeScriptElement(scriptID) {
-            var scriptElement = document.getElementById(scriptID);
-            scriptElement.parentNode.removeChild(scriptElement);
-            console.log('removed successfully');
         }
 
         // Reset the form fields
