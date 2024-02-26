@@ -9,14 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['isAjaxRequest']) && $_
     }
 }
 
-
-
-
-
-
-
-
-
 if (isset($_GET['code_for_quiz'])) {
     $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
