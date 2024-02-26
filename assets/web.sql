@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Feb 23, 2024 at 05:58 AM
+-- Host: 127.0.0.1
+-- Generation Time: Feb 25, 2024 at 08:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,8 +37,9 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`pass`, `username`) VALUES
-('$2y$10$gUXmDYLGxbTW4p5B8HSuJuPGaB0ckpTXEgMGihpJTFpgvtDJpql/u', 'otin'),
-('$2y$10$k3o1019PoGeCqYV16oUEP.sI74es6q7BIJH7eqAcy8779izsEWvEm', 'shit');
+('$2y$10$VXV61QGzVzi2nQTk7jyvqe5FhvA2/KcLVBxw/KVNHWkR8DIX4QcoG', 'laiton'),
+('$2y$10$LeGX9RNkiEj.2PgGLBUD2OQJWaFtn2Pg8K5lV1jhTykMDVikgB4XK', 'lean'),
+('$2y$10$LF2JfunAwwn0jWTg6izAzuOsRAf6XPnMqthLNzwPo0QBUJk1ndSKG', 'pans');
 
 -- --------------------------------------------------------
 
@@ -63,40 +64,11 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qid`, `quizcode`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
-(1, '$5ayyt2', '123', 'IDEN', '123', '', '', '', ''),
-(2, '$5ayyt2', '123', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(3, 'U71OhnF', '123', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(4, 'U71OhnF', '123', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(5, 'U71OhnF', 'sa true lungs', 'TOF', 'TRUE', '', '', '', ''),
-(11, 'o0d5HRY', 'sino si kokey', 'TOF', 'TRUE', '', '', '', ''),
-(12, 'o0d5HRY', 'shiiit', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(13, 'o0d5HRY', '123', 'IDEN', '2', '', '', '', ''),
-(14, 'o0d5HRY', '12', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(15, 'o0d5HRY', '123', 'IDEN', '123', '', '', '', ''),
-(16, 'o0d5HRY', '123', 'IDEN', '', '', '', '', ''),
-(17, 'o0d5HRY', '123', 'IDEN', '', '', '', '', ''),
-(18, 'o0d5HRY', 'j', 'IDEN', '123', '', '', '', ''),
-(19, 'o0d5HRY', 'jaks', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(20, 'o0d5HRY', '12', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(21, 'TKGstEe', '123', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(22, 'TKGstEe', '123', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(23, 'TKGstEe', '123', 'IDEN', '1', '', '', '', ''),
-(24, 'TKGstEe', '132', 'IDEN', '1', '', '', '', ''),
-(25, 'r4XNJhu', 'utok', 'IDEN', '1', '', '', '', ''),
-(26, '$rahnyz', '123', 'IDEN', '123', '', '', '', ''),
-(28, 'LrUXQpI', 'raxa', 'IDEN', '123', '', '', '', ''),
-(29, 'JlwYuaG', '13', 'IDEN', '13', '', '', '', ''),
-(30, 'Tm0nNDF', '123', 'IDEN', '123', '', '', '', ''),
-(31, 'JwJcnre', '12', 'MCQ', 'choiceC', '1', '2', '3', '4'),
-(32, 'JwJcnre', 'shit lami', 'IDEN', '123', '', '', '', ''),
-(33, 'CbPmbWi', '123', 'IDEN', '1', '', '', '', ''),
-(34, 'CbPmbWi', '123', 'IDEN', '123', '', '', '', ''),
-(35, 'CbPmbWi', '123', 'IDEN', '123', '', '', '', ''),
-(36, 'gCvqjb6', '12', 'IDEN', '123', '', '', '', ''),
-(37, 'gCvqjb6', '123', 'IDEN', '123', '', '', '', ''),
-(38, '9Kbw46i', '123', 'IDEN', '222', '', '', '', ''),
-(39, '9Kbw46i', 'shit', 'IDEN', '123', '', '', '', ''),
-(40, '9Kbw46i', 'bilatize', 'MCQ', 'choiceC', '123', '123', '123', '123');
+(52, 'y3Nsxne', 'is it?', 'TOF', 'TRUE', '', '', '', ''),
+(55, 'xqzHFOo', 'Of course its true?', 'TOF', 'FALSE', '', '', '', ''),
+(56, 'GNncDlZ', 'd oi', 'MCQ', 'choiceB', 'yes', 'no', 'what', 'ha'),
+(57, 'bth4e37', 'is it?', 'TOF', 'TRUE', '', '', '', ''),
+(58, 'ctCuYNQ', 'yesss', 'IDEN', 'no', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -109,45 +81,22 @@ CREATE TABLE `quizlisttable` (
   `title` varchar(255) NOT NULL,
   `thumbnail` varchar(255) NOT NULL,
   `accessibility` varchar(8) NOT NULL,
-  `creator` varchar(255) NOT NULL
+  `creator` varchar(255) NOT NULL,
+  `views` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `quizlisttable`
 --
 
-INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`) VALUES
-('$5ayyt2', '123', '', '', 'shit'),
-('$bt06x2', 'kogmix', '', '', 'shit'),
-('$qdri90', 'otni', '', '', 'otin'),
-('$rahnyz', 'laighton', '', '', 'shit'),
-('$xt7lso', '123', '', '', 'shit'),
-('3NZ08WH', 'loklok', '', '', 'shit'),
-('3yqr0Bv', '323', '', '', 'shit'),
-('58aSWI2', 'shitz', '', '', 'shit'),
-('7MT9MMo', '123321', '65d80048557394.77320454.png', 'PRIVATE', 'shit'),
-('9Kbw46i', 'koing', '65d82405d5d652.86073763.png', 'PRIVATE', 'shit'),
-('c1z14P7', 'uloleers', '', 'PUBLIC', 'shit'),
-('CbPmbWi', 'skwembols', '', 'PRIVATE', 'shit'),
-('CesVxAr', '321go', '65d802d394b301.74791797.png', 'PRIVATE', 'shit'),
-('DYvchlq', '123', '', 'PUBLIC', 'shit'),
-('Eu4eoh1', 'why are you gay?', '', 'PUBLIC', 'shit'),
-('fITcsLx', 'shit', '', '', 'shit'),
-('gCvqjb6', 'serverside monster', '', 'PRIVATE', 'shit'),
-('JlwYuaG', 'copy2', '', 'PUBLIC', 'shit'),
-('JwJcnre', 'corykoy', '', 'PRIVATE', 'shit'),
-('LrUXQpI', 'public', '', 'PUBLIC', 'shit'),
-('MFKmYSV', 'gapnguoot', '', 'PRIVATE', 'shit'),
-('o0d5HRY', 'new Quiz', '', '', 'shit'),
-('PsPOwr8', 'gabokol', '65d7fd38703f23.91367010.jpg', 'PUBLIC', 'shit'),
-('r4XNJhu', '123', '', '', 'shit'),
-('r8ZmkDI', '12211', '', 'PUBLIC', 'shit'),
-('sPLLcM0', 'itlog ni bain', '', '', 'shit'),
-('TKGstEe', 'shitzu', '', '', 'shit'),
-('Tm0nNDF', 'akos kay gay', '', 'PUBLIC', 'shit'),
-('U71OhnF', 'si god na bahala', '', '', 'shit'),
-('xtKvduA', 'shotgun2', '65d8062ea7d187.73708020.png', 'PRIVATE', 'shit'),
-('Z0WieHu', 'gabukol', '', 'PRIVATE', 'shit');
+INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`) VALUES
+('bth4e37', 'sample', '65dae690439182.42432150.png', 'PUBLIC', 'laiton', 3),
+('ctCuYNQ', 'sample for private', 'default_img.jpg', 'PRIVATE', 'laiton', 0),
+('GNncDlZ', 'pubic', '65dacca4de9f65.31747546.png', 'PUBLIC', 'pans', 2),
+('oUxX7PG', 'private', 'default_img.jpg', 'PRIVATE', 'pans', 0),
+('xqzHFOo', 'new', 'default_img.jpg', 'PRIVATE', 'pans', 0),
+('y3Nsxne', 'new lean', '65dac26ac22716.75628370.jpg', 'PUBLIC', 'lean', 1),
+('zLTOvai', 'sampl', 'default_img.jpg', 'PRIVATE', 'pans', 0);
 
 --
 -- Indexes for dumped tables
@@ -181,7 +130,7 @@ ALTER TABLE `quizlisttable`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- Constraints for dumped tables
