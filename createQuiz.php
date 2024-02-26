@@ -291,7 +291,7 @@ if ($stmt->rowCount() > 0) {
     </div>
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-outline-light add-btn mb-3" id="add-question" name="add-question">
+            <button type="submit" class="btn btn-primary add-btn mb-3" id="add-question" name="add-question">
                 <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>

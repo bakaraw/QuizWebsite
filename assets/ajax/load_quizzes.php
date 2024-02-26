@@ -16,13 +16,13 @@ if ($stmt->rowCount() > 0) :
             $select_public = "selected";
         }
 ?>
-        <a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action bg-dark border border-light text-light d-flex align-items-center" aria-current="true" style="--bs-border-opacity: 0.15;">
+        <a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action border border-dark text-dark d-flex align-items-center" aria-current="true" style="--bs-border-opacity: 0.15;">
             
             <div class="image-container rounded-1 me-3" style="background-image: url('assets/img/uploads/<?php echo $row['thumbnail'] ?>');"></div>
             <div>
-                <h5 class="mb-1 text-light text-break"><?php echo $row['title'] ?></h5>
+                <h5 class="mb-1 text-dark text-break"><?php echo $row['title'] ?></h5>
             </div>
-            <div class="ms-auto d-flex align-items-center text-light">
+            <div class="ms-auto d-flex align-items-center text-dark">
                 <div class="me-3" id="access-icon<?php echo $row['code'] ?>">
                     <?php if ($row['accessibility'] == 'PRIVATE') : ?>
                         <i class="fa-solid fa-lock fa-lg" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
@@ -30,7 +30,7 @@ if ($stmt->rowCount() > 0) :
                         <i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
                     <?php endif; ?>
                 </div>
-                <select class="form-select bg-dark border border-dark fw-semibold access-option me-3 text-light" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
+                <select class="form-select bg-transparent border border-dark fw-semibold access-option me-3 text-dark" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
                     <option <?php echo $select_private; ?> value="PRIVATE">Private</option>
                     <option <?php echo $select_public; ?> value="PUBLIC">Public</option>
                 </select>
@@ -101,7 +101,7 @@ if ($stmt->rowCount() > 0) :
 else :
     ?>
     <div class="d-flex justify-content-center align-items-center mt-5">
-        <h3 class="text-light" style="--bs-text-opacity: 0.5;">No quizzes created</h3>
+        <h3 class="text-dark" style="--bs-text-opacity: 0.5;">No quizzes created</h3>
     </div>
 
 <?php
