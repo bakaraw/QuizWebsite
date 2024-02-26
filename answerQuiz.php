@@ -1,37 +1,33 @@
 <?php
 include "assets/php/dbh_quiz.inc.php";
 session_start();
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['isAjaxRequest']) && $_POST['isAjaxRequest'] == 'true') {
-    if (isset($_POST['code_for_quiz'])) {
-        $_SESSION['code_for_quiz'] = $_POST['code_for_quiz'];
-        echo "Quiz code set in session"; // Response back to the AJAX call
-        exit; // Stop further script execution for AJAX request
-    }
-}
-
-
-
-
-
-
-
-
 
 if (isset($_GET['code_for_quiz'])) {
     $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
     // Assuming $pdo is your PDO database connection instance
 
-    // First, update the view count
-    $updateSql = "UPDATE quizlisttable SET views = views + 1 WHERE code = ?";
-    $updateStmt = $pdo->prepare($updateSql);
-    $updateStmt->execute([$quizCode]); // Execute with an array of parameters
-
-    // Then, fetch questions related to the quiz
-    $fetchSql = "SELECT * FROM `questions` WHERE quizcode = ?";
+    // Fetch quiz details, including 'views'
+    $fetchSql = "SELECT * FROM quizlisttable WHERE code = ?";
     $fetchStmt = $pdo->prepare($fetchSql);
-    $fetchStmt->execute([$quizCode]); // Execute with an array of parameters
-    $questions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
+    $fetchStmt->execute([$quizCode]);
+    $quizDetails = $fetchStmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($quizDetails) {
+        // Increment the 'views' count
+        $updateSql = "UPDATE quizlisttable SET views = views + 1 WHERE code = ?";
+        $updateStmt = $pdo->prepare($updateSql);
+        $updateStmt->execute([$quizCode]);
+
+        // Fetch questions related to the quiz
+        $fetchSql = "SELECT * FROM `questions` WHERE quizcode = ?";
+        $fetchStmt = $pdo->prepare($fetchSql);
+        $fetchStmt->execute([$quizCode]);
+        $questions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        echo 'Quiz not found.';
+        exit;
+    }
 }
 ?>
 
@@ -41,10 +37,7 @@ if (isset($_GET['code_for_quiz'])) {
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
 
-
-
 <div class="container">
-
     <form action="submit_quiz.php" method="post">
         <?php foreach ($questions as $question): ?>
             <div class="container ms-auto me-auto">
