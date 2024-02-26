@@ -77,7 +77,6 @@
     height: auto; /* Maintain aspect ratio */
 }
 
-/* Adjust the text container to fill remaining space if needed */
 .text-content {
     flex: 1; /* Allow text content to grow and fill available space */
 }
@@ -146,26 +145,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if ($result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {           
-            echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
+            echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
             echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz found</h5></div>';
             $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
             if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
                 $thumbnailPath = 'assets/img/uploads/default_img.jpg'; 
             }
             echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
-      . '<div class="card-body d-flex align-items-center">'
-      . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">'
-      . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
-      . '</div>'
-      . '<div style="flex: 1;">'
-      . '<h5 class="card-title">' . htmlspecialchars($row["title"]) . '</h5>'
-      . '<p class="card-text">'
-      . 'Creator: ' . htmlspecialchars($row["creator"]) . '<br>'
-      . 'Code: ' . htmlspecialchars($row["code"])
-      . '</p>'
-      . '</div>' // Close text container
-      . '</div>' // Close card-body
-      . '</div>'; // Close card
+            . '<div class="card-body d-flex align-items-center justify-content-between">'
+            . '<div class="left-content d-flex align-items-center">'
+            . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">'
+            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+            . '</div>'
+            . '<div>'
+            . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+            . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+            . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+            . '</div>' 
+            . '</div>' 
+            . '<div class="right-content">'
+            . '<p class="views-text">Views: ' . htmlspecialchars($row["views"]) . '</p>'
+            . '</div>' 
+            . '</div>'
+            . '</div>'; 
               echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
               unset($_SESSION['quizCode']);
 
@@ -173,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         unset($_SESSION['quizCode']);
 
-        echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
+        echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
         echo '<br>';
         echo '<div data-quiz-code class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">No quiz found with code: ' . $quizCode . '</h5></div>';
         echo '<br>';
@@ -220,15 +222,13 @@ if ($result->num_rows > 0) {
       echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
       . '<div class="card-body d-flex align-items-center justify-content-between">'
       . '<div class="left-content d-flex align-items-center">'
-      . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px; overflow: hidden;">'
-      . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+      . '<div class="img-container me-3" style="flex: 0 0 50px; height: 50px;">' // Removed overflow:hidden to allow adjustments below
+      . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">' // Adjusted styles here
       . '</div>'
       . '<div>'
-      . '<h5 class="card-title">' . htmlspecialchars($row["title"]) . '</h5>'
-      . '<p class="card-text">'
-      . 'Creator: ' . htmlspecialchars($row["creator"]) . '<br>'
-      . 'Code: ' . htmlspecialchars($row["code"])
-      . '</p>'
+      . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+      . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+      . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
       . '</div>' // Close text container
       . '</div>' // Close left content
       . '<div class="right-content">'
@@ -238,18 +238,24 @@ if ($result->num_rows > 0) {
       . '</div>'; // Close card
     }
 } else {
-  echo "0 results";
+    echo '<div class="card quiz-card">'
+    . '<div class="card-body d-flex align-items-center justify-content-between">'
+    . '<div class="left-content d-flex align-items-center">'
+    . '<p>No quiz found.</p>'
+    . '</div>' // Close left content
+    . '</div>' // Close card-body
+    . '</div>'; // Close card
 }
 echo    '<div class="pagination-container">';
 echo         '<div class="card-body d-flex justify-content-center">';
 
-        for ($i = 1; $i <= $totalPages; $i++) {
-            if ($i == $currentPage) {
-                echo "<b>$i</b> ";
-            } else {
-                echo "<a href='?page=$i'>$i</a> "; 
-            }
-        }
+for ($i = 1; $i <= $totalPages; $i++) {
+    if ($i == $currentPage) {
+        echo "<b>$i</b> ";
+    } else {
+        echo "<a href='?page=$i'>$i</a> "; 
+    }
+}
         echo '</div>'; 
     echo '</div>'; 
 $conn->close();
