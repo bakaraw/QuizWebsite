@@ -12,7 +12,7 @@ session_start();
 <div class="container">
   <div class="card bg-dark text-light border-dark" style="width: 30rem;">
     <div class="pt-5" ">
-    <h5 class=" card-title h1 pb-3">Create quiz with just a few clicks</h5>
+    <h1 class=" card-title h1 pb-3 font-moon-bold">Create quiz with just a few clicks</h1>
       <p class="card-text " style="width: 30rem;">
         QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
       </p>

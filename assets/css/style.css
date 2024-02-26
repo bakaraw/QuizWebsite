@@ -1,17 +1,41 @@
-.navbar {
-    background-color: #6610f2 !important;
+
+@font-face {
+    font-family: 'RobotoLight';
+    src: url('../img/fonts/Roboto-Light.ttf') format('truetype');
+    /* Add additional src lines for different font styles (e.g., bold, italic) */
 }
 
+@font-face {
+    font-family: 'MoonBold';
+    src: url('../img/fonts/Moon\ Bold.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'MoonLight';
+    src: url('../img/fonts/Moon\ Light.otf') format('opentype');
+}
 .btn-primary {
-    background-color: #6610f2 !important;
+    
+    background-color: #fcbf49;
+    color: white !important;
+    border: none;
+    box-shadow: 0px 5px 0px 0px rgb(234, 148, 36);
+    border-radius: 16px;
+}
+  
+.font-moon-bold{
+    font-family: 'MoonBold', serif;
+}
+.navbar-light{
+    color: #212121;
 }
 
-.btn-primary:hover {
-    background-color: #5605da !important;
+.bg-light{
+    background-color: #FFFFFF !important;
 }
 
-.btn-primary:active {
-    background-color: #4e06c2 !important;
+.nav-shadow {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.08); /* Change the opacity value as needed */
 }
 
 .btn-light {
