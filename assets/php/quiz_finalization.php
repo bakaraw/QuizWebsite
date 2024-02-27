@@ -31,6 +31,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
                 move_uploaded_file($thmb_tmp, $file_destination);
 
                 updateQuizWithThmb($pdo, $quiztitle, $access_option, $new_file_name, $quizcode);
+                echo "successful";
             } else {
                 echo "Image too large";
             }
