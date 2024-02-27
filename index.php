@@ -32,35 +32,34 @@ session_start();
 
 <img src="assets/img/icons/curve1.svg" alt="">
 
-
-
-
-
-
 <div style="background-color: #fcbf49; width: 100%;">
-  <div class="container"></div>
+
   <div class="container">
+    <img class="me-auto img-shadow" src="assets/img/art/brain-art.png" alt="" style="float: left; width:380px; height: auto;">
     <div class="card border-dark ms-auto bg-orange" style="width: 37rem; --bs-border-opacity: 0;">
       <div class="pt-5">
-        <h5 class="card-title h1 pb-3 d-flex justify-content-end font-moon-bold">Test your knowledge</h5>
-        <p class="card-text text-end font-roboto-light">Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase your brilliance!</p>
-        <form class="d-flex justify-content-end" role="search" id="search-form">
-          <input class="form-control me-2 rounded" style="width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search" id="quizcode-search">
+        <h5 class="card-title h1 pb-4 d-flex justify-content-end font-moon-bold">Test your knowledge</h5>
+        <p class="card-text text-end font-roboto-light mb-4 font-roboto-light  ">Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase your brilliance!</p>
+        <form class="d-flex justify-content-end mt-4 mb-5" role="search" id="search-form">
+          <input class="form-control me-2 rounded ms-auto" style="width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search" id="quizcode-search">
           <button class="btn btn-info border-dark" type="submit" id="search-btn">Search</button>
         </form>
       </div>
     </div>
   </div>
 
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="no-quiz-found" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <strong class="me-auto">QuizHero</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        Quiz not found :\
-      </div>
+</div>
+<img src="assets/img/icons/curve2.svg" alt="">
+
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="no-quiz-found" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">QuizHero</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Quiz not found :\
     </div>
   </div>
 </div>

@@ -14,6 +14,11 @@
     src: url('../img/fonts/Moon\ Light.otf') format('opentype');
 }
 
+.img-shadow{
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.4)); /* Adjust the shadow color and size as needed */
+    
+}
+
 .bg-orange{
     background-color: #fcbf49;
 }
@@ -85,7 +90,7 @@
 }
 
 .nav-shadow {
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     /* Change the opacity value as needed */
 }
 
