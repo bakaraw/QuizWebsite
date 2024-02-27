@@ -13,7 +13,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
   <nav class="navbar navbar-expand-lg navbar-light nav-shadow">
     <div class="container">
       <a class="navbar-brand me-4" href="index.php">
-        <img src="assets/img/icons/logo.svg" style="width: 120px; height: auto; overflow: visible" alt="QuizHero">
+        <img src="assets/img/icons/quizhero.png" style="width: 120px; height: auto; overflow: visible" alt="QuizHero">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
