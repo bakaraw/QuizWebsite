@@ -20,8 +20,8 @@ $checkD = "";
 <form class="needs-validation" method="post" id="questionform<?php echo $qid ?>" name="questionform">
     <!-- select option element (quiztype) -->
     <div class="input-group mb-3">
-        <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
-        <select onchange="changeQuizType<?php echo $qid; ?>()" class="form-select bg-dark text-light border-light" id="questiontype<?php echo $qid; ?>" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype<?php echo $qid; ?>">
+        <label class="input-group-text">Question Type</label>
+        <select onchange="changeQuizType<?php echo $qid; ?>()" class="form-select" id="questiontype<?php echo $qid; ?>" style="width:10rem;" name="questiontype<?php echo $qid; ?>">
             <option <?php
                     if ($questiontype == "IDEN") {
                         echo "selected";
@@ -43,8 +43,8 @@ $checkD = "";
 
     <!-- for question text area -->
     <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
-        <textarea type="text" class="form-control bg-dark text-light border-light" rows="3" style="--bs-border-opacity: .2;" name="question<?php echo $qid ?>" id="question<?php echo $qid ?>" required><?php echo $question; ?></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label">Question:</label>
+        <textarea type="text" class="form-control" rows="3" name="question<?php echo $qid ?>" id="question<?php echo $qid ?>" required><?php echo $question; ?></textarea>
         <div class="invalid-feedback text-danger">
             Please enter a question.
         </div>
@@ -57,7 +57,7 @@ $checkD = "";
         switch ($questiontype) {
             case "IDEN":
                 echo '
-                <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" value="' . $answer . '" required>
+                <input class="form-control" type="text" placeholder="Answer" aria-label="default input example" value="' . $answer . '" required>
                 <div class="invalid-feedback text-danger">
                     Please enter the answer.
                 </div>
@@ -74,33 +74,33 @@ $checkD = "";
                     $checkD =  "checked";
                 }
                 echo '
-                <p class="text-light" style="--bs-text-opacity: .7;">Input choices then select the answer</p>
+                <p>Input choices then select the answer</p>
                 <div class="input-group mt-3">
-                    <div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">
+                    <div class="input-group-text">
                         <input class="form-check-input mt-0" type="radio" value="choiceA" aria-label="Radio button for following text input" name="answerMCQ" ' . $checkA . ' required>
                     </div>
-                    <input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice A" name="choiceA" value="' . $choiceA . '" required>
+                    <input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice A" name="choiceA" value="' . $choiceA . '" required>
                 </div>
 
                 <div class="input-group mt-3">
-                    <div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">
+                    <div class="input-group-text" >
                         <input class="form-check-input mt-0" type="radio" value="choiceB" aria-label="Radio button for following text input" name="answerMCQ" ' . $checkB . ' required>
                     </div>
-                    <input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice B" name="choiceB" value="' . $choiceB . '" required>
+                    <input type="text" class="form-control" aria-label="Text input with radio button"  placeholder="Choice B" name="choiceB" value="' . $choiceB . '" required>
                 </div>
 
                 <div class="input-group mt-3">
-                    <div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">
+                    <div class="input-group-text">
                         <input class="form-check-input mt-0" type="radio" value="choiceC" aria-label="Radio button for following text input" name="answerMCQ" ' . $checkC . ' required>
                     </div>
-                    <input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice C" name="choiceC" value="' . $choiceC . '" required>
+                    <input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice C" name="choiceC" value="' . $choiceC . '" required>
                 </div>
 
                 <div class="input-group mt-3">
-                    <div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">
+                    <div class="input-group-text">
                         <input class="form-check-input mt-0" type="radio" value="choiceD" aria-label="Radio button for following text input" name="answerMCQ" ' . $checkD . ' required>
                     </div>
-                    <input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice D" name="choiceD" value="' . $choiceD . '" required>
+                    <input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice D" name="choiceD" value="' . $choiceD . '" required>
                 </div>';
 
                 break;
@@ -112,15 +112,15 @@ $checkD = "";
                     $checkFalse = "checked";
                 }
                 echo '
-                <p class="text-light" style="--bs-text-opacity: .7;">Answer:</p>
+                <p>Answer:</p>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="answerTOF" id="inlineRadio1" value="TRUE" ' . $checkTrue . ' required>
-                    <label class="form-check-label text-light" for="inlineRadio1">True</label>
+                    <label class="form-check-label" for="inlineRadio1">True</label>
                 </div>
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="answerTOF" id="inlineRadio2" value="FALSE" ' . $checkFalse . ' required>
-                    <label class="form-check-label text-light" for="inlineRadio2">False</label>
+                    <label class="form-check-label" for="inlineRadio2">False</label>
                 </div>';
                 break;
         }
@@ -131,12 +131,12 @@ $checkD = "";
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-        <button class="btn btn-warning text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
+        <button class="btn btn-info text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
     </div>
 </form>
 <script>
     var identHtml<?php echo $qid; ?> = [
-        '<input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" value="<?php echo $answer; ?>" required>',
+        '<input class="form-control " type="text" placeholder="Answer" aria-label="default input example" name="answerIden" value="<?php echo $answer; ?>" required>',
         '<div class="invalid-feedback text-danger">',
         'Please enter a question.',
         '</div>'
@@ -144,47 +144,47 @@ $checkD = "";
 
     //html for mcq
     var mcqHtml<?php echo $qid; ?> = [
-        '<p class="text-light" style="--bs-text-opacity: .7;">Input choices then select the answer</p>',
+        '<p>Input choices then select the answer</p>',
         '<div class="input-group mt-3">',
-        '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
+        '<div class="input-group-text">',
         '<input class="form-check-input mt-0" type="radio" value="choiceA" aria-label="Radio button for following text input" name="answerMCQ" <?php echo $checkA; ?> required>',
         '</div>',
-        '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice A" name="choiceA" value="<?php echo $choiceA ?>" required>',
+        '<input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice A" name="choiceA" value="<?php echo $choiceA ?>" required>',
         '</div>',
 
         '<div class="input-group mt-3">',
-        '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
+        '<div class="input-group-text">',
         '<input class="form-check-input mt-0" type="radio" value="choiceB" aria-label="Radio button for following text input" name="answerMCQ" <?php echo $checkB; ?> required>',
         '</div>',
-        '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice B" name="choiceB" value="<?php echo $choiceB ?>" required>',
+        '<input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice B" name="choiceB" value="<?php echo $choiceB ?>" required>',
         '</div>',
 
         '<div class="input-group mt-3">',
-        '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
+        '<div class="input-group-text " >',
         '<input class="form-check-input mt-0" type="radio" value="choiceC" aria-label="Radio button for following text input" name="answerMCQ" <?php echo $checkC; ?> required>',
         '</div>',
-        '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice C" name="choiceC" value="<?php echo $choiceC ?>" required>',
+        '<input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice C" name="choiceC" value="<?php echo $choiceC ?>" required>',
         '</div>',
 
         '<div class="input-group mt-3">',
-        '<div class="input-group-text bg-dark border-light" style="--bs-border-opacity: .2;">',
+        '<div class="input-group-text">',
         '<input class="form-check-input mt-0" type="radio" value="choiceD" aria-label="Radio button for following text input" name="answerMCQ" <?php echo $checkD; ?> required>',
         '</div>',
-        '<input type="text" class="form-control bg-dark border-light text-light" aria-label="Text input with radio button" style="--bs-border-opacity: .2;" placeholder="Choice D" name="choiceD" value="<?php echo $choiceD ?>" required>',
+        '<input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice D" name="choiceD" value="<?php echo $choiceD ?>" required>',
         '</div>',
     ];
 
     // html for true or false
     var tofHtml<?php echo $qid; ?> = [
-        '<p class="text-light" style="--bs-text-opacity: .7;">Answer:</p>',
+        '<p>Answer:</p>',
         '<div class="form-check form-check-inline">',
         '<input class="form-check-input" type="radio" name="answerTOF" id="inlineRadio1" value="TRUE" <?php echo $checkTrue ?> required>',
-        '<label class="form-check-label text-light" for="inlineRadio1">True</label>',
+        '<label class="form-check-label" for="inlineRadio1">True</label>',
         '</div>',
 
         '<div class="form-check form-check-inline">',
         '<input class="form-check-input" type="radio" name="answerTOF" id="inlineRadio2" value="FALSE" <?php echo $checkFalse ?> required>',
-        '<label class="form-check-label text-light" for="inlineRadio2">False</label>',
+        '<label class="form-check-label" for="inlineRadio2">False</label>',
         '</div>',
     ];
 

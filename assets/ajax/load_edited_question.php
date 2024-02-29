@@ -57,7 +57,7 @@ if ($row) {
     echo '<input type="hidden"  name="quizcode" value="' . $quizcode . '">';
     echo '<input type="hidden"  name="qid" value="' . $row['qid'] . '">';
     echo '<div class="d-grid gap-2 d-md-flex justify-content-md-end" id="' . 'question' . $row['qid'] . '">';
-    echo '<button class="btn btn-warning me-md-1 border border-light" type="submit" name="edit-' . $row['qid'] . '" id="edit-' . $row['qid'] . '" style="--bs-border-opacity: 0;">';
+    echo '<button class="btn btn-info me-md-1 border border-light" type="submit" name="edit-' . $row['qid'] . '" id="edit-' . $row['qid'] . '" style="--bs-border-opacity: 0;">';
     echo "Edit";
     echo '</button>';
     echo '<button class="btn btn-danger" type="submit" name="delete-' . $row['qid'] . '" id="delete-' . $row['qid'] . '">';

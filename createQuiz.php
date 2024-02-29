@@ -39,8 +39,8 @@ if ($stmt->rowCount() > 0) {
     <div class="container mt-5 mb-5"></div>
     <form action="" method="post" id="share-form">
         <div class="input-group mb-3 border-light">
-            <span class="input-group-text bg-dark text-light border-light" id="inputGroup-sizing-default" style="--bs-bg-opacity: .05; --bs-border-opacity: .2; --bs-text-opacity: .75;">Quiz title</span>
-            <input type="text" class="form-control bg-dark text-light border-light me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="--bs-bg-opacity: .05;  --bs-border-opacity: .2;" value="<?php echo $quiztitle; ?>" name="title-input">
+            <span class="input-group-text" id="inputGroup-sizing-default">Quiz title</span>
+            <input type="text" class="form-control me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
             <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">
                 Share
             </button>
@@ -132,7 +132,6 @@ if ($stmt->rowCount() > 0) {
         <div class="col" id="questions">
             <?php
 
-            // Prepare the SQL query
             $sql = "SELECT * FROM `questions` WHERE quizcode = :quizcode";
 
             // Prepare the statement
@@ -148,7 +147,7 @@ if ($stmt->rowCount() > 0) {
                 // Fetch and display the results
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<div class='container ms-auto me-auto'>";
-                    echo "<div class='bg-black rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid' style='--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70;' id='question-{$row['qid']}'>";
+                    echo "<div class=' rounded p-3 mt-3 shadow shadow-4 container-fluid' id='question-{$row['qid']}'>";
 
                     switch ($row['questiontype']) {
                         case "IDEN":
@@ -192,7 +191,7 @@ if ($stmt->rowCount() > 0) {
                     <input type="hidden"  name="quizcode" value="' . $quizcode . '">
                     <input type="hidden"  name="qid" value="' . $row['qid'] . '">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="' . 'question' . $row['qid'] . '">
-                    <button class="btn btn-warning me-md-1 border border-light" type="submit" name="edit-' . $row['qid'] . '" id="edit-' . $row['qid'] . '" style="--bs-border-opacity: 0;">
+                    <button class="btn btn-info me-md-1 border border-light" type="submit" name="edit-' . $row['qid'] . '" id="edit-' . $row['qid'] . '" style="--bs-border-opacity: 0;">
                         Edit
                     </button>
                     <button class="btn btn-danger" type="submit" name="delete-' . $row['qid'] . '" id="delete-' . $row['qid'] . '">
@@ -244,7 +243,6 @@ if ($stmt->rowCount() > 0) {
             }
 
 
-
             ?>
         </div>
     </div>
@@ -252,12 +250,12 @@ if ($stmt->rowCount() > 0) {
 
     <div class="form" id="questionform-div">
         <form class="needs-validation" method="post" id="questionform" name="questionform">
-            <div class="shadow bg-black border border-light p-3 rounded-4 mt-3" style="--bs-bg-opacity: .2; --bs-border-opacity: .2;">
+            <div class="shadow p-3 rounded-4 mt-3 bg-secondary-subtle">
 
                 <!-- select option element (quiztype) -->
                 <div class="input-group mb-3">
-                    <label class="input-group-text bg-dark text-light border-light" style="--bs-border-opacity: .2; --bs-text-opacity: .70;">Question Type</label>
-                    <select onchange="changeQuizType()" class="form-select bg-dark text-light border-light" id="questiontype" style="--bs-border-opacity: .2;  --bs-text-opacity: .75; width:10rem;" name="questiontype">
+                    <label class="input-group-text">Question Type</label>
+                    <select onchange="changeQuizType()" class="form-select" id="questiontype" style="width:10rem;" name="questiontype">
                         <option selected value="IDEN">Identification</option>
                         <option value="MCQ">Multiple Choice Question</option>
                         <option value="TOF">True or False</option>
@@ -267,8 +265,8 @@ if ($stmt->rowCount() > 0) {
 
                 <!-- for question text area -->
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label text-light" style="--bs-text-opacity: .7;">Question:</label>
-                    <textarea type="text" class="form-control bg-dark text-light border-light" id="exampleFormControlTextarea1" rows="3" style="--bs-border-opacity: .2;" name="question" required></textarea>
+                    <label for="exampleFormControlTextarea1" class="form-label">Question:</label>
+                    <textarea type="text" class="form-control" id="exampleFormControlTextarea1" rows="3" name="question" required></textarea>
                     <div class="invalid-feedback text-danger">
                         Please enter a question.
                     </div>
@@ -277,21 +275,21 @@ if ($stmt->rowCount() > 0) {
 
                 <!-- changing div based on the question type -->
                 <div id="questiontype_gui">
-                    <input class="form-control bg-dark text-light border-light" type="text" placeholder="Answer" aria-label="default input example" style="--bs-border-opacity: .2;" name="answerIden" required>
+                    <input class="form-control" type="text" placeholder="Answer" aria-label="default input example" name="answerIden" required>
                     <div class="invalid-feedback text-danger">
                         Please enter the answer.
                     </div>
                 </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                    <button class="btn btn-warning text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
+                    <button class="btn btn-info text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
                 </div>
             </div>
         </form>
     </div>
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary add-btn mb-3" id="add-question" name="add-question">
+            <button type="submit" class="btn btn-primary add-btn mb-5" id="add-question" name="add-question">
                 <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>
@@ -317,7 +315,7 @@ if ($stmt->rowCount() > 0) {
                     data: formData,
                     type: 'post',
                     success: function(response) {
-                        
+
                         if (response == "successful") {
                             $('#shareModal').modal('hide');
                             $('#liveToast').toast('show');
