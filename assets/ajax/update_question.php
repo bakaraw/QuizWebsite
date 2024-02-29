@@ -57,7 +57,7 @@ $checkD = "";
         switch ($questiontype) {
             case "IDEN":
                 echo '
-                <input class="form-control" type="text" placeholder="Answer" aria-label="default input example" value="' . $answer . '" required>
+                <input class="form-control" type="text" placeholder="Answer" aria-label="default input example" name="answerIden" value="' . $answer . '" required>
                 <div class="invalid-feedback text-danger">
                     Please enter the answer.
                 </div>
