@@ -14,11 +14,16 @@
     src: url('../img/fonts/Moon\ Light.otf') format('opentype');
 }
 
-.bg-orange{
+
+.bg-dark-blue {
+    background-color: #003049;
+}
+
+.bg-orange {
     background-color: #fcbf49;
 }
 
-.text-orange{
+.text-orange {
     color: #f77f00;
 }
 
@@ -32,6 +37,7 @@
     font-family: 'MoonBold', sans-serif;
     /* Add transition for smooth effect */
 }
+
 .btn-primary:hover {
     background-color: #f77f00;
     box-shadow: none;
@@ -43,11 +49,77 @@
     /* Remove box shadow on hover */
 }
 
-.rounded{
+.btn-danger {
+    background-color: #dc3545;
+    color: white !important;
+    border: none;
+    box-shadow: 0px 5px 0px 0px rgb(185, 29, 45);
+    border-radius: 16px;
+    transition: box-shadow 0.3s ease;
+    font-family: 'MoonBold', sans-serif;
+    /* Add transition for smooth effect */
+}
+
+.btn-danger:hover {
+    background-color: #a51b29;
+    box-shadow: none;
+    /* Remove box shadow on hover */
+}
+
+.btn-danger:active {
+    background-color: #9e0f1d !important;
+    /* Remove box shadow on hover */
+}
+
+.btn-success {
+    background-color: #198653;
+    color: white !important;
+    border: none;
+    box-shadow: 0px 5px 0px 0px rgb(11, 99, 58);
+    border-radius: 16px;
+    transition: box-shadow 0.3s ease;
+    font-family: 'MoonBold', sans-serif;
+    /* Add transition for smooth effect */
+}
+
+.btn-success:hover {
+    background-color: #0f693f;
+    box-shadow: none;
+    /* Remove box shadow on hover */
+}
+
+.btn-success:active {
+    background-color: #9e0f1d !important;
+    /* Remove box shadow on hover */
+}
+
+.btn-secondary {
+    background-color: #7b7b7b;
+    color: white !important;
+    border: none;
+    box-shadow: 0px 5px 0px 0px rgb(92, 92, 92);
+    border-radius: 16px;
+    transition: box-shadow 0.3s ease;
+    font-family: 'MoonBold', sans-serif;
+    /* Add transition for smooth effect */
+}
+
+.btn-secondary:hover {
+    background-color: #5f5f5f;
+    box-shadow: none;
+    /* Remove box shadow on hover */
+}
+
+.btn-secondary:active {
+    background-color: #464646 !important;
+    /* Remove box shadow on hover */
+}
+
+.rounded {
     border-radius: 16px !important;
 }
 
-.btn-info{
+.btn-info {
     background-color: #003049 !important;
     color: white !important;
     border: none;
@@ -72,7 +144,7 @@
     font-family: 'MoonBold', serif;
 }
 
-.font-roboto-light{
+.font-roboto-light {
     font-family: 'RobotoLight', sans-serif;
 }
 
@@ -85,7 +157,7 @@
 }
 
 .nav-shadow {
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     /* Change the opacity value as needed */
 }
 
@@ -113,9 +185,12 @@
 
 }
 
-.add-btn:hover img {
-    filter: brightness(0.1) !important;
+.solid-shadow{
+    box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.2);
 }
+/* .add-btn:hover img {
+    filter: brightness(0.1) !important;
+} */
 
 input::placeholder {
     color: red;
@@ -159,16 +234,27 @@ input::placeholder {
 }
 
 .my-quiz:hover {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.image-container {
-    width: 125px;
-    height: 70.31px;
-    background-size: cover;
-    background-position: center;
-    transition: all .2s;
+.ratio {
+    position: relative;
+    width: 100%;
 }
+
+.ratio img {
+    object-fit: cover;
+    width: 100%;
+    /* Adjust the size as needed */
+    height: 100%;
+    /* Adjust the size as needed */
+}
+
+.img-thumbnail {
+    border: 0; /* Remove the border */
+    padding: 0; /* Remove any padding */
+}
+
 
 .copy-btn {
     color: black !important;

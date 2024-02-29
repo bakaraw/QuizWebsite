@@ -7,60 +7,60 @@ session_start();
 
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
-<div class="container">
-  <div class="container mt-5 pt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <!-- Your existing content here -->
-        <div class="card bg-transparent border-dark" style="width: 38rem; --bs-border-opacity: 0; margin-top:4rem ;">
-          <div class="pt-5">
-            <h1 class="card-title h1 font-moon-bold mb-5 text-orange">Create quiz with just a few clicks</h1>
-            <p class="card-text font-roboto-light h5 mb-5" style="width: 35rem;">
-              QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
-            </p>
-            <a href="#" class="btn btn-primary btn-lg text-dark border-dark">Start now</a>
-          </div>
+
+<div class="container mt-2 pt-5">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card bg-transparent border-dark" style="--bs-border-opacity: 0;">
+        <div class="card-body">
+          <h1 class="card-title h1 font-moon-bold mb-4 text-orange">Create quiz with just a few clicks</h1>
+          <p class="card-text font-roboto-light h5 mb-4">
+            QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
+          </p>
+          <a href="#" class="btn btn-primary btn-lg text-dark border-dark">Start now</a>
         </div>
       </div>
-      <div class="col-md-6 ms-auto">
-        <!-- Image positioned at the very right -->
-        <img src="assets/img/art/314.jpg" class="img-fluid" alt="Image" style="max-width: 100%; height: auto;">
-      </div>
+    </div>
+    <div class="col-md-6">
+      <img src="assets/img/art/314.jpg" class="img-fluid" alt="Image">
     </div>
   </div>
 </div>
 
-<img src="assets/img/icons/curve1.svg" alt="">
-
-
-
-
-
-
-<div style="background-color: #fcbf49; width: 100%;">
-  <div class="container"></div>
-  <div class="container">
-    <div class="card border-dark ms-auto bg-orange" style="width: 37rem; --bs-border-opacity: 0;">
-      <div class="pt-5">
-        <h5 class="card-title h1 pb-3 d-flex justify-content-end font-moon-bold">Test your knowledge</h5>
-        <p class="card-text text-end font-roboto-light">Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase your brilliance!</p>
-        <form class="d-flex justify-content-end" role="search" id="search-form">
-          <input class="form-control me-2 rounded" style="width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search" id="quizcode-search">
-          <button class="btn btn-info border-dark" type="submit" id="search-btn">Search</button>
-        </form>
+<img src="assets/img/icons/curve1.svg" alt="" style="--bs-border-opacity: 0;">
+<div class="bg-orange" style="--bs-border-opacity: 0;">
+  <div class="container pt-5 pb-5">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <img class="img-fluid mb-4" src="assets/img/art/brain-art.png" alt="Brain Art">
+      </div>
+      <div class="col-md-6">
+        <div class="card border-dark bg-transparent" style="--bs-border-opacity: 0;">
+          <div class="card-body">
+            <h5 class="card-title h1 pb-4 font-moon-bold text-end">Test your knowledge</h5>
+            <p class="card-text font-roboto-light mb-4 text-end">
+              Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase your brilliance!
+            </p>
+            <form class="d-flex justify-content-end mt-4 mb-4" role="search" id="search-form">
+              <input class="form-control me-2 rounded" style="max-width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search" id="quizcode-search">
+              <button class="btn btn-info border-dark" type="submit" id="search-btn">Search</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+<img src="assets/img/icons/curve2.svg" alt="" style="--bs-border-opacity: 0;">
 
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="no-quiz-found" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <strong class="me-auto">QuizHero</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        Quiz not found :\
-      </div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="no-quiz-found" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-orange">
+      <strong class="me-auto">QuizHero</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Quiz not found :\
     </div>
   </div>
 </div>
@@ -87,9 +87,6 @@ session_start();
               quizcode: quizcode
             },
             success: function(response) {
-
-
-
               if (response === 'exists') {
                 var url = "answerQuiz.php?code_for_quiz=" + quizcode;
                 window.location.href = url;
@@ -97,8 +94,6 @@ session_start();
                 $('.toast-body').text('Quiz not found :(');
                 $('#no-quiz-found').toast('show');
               }
-
-
             }
           });
 
@@ -113,5 +108,6 @@ session_start();
     });
   });
 </script>
+
 <!-- footer -->
 <?php require('assets/php/footer.inc.php'); ?>

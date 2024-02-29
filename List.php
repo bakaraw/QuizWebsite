@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+    <title>Quiz List</title>
     <style>
         .card {
-            width: 20rem;
             padding: 5px;
             border: 1px solid #bd1717;
             border-radius: 8px;
@@ -29,7 +28,8 @@
         }
 
         .card-body {
-            padding: 20px;
+            
+             padding: 20px;
             display: flex;
             align-items: center;
         }
@@ -71,6 +71,22 @@
             align-items: center;
             color: #FFFFFF;
         }
+        
+        nav[aria-label="page nav"] {
+            display: flex;
+            justify-content: center; 
+        }
+        .pagination .page-link {
+        color: #fcbf49; 
+        background-color: #ffffff; 
+        border-color: #fcbf49; 
+        
+        }
+
+        .pagination .page-item.active .page-link {
+            color: #ffffff; 
+            background-color: #fcbf49;
+        }
 
         .img-container {
             flex: 0 0 50px;
@@ -87,6 +103,30 @@
         .text-content {
             flex: 1;
         }
+        .html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex-grow: 1;
+             overflow: auto; /* Adjust padding as needed */
+        }
+
+        .footer-content {
+            width: 100%;
+             overflow: hidden;
+        }
+        @media (max-width: 768px) {
+    .card-body {
+        flex-direction: column; 
+    }
+}
+
+
     </style>
 </head>
 
@@ -150,7 +190,7 @@
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
-                echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz found</h5></div>';
+                echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: black;">Quiz found</h5></div>';
                 $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
                 if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
                     $thumbnailPath = 'assets/img/uploads/default_img.jpg';
@@ -179,7 +219,7 @@
             unset($_SESSION['quizCode']);
             echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
             echo '<br>';
-            echo '<div data-quiz-code class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: white;">No quiz found with code: ' . $quizCode . '</h5></div>';
+            echo '<div data-quiz-code class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: black;">No quiz found with code: ' . $quizCode . '</h5></div>';
             echo '<br>';
             echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
         }
@@ -188,7 +228,7 @@
 
     <?php
 
-    $itemsPerPage = 4;
+    $itemsPerPage = 3;
     $sql = "SELECT COUNT(*) as count FROM quizlisttable";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
@@ -240,22 +280,44 @@
             . '</div>'
             . '</div>';
     }
-    echo '<div class="pagination-container">';
-    echo '<div class="card-body d-flex justify-content-center">';
+   
+         echo '<nav aria-label="page nav">';
+        echo '<ul class="pagination pagination-lg">';
 
-    for ($i = 1; $i <= $totalPages; $i++) {
-        if ($i == $currentPage) {
-            echo "<b>$i</b> ";
-        } else {
-            echo "<a href='?page=$i'>$i</a> ";
+        for ($i = 1; $i <= $totalPages; $i++) {
+            if ($i == $currentPage) {
+                echo '<li class="page-item active" aria-current="page">';
+                echo '<span class="page-link">' . $i . '</span>';
+                echo '</li>';
+            } else {
+                echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+            }
         }
-    }
-    echo '</div>';
-    echo '</div>';
+
+        echo '</ul>';
+        echo '</nav>';
+
+
+    
     $conn->close();
     ?>
 
-    <?php require('assets/php/footer.inc.php'); ?>
+
+<div class="footer-content">
+<div style="margin-top: 20px;">
+    <img class="me-auto img-shadow" src="assets/img/art/brain-art.png" alt="" style="display: block; width:250px; height: auto; margin: 0 auto;">
+</div>
+    
+
+        <div>
+            <img src="assets/img/icons/curve1.svg" alt="" style="display: block; width: 100%;">
+        </div>
+
+        <div style="background-color: #fcbf49; width: 200%; height: 250px;">
+        </div>
+    </div>
+    <img src="assets/img/icons/curve2.svg" alt="">
+
 </body>
 
 </html>
