@@ -39,8 +39,8 @@ if ($stmt->rowCount() > 0) {
     <div class="container mt-5 mb-5"></div>
     <form action="" method="post" id="share-form">
         <div class="input-group mb-3 border-light">
-            <span class="input-group-text" id="inputGroup-sizing-default">Quiz title</span>
-            <input type="text" class="form-control me-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
+            <span class="input-group-text solid-shadow" id="inputGroup-sizing-default">Quiz title</span>
+            <input type="text" class="form-control me-3 solid-shadow" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
             <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">
                 Share
             </button>
@@ -250,7 +250,7 @@ if ($stmt->rowCount() > 0) {
 
     <div class="form" id="questionform-div">
         <form class="needs-validation" method="post" id="questionform" name="questionform">
-            <div class="shadow p-3 rounded-4 mt-3 bg-secondary-subtle">
+            <div class="shadow p-3 rounded-4 mt-3 bg-body-secondary">
 
                 <!-- select option element (quiztype) -->
                 <div class="input-group mb-3">

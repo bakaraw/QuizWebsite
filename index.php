@@ -8,7 +8,7 @@ session_start();
 <!-- navbar -->
 <?php include('assets/php/navbar.inc.php'); ?>
 
-<div class="container mt-5 pt-5">
+<div class="container mt-2 pt-5">
   <div class="row justify-content-center align-items-center">
     <div class="col-md-6">
       <div class="card bg-transparent border-dark" style="--bs-border-opacity: 0;">

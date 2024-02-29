@@ -17,7 +17,7 @@ $stmt->execute();
 $quiz_per_page = 10;
 ?>
 <style></style>
-<div class="container">
+<div class="container mt-5">
 
     <!-- Modal for quiz title-->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
