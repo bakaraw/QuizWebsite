@@ -6,7 +6,25 @@ session_start();
 include "assets/php/dbh_quiz.inc.php";
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
+?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Other head content -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        /* Add any additional styles here */
+        .selected-choice {
+        background-color: #EA9424 !important; /* Change the color as desired */
+        color: white !important;
+        border: none !important;
+    }
+    </style>
+</head>
+<body>
+
+<?php
 if (isset($_GET['code_for_quiz'])) {
     $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
@@ -30,39 +48,46 @@ if (isset($_GET['code_for_quiz'])) {
         $fetchStmt->execute([$quizCode]);
         $allQuestions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Create an array of indices and shuffle it
-        $indices = range(0, count($allQuestions) - 1);
-        shuffle($indices);
+        // Display JavaScript code for button click handling
+        echo '<script>
+            $(document).ready(function() {
+                $(".choice-button").click(function() {
+                    $(this).addClass("selected-choice");
+                    $(this).siblings().removeClass("selected-choice");
+                });
+            });
+        </script>';
 
         // Shuffle the order of choices for each question
         $questionNumber = 1; // Initialize the question number counter
-        foreach ($indices as $index => $questionIndex) {
-            $question = $allQuestions[$questionIndex];
+        foreach ($allQuestions as $question) {
+            // Check if keys exist before using them
+            $fontStyle = isset($question['fontstyle']) ? 'font-family: ' . $question['fontstyle'] . ';' : '';
+            $fontColor = isset($question['fontcolor']) ? 'color: ' . $question['fontcolor'] . ' !important;' : '';
 
             $choices = array($question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']);
             shuffle($choices);
-            list($question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']) = $choices;
 
             // Display the question with its number
             echo '<div class="container ms-auto me-auto">';
             echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49;">';
-            echo '<h5 style="color: black;"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
+            echo '<h5 style="color: black; ' . $fontStyle . '"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
             
             if ($question['questiontype'] == "MCQ") {
                 echo '<div style="color: black;">';
-                echo '<input type="radio" name="answer[' . $question['qid'] . ']" value="A"> A. ' . $question['choiceA'] . '<br>';
-                echo '<input type="radio" name="answer[' . $question['qid'] . ']" value="B"> B. ' . $question['choiceB'] . '<br>';
-                echo '<input type="radio" name="answer[' . $question['qid'] . ']" value="C"> C. ' . $question['choiceC'] . '<br>';
-                echo '<input type="radio" name="answer[' . $question['qid'] . ']" value="D"> D. ' . $question['choiceD'] . '<br>';
+                echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'A\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="A"><strong>' . $choices[0] . '</strong></button><br>';
+                echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'B\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="B"><strong>' . $choices[1] . '</strong></button><br>';
+                echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'C\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="C"><strong>' . $choices[2] . '</strong></button><br>';
+                echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'D\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="D"><strong>' . $choices[3] . '</strong></button><br>';
                 echo '</div>';
             } elseif ($question['questiontype'] == "TOF") {
                 echo '<div style="color: black;">';
-                echo '<input type="radio" name="answer[' . $question['qid'] . ']" value="True"> True<br>';
-                echo '<input type="radio" name="answer[' . $question['qid'] . ']" value="False"> False<br>';
+                echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'True\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="True"><strong>True</strong></button><br>';
+                echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'False\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="False"><strong>False</strong></button><br>';
                 echo '</div>';
             } elseif ($question['questiontype'] == "IDEN") {
                 echo '<div style="color: black;">';
-                echo '<input type="text" name="answer[' . $question['qid'] . ']" placeholder="Type your answer here" style="width: calc(100% - 32px); color: black; border: none; border-radius: 15px; padding: 10px; font-size: 16px;" class="form-control" placeholder="Type your answer here" style="color: gray;">';
+                echo '<input type="text" name="answer[' . $question['qid'] . ']" placeholder="Type your answer here" style="width: 100%; color: black; border: none; border-radius: 16px; padding: 10px; font-size: 16px; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36);" class="form-control" placeholder="Type your answer here" style="color: gray;">';
                 echo '</div>';
             }
 
@@ -87,3 +112,6 @@ if (isset($_GET['code_for_quiz'])) {
 </div>
 
 <?php require('assets/php/footer.inc.php'); ?>
+
+</body>
+</html>
