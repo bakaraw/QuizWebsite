@@ -19,18 +19,6 @@ include('assets/php/ModalSubmitQ.php');
     <!-- Include Bootstrap JS from CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
-        function checkUnansweredQuestions() {
-            var unansweredQuestions = $(".choice-button:not(.selected-choice)").length;
-
-            if (unansweredQuestions > 0) {
-                // Unanswered questions found, show modal
-                $("#modalSubmitQuiz").modal('show');
-                return false; // Prevent form submission
-            }
-
-            return true; // Continue with form submission
-        }
-
         $(document).ready(function () {
             $(".choice-button").click(function () {
                 $(this).addClass("selected-choice");
