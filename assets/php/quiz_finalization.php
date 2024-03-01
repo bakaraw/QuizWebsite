@@ -101,6 +101,8 @@ function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode)
         $stmt->bindParam(':quizcode', $quizcode);
         // Execute the statement
         $stmt->execute();
+
+        echo "successful";
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

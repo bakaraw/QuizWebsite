@@ -18,13 +18,13 @@ if ($stmt->rowCount() > 0) :
 ?>
 
 <a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action border border-dark text-dark " aria-current="true" style="--bs-border-opacity: 0.15;">
-    <div class="row">
-        <div class="col-sm-1 col-12">
+    <div class="row align-items-center">
+        <div class="col-lg-1 col-12 mb-sm-2">
             <div class="ratio ratio-16x9">
                 <img src="assets/img/uploads/<?php echo $row['thumbnail']?>" class="img-thumbnail rounded mx-auto d-block" alt="...">
             </div>
         </div>
-        <div class="col-sm d-flex align-items-center justify-content-start contol2">
+        <div class="col-sm d-flex align-items-center justify-content-start">
             <div>
                 <h5 class="mb-1 text-dark text-break"><?php echo $row['title'] ?></h5>
                 <p class="mb-0">Views: <?php echo $row['views'] ?></p>

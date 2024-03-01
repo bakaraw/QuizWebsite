@@ -319,7 +319,7 @@ if ($stmt->rowCount() > 0) {
                         if (response == "successful") {
                             $('#shareModal').modal('hide');
                             $('#liveToast').toast('show');
-                        } else {
+                        } else{
                             $('#upload-status').text(response);
                         }
 
