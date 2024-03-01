@@ -39,7 +39,7 @@ if ($stmt->rowCount() > 0) {
     <div class="container mt-5 mb-5"></div>
     <form action="" method="post" id="share-form">
         <div class="input-group mb-3 border-light">
-            <span class="input-group-text solid-shadow" id="inputGroup-sizing-default">Quiz title</span>
+            <span class="input-group-text solid-shadow-orange bg-orange fw-semibold text-light" id="inputGroup-sizing-default ">Quiz title</span>
             <input type="text" class="form-control me-3 solid-shadow" aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
             <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal"
@@ -259,12 +259,12 @@ if ($stmt->rowCount() > 0) {
 
     <div class="form" id="questionform-div">
         <form class="needs-validation" method="post" id="questionform" name="questionform">
-            <div class="shadow p-3 rounded-4 mt-3 bg-body-secondary">
+            <div class="shadow p-3 rounded-4 mt-3 bg-orange">
 
                 <!-- select option element (quiztype) -->
                 <div class="input-group mb-3">
-                    <label class="input-group-text">Question Type</label>
-                    <select onchange="changeQuizType()" class="form-select" id="questiontype" style="width:10rem;"
+                    <label class="input-group-text fw-medium solid-shadow-orange">Question Type</label>
+                    <select onchange="changeQuizType()" class="form-select fw-medium solid-shadow-orange" id="questiontype" style="width:10rem;"
                         name="questiontype">
                         <option selected value="IDEN">Identification</option>
                         <option value="MCQ">Multiple Choice Question</option>
@@ -275,8 +275,8 @@ if ($stmt->rowCount() > 0) {
 
                 <!-- for question text area -->
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Question:</label>
-                    <textarea type="text" class="form-control" id="exampleFormControlTextarea1" rows="3" name="question"
+                    <label for="exampleFormControlTextarea1" class="form-label fw-medium">Question:</label>
+                    <textarea type="text" class="form-control solid-shadow-orange" id="exampleFormControlTextarea1" rows="3" name="question"
                         required></textarea>
                     <div class="invalid-feedback text-danger">
                         Please enter a question.
@@ -286,7 +286,7 @@ if ($stmt->rowCount() > 0) {
 
                 <!-- changing div based on the question type -->
                 <div id="questiontype_gui">
-                    <input class="form-control" type="text" placeholder="Answer" aria-label="default input example"
+                    <input class="form-control solid-shadow-orange" type="text" placeholder="Answer" aria-label="default input example"
                         name="answerIden" required>
                     <div class="invalid-feedback text-danger">
                         Please enter the answer.
