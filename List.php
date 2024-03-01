@@ -97,15 +97,16 @@
         }
 
         .img-container {
-            flex: 0 0 50px;
-            height: 100px;
-            overflow: hidden;
-            margin-right: 15px;
+        flex: 0 0 50px;
+        height: 100px;
+        overflow: hidden;
+        margin-right: 15px;
         }
 
         .img-container img {
-            width: 100%;
-            height: auto;
+        width: 100%;
+        height: 100%; /* Change this to 100% to maintain the aspect ratio */
+        object-fit: contain; /* This property ensures the image fits while maintaining aspect ratio */
         }
 
         .text-content {
