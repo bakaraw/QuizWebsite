@@ -248,7 +248,7 @@ if (isset($_SESSION['quizCode'])) {
     $row = $result->fetch_assoc();
     $totalItems = $row['count'];
     $totalPages = ceil($totalItems / $itemsPerPage);
-    echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz List</h5></div>';
+    echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: black;">Quiz List</h5></div>';
 
     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
         $currentPage = (int) $_GET['page'];

@@ -6,6 +6,7 @@ session_start();
 include "assets/php/dbh_quiz.inc.php";
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +105,9 @@ if (isset($_GET['code_for_quiz'])) {
 ?>
 
 <div class="container">
-    <form action="submit_quiz.php" method="post">
+    <form action="answerQuiz.php" method="post">
+    <input type="hidden" name="quizCode" value="<?php echo $quizCode; ?>">
+
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
             <button class="btn btn-success text-light border-dark btn-md" type="submit" name="submit-quiz">Submit Quiz</button>
         </div>
@@ -112,6 +115,35 @@ if (isset($_GET['code_for_quiz'])) {
 </div>
 
 <?php require('assets/php/footer.inc.php'); ?>
+
+
+
+<?php 
+include "assets/php/dbh_quiz.inc.php";
+
+if (isset($_POST['submit-quiz'], $_SESSION['username'], $_POST['quizCode'])) {
+    $quizCode = $_POST['quizCode'];
+    $username = $_SESSION['username'];
+    $score = 1;
+
+    try {
+        $pdo->beginTransaction();
+
+        // Prepare and execute the insert or update operation
+        $stmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE score = VALUES(score)");
+        $stmt->execute([$username, $quizCode, $score]);
+
+        $pdo->commit();
+
+        // Optionally, redirect the user or show a success message
+        echo "Quiz submitted successfully!";
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        echo "Failed to submit quiz: " . $e->getMessage();
+    }
+}
+
+?>
 
 </body>
 </html>
