@@ -92,7 +92,7 @@
 
         .img-container {
             flex: 0 0 50px;
-            height: 50px;
+            height: 100px;
             overflow: hidden;
             margin-right: 15px;
         }
@@ -272,8 +272,8 @@ if ($result->num_rows > 0) {
         echo '<div class="col-lg-6 col-md-6 mb-2">'; 
         echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
             . '<div class="card-body d-flex align-items-center">'
-            . '<div class="img-container me-3">'
-            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+            . '<div class="col-6 col-md-5 col-lg-4  img-container me-3">'
+            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" class="img-fluid">'
             . '</div>'
             . '<div class="flex-grow-1 d-flex flex-column">'
             . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
