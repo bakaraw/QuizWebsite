@@ -17,7 +17,7 @@ session_start();
           <p class="card-text font-roboto-light h5 mb-4">
             QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
           </p>
-          <a href="#" class="btn btn-primary btn-lg text-dark border-dark">Start now</a>
+          <a id="start-now" class="btn btn-primary btn-lg text-dark border-dark">Start now</a>
         </div>
       </div>
     </div>
@@ -102,7 +102,19 @@ session_start();
           $('#no-quiz-found').toast('show');
         }
       } else {
-        console.log('uten');
+        
+        $('#modalLogin').modal('show');
+      }
+    });
+
+    $('#start-now').click(function (e) { 
+      e.preventDefault();
+      var session_username = '<?php if (isset($_SESSION['username'])) {
+                                echo $_SESSION['username'];
+                              } ?>';
+      if(session_username != "") {
+        window.location.href = 'MakeQuiz.php';
+      } else {
         $('#modalLogin').modal('show');
       }
     });

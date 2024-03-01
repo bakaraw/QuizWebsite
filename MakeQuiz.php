@@ -65,7 +65,7 @@ $quiz_per_page = 10;
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="quizcode-confirm">
-                    You <strong>CANNOT</strong> retrieve deleted quiz.
+                    You <strong>CANNOT</strong> restore deleted quiz.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirm-delete-btn">Delete</button>
