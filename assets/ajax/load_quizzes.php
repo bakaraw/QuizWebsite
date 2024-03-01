@@ -16,29 +16,33 @@ if ($stmt->rowCount() > 0) :
             $select_public = "selected";
         }
 ?>
-        <a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action border border-dark text-dark d-flex align-items-center" aria-current="true" style="--bs-border-opacity: 0.15;">
-            
-            <div class="image-container rounded-1 me-3" style="background-image: url('assets/img/uploads/<?php echo $row['thumbnail'] ?>');"></div>
+
+<a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action border border-dark text-dark " aria-current="true" style="--bs-border-opacity: 0.15;">
+    <div class="row align-items-center">
+        <div class="col-lg-1 col-12 mb-sm-2">
+            <div class="ratio ratio-16x9">
+                <img src="assets/img/uploads/<?php echo $row['thumbnail']?>" class="img-thumbnail rounded mx-auto d-block" alt="...">
+            </div>
+        </div>
+        <div class="col-sm d-flex align-items-center justify-content-start">
             <div>
                 <h5 class="mb-1 text-dark text-break"><?php echo $row['title'] ?></h5>
+                <p class="mb-0">Views: <?php echo $row['views'] ?></p>
             </div>
-            <div class="ms-auto d-flex align-items-center text-dark">
-                <div class="me-3" id="access-icon<?php echo $row['code'] ?>">
-                    <?php if ($row['accessibility'] == 'PRIVATE') : ?>
-                        <i class="fa-solid fa-lock fa-lg" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
-                    <?php else : ?>
-                        <i class="fa-solid fa-earth-americas" data-fa-transform="shrink-3.5 down-1.6 right-1.25" data-fa-mask="fa-solid fa-circle"></i>
-                    <?php endif; ?>
-                </div>
-                <select class="form-select bg-transparent border border-dark fw-semibold access-option me-3 text-dark" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
+        </div>
+        <div class="col-sm-auto">
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-end align-items-center">
+                <select class="form-select bg-transparent border border-dark fw-semibold access-option me-3 text-dark me-sm-1 mb-sm-1" aria-label="Default select example" style="height: 40px;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
                     <option <?php echo $select_private; ?> value="PRIVATE">Private</option>
                     <option <?php echo $select_public; ?> value="PUBLIC">Public</option>
                 </select>
-                <button type="button" class="btn btn-danger" onclick="event.stopPropagation();" id="delete-<?php echo $row['code']; ?>" data-bs-toggle="modal" data-bs-target="#delete-confirm">
-                    <img src="assets/img/icons/trash-fill.svg" alt="Delete" style="width: 20px; height: 20px; fill: white;">
+                <button type="button" class="btn btn-danger mb-sm-1" onclick="event.stopPropagation();" id="delete-<?php echo $row['code']; ?>" data-bs-toggle="modal" data-bs-target="#delete-confirm" style="height: 40px;">
+                    <img src="assets/img/icons/trash-fill.svg" alt="Delete" style="width: 20px; fill: white;">
                 </button>
             </div>
-        </a>
+        </div>
+    </div>
+</a>
 
         <script>
             $(document).ready(function() {

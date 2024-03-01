@@ -147,7 +147,7 @@
     // Create connection
     $conn = new mysqli($servername, $dbUsername, $dbPassword, $database_name);
     ?>
-
+    
     <!-- header -->
     <?php require('assets/php/head.inc.php'); ?>
     <!-- navbar -->
@@ -228,7 +228,7 @@
 
     <?php
 
-    $itemsPerPage = 3;
+    $itemsPerPage = 4;
     $sql = "SELECT COUNT(*) as count FROM quizlisttable";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
@@ -304,20 +304,15 @@
 
 
 <div class="footer-content">
-<div style="margin-top: 20px;">
-    <img class="me-auto img-shadow" src="assets/img/art/brain-art.png" alt="" style="display: block; width:250px; height: auto; margin: 0 auto;">
-</div>
-    
 
         <div>
             <img src="assets/img/icons/curve1.svg" alt="" style="display: block; width: 100%;">
         </div>
 
-        <div style="background-color: #fcbf49; width: 200%; height: 250px;">
+        <div style="background-color: #fcbf49; width: 200%; height: 500px;">
         </div>
-    </div>
-    <img src="assets/img/icons/curve2.svg" alt="">
-
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

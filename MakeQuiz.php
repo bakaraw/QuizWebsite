@@ -17,7 +17,7 @@ $stmt->execute();
 $quiz_per_page = 10;
 ?>
 <style></style>
-<div class="container">
+<div class="container mt-5">
 
     <!-- Modal for quiz title-->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -65,7 +65,7 @@ $quiz_per_page = 10;
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="quizcode-confirm">
-                    You <strong>CANNOT</strong> retrieve deleted quiz.
+                    You <strong>CANNOT</strong> restore deleted quiz.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirm-delete-btn">Delete</button>
@@ -93,7 +93,7 @@ $quiz_per_page = 10;
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
+            <div class="toast-header bg-orange">
 
                 <strong class="me-auto">QuizHero</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
