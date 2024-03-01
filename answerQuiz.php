@@ -13,13 +13,7 @@ include('assets/php/navbar.inc.php');
 
 <head>
     <!-- Other head content -->
-
-    <!-- Include jQuery for Bootstrap modal functionality -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <!-- Include the Unanswered Questions Modal -->
-    <?php include('ModalUnansweredQ.php'); ?>
-
     <style>
         /* Add any additional styles here */
         .selected-choice {
@@ -56,6 +50,27 @@ include('assets/php/navbar.inc.php');
             $fetchStmt->execute([$quizCode]);
             $allQuestions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
 
+            // Display JavaScript code for button click handling
+            echo '<script>
+                $(document).ready(function() {
+                    $(".choice-button").click(function() {
+                        var questionId = $(this).data("question-id");
+
+                        // Check if the clicked button already has the "selected-choice" class
+                        if ($(this).hasClass("selected-choice")) {
+                            // Button is already selected, remove the "selected-choice" class
+                            $(this).removeClass("selected-choice");
+                        } else {
+                            // Button is not selected, remove the class from all buttons with the same question ID
+                            $(".choice-button[data-question-id=\'" + questionId + "\']").removeClass("selected-choice");
+
+                            // Add the "selected-choice" class to the clicked button
+                            $(this).addClass("selected-choice");
+                        }
+                    });
+                });
+            </script>';
+
             // Shuffle the order of choices for each question
             $questionNumber = 1; // Initialize the question number counter
             foreach ($allQuestions as $question) {
@@ -70,7 +85,7 @@ include('assets/php/navbar.inc.php');
                 echo '<div class="container ms-auto me-auto">';
                 echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49;">';
                 echo '<h5 style="color: black; ' . $fontStyle . '"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
-
+                
                 if ($question['questiontype'] == "MCQ") {
                     echo '<div style="color: black;">';
                     echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'A\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="A"><strong>' . $choices[0] . '</strong></button><br>';
@@ -102,7 +117,7 @@ include('assets/php/navbar.inc.php');
     ?>
 
     <div class="container">
-        <form id="quiz-form" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
+        <form action="submit_quiz.php" method="post">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                 <button class="btn btn-success text-light border-dark btn-md" type="submit" name="submit-quiz">Submit Quiz</button>
             </div>
@@ -110,45 +125,6 @@ include('assets/php/navbar.inc.php');
     </div>
 
     <?php require('assets/php/footer.inc.php'); ?>
-
-    <script>
-    $(document).ready(function () {
-        // Handle the click event for choice buttons
-        $('.choice-button').on('click', function () {
-            // Get the question ID and choice value
-            var questionId = $(this).data('question-id');
-            var choice = $(this).data('choice');
-
-            // Remove the 'selected-choice' class from all buttons with the same question ID
-            $('.choice-button[data-question-id="' + questionId + '"]').removeClass('selected-choice');
-            // Add the 'selected-choice' class to the clicked button
-            $(this).addClass('selected-choice');
-        });
-
-        // Handle the form submission
-        $('#quiz-form').on('submit', function (event) {
-            // Check if there are multiple selected choices for any question
-            var hasMultipleSelection = false;
-
-            $('.choice-button.selected-choice').each(function () {
-                var questionId = $(this).data('question-id');
-
-                if ($('.choice-button.selected-choice[data-question-id="' + questionId + '"]').length > 1) {
-                    hasMultipleSelection = true;
-                    return false; // Exit the loop early
-                }
-            });
-
-            // If there are multiple selected choices, prevent the form submission
-            if (hasMultipleSelection) {
-                alert('Please select only one choice per question.');
-                event.preventDefault();
-            }
-        });
-    });
-</script>
-
-
 
 </body>
 
