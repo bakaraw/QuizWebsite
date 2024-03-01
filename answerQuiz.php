@@ -52,24 +52,13 @@ include('assets/php/navbar.inc.php');
 
             // Display JavaScript code for button click handling
             echo '<script>
-                $(document).ready(function() {
-                    $(".choice-button").click(function() {
-                        var questionId = $(this).data("question-id");
-
-                        // Check if the clicked button already has the "selected-choice" class
-                        if ($(this).hasClass("selected-choice")) {
-                            // Button is already selected, remove the "selected-choice" class
-                            $(this).removeClass("selected-choice");
-                        } else {
-                            // Button is not selected, remove the class from all buttons with the same question ID
-                            $(".choice-button[data-question-id=\'" + questionId + "\']").removeClass("selected-choice");
-
-                            // Add the "selected-choice" class to the clicked button
-                            $(this).addClass("selected-choice");
-                        }
-                    });
+            $(document).ready(function() {
+                $(".choice-button").click(function() {
+                    $(this).addClass("selected-choice");
+                    $(this).siblings().removeClass("selected-choice");
                 });
-            </script>';
+            });
+        </script>';
 
             // Shuffle the order of choices for each question
             $questionNumber = 1; // Initialize the question number counter
