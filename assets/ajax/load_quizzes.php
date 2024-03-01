@@ -32,7 +32,7 @@ if ($stmt->rowCount() > 0) :
         </div>
         <div class="col-sm-auto">
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-end align-items-center">
-                <select class="form-select bg-transparent border border-dark fw-semibold access-option me-3 text-dark me-sm-1 mb-sm-1" aria-label="Default select example" style="height: 40px;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
+                <select class="form-select bg-transparent border border-dark fw-semibold access-option me-3 text-dark me-sm-1 mb-sm-1" aria-label="Default select example" style="height: 40px; border-radius: 15px;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
                     <option <?php echo $select_private; ?> value="PRIVATE">Private</option>
                     <option <?php echo $select_public; ?> value="PUBLIC">Public</option>
                 </select>

@@ -39,9 +39,11 @@ if ($stmt->rowCount() > 0) {
     <div class="container mt-5 mb-5"></div>
     <form action="" method="post" id="share-form">
         <div class="input-group mb-3 border-light">
-            <span class="input-group-text solid-shadow" id="inputGroup-sizing-default">Quiz title</span>
-            <input type="text" class="form-control me-3 solid-shadow" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
-            <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal" name="share-btn">
+            <span class="input-group-text solid-shadow-orange bg-orange fw-semibold text-light" id="inputGroup-sizing-default ">Quiz title</span>
+            <input type="text" class="form-control me-3 solid-shadow" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
+            <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal"
+                data-bs-target="#shareModal" name="share-btn">
                 Share
             </button>
         </div>
@@ -57,12 +59,14 @@ if ($stmt->rowCount() > 0) {
                     </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="assets/php/quiz_finalization.php" method="post" enctype="multipart/form-data" id="quiz-settings-form">
+                <form action="assets/php/quiz_finalization.php" method="post" enctype="multipart/form-data"
+                    id="quiz-settings-form">
                     <div class="modal-body">
                         <input type="hidden" id="new-title" name="new-title">
                         <label class="fw-medium ms-3 mb-0">General access</label>
                         <div class="mt-0 access-div">
-                            <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3" style="--bs-border-opacity: 0;">
+                            <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3"
+                                style="--bs-border-opacity: 0;">
                                 <div class="text-dark" id="access-icon">
                                     <?php
                                     if ($access_option == "PRIVATE") {
@@ -74,7 +78,9 @@ if ($stmt->rowCount() > 0) {
                                     ?>
                                 </div>
 
-                                <select class="form-select transparent-btn border border-dark fw-semibold access-option" aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;" onchange="changeAccess()" id="access-option" name="access-option">
+                                <select class="form-select transparent-btn border border-dark fw-semibold access-option"
+                                    aria-label="Default select example" style="width: 100px; --bs-border-opacity: 0;"
+                                    onchange="changeAccess()" id="access-option" name="access-option">
                                     <option <?php echo $private_selected; ?> value="PRIVATE">Private</option>
                                     <option <?php echo $public_selected; ?> value="PUBLIC">Public</option>
                                 </select>
@@ -99,11 +105,14 @@ if ($stmt->rowCount() > 0) {
 
                     <div class="modal-footer">
 
-                        <button type="button" class="btn btn-outline-secondary me-auto border border-dark" style="--bs-border-opacity: 0;" id="copy-code" onclick="buttonC()" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied">
+                        <button type="button" class="btn btn-outline-secondary me-auto border border-dark"
+                            style="--bs-border-opacity: 0;" id="copy-code" onclick="buttonC()" data-bs-container="body"
+                            data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied">
                             <i class="fa-regular fa-copy"></i> Copy code
                         </button>
 
-                        <button type="submit" class="btn btn-success" id="save-changes" name="save-changes">Save changes</button>
+                        <button type="submit" class="btn btn-success" id="save-changes" name="save-changes">Save
+                            changes</button>
                     </div>
                 </form>
             </div>
@@ -250,12 +259,13 @@ if ($stmt->rowCount() > 0) {
 
     <div class="form" id="questionform-div">
         <form class="needs-validation" method="post" id="questionform" name="questionform">
-            <div class="shadow p-3 rounded-4 mt-3 bg-body-secondary">
+            <div class="shadow p-3 rounded-4 mt-3 bg-orange">
 
                 <!-- select option element (quiztype) -->
                 <div class="input-group mb-3">
-                    <label class="input-group-text">Question Type</label>
-                    <select onchange="changeQuizType()" class="form-select" id="questiontype" style="width:10rem;" name="questiontype">
+                    <label class="input-group-text fw-medium solid-shadow-orange">Question Type</label>
+                    <select onchange="changeQuizType()" class="form-select fw-medium solid-shadow-orange" id="questiontype" style="width:10rem;"
+                        name="questiontype">
                         <option selected value="IDEN">Identification</option>
                         <option value="MCQ">Multiple Choice Question</option>
                         <option value="TOF">True or False</option>
@@ -265,8 +275,9 @@ if ($stmt->rowCount() > 0) {
 
                 <!-- for question text area -->
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Question:</label>
-                    <textarea type="text" class="form-control" id="exampleFormControlTextarea1" rows="3" name="question" required></textarea>
+                    <label for="exampleFormControlTextarea1" class="form-label fw-medium">Question:</label>
+                    <textarea type="text" class="form-control solid-shadow-orange" id="exampleFormControlTextarea1" rows="3" name="question"
+                        required></textarea>
                     <div class="invalid-feedback text-danger">
                         Please enter a question.
                     </div>
@@ -275,14 +286,16 @@ if ($stmt->rowCount() > 0) {
 
                 <!-- changing div based on the question type -->
                 <div id="questiontype_gui">
-                    <input class="form-control" type="text" placeholder="Answer" aria-label="default input example" name="answerIden" required>
+                    <input class="form-control solid-shadow-orange" type="text" placeholder="Answer" aria-label="default input example"
+                        name="answerIden" required>
                     <div class="invalid-feedback text-danger">
                         Please enter the answer.
                     </div>
                 </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                    <button class="btn btn-info text-dark border-dark btn-md" type="submit" name="save-btn" id="save-btn">Save</button>
+                    <button class="btn btn-info text-dark border-dark btn-md" type="submit" name="save-btn"
+                        id="save-btn">Save</button>
                 </div>
             </div>
         </form>
@@ -290,7 +303,8 @@ if ($stmt->rowCount() > 0) {
     <div class="container-fluid mt-4">
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary add-btn mb-5" id="add-question" name="add-question">
-                <img src="assets/img/icons/plus-circle.svg" alt="Add Question" style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
+                <img src="assets/img/icons/plus-circle.svg" alt="Add Question"
+                    style="width: 24px; height: 24px; fill: white;"> <label class="ms-2">Add Question</label>
             </button>
         </div>
     </div>
@@ -298,8 +312,8 @@ if ($stmt->rowCount() > 0) {
         // pag send data sa database
         const questionFormDiv = document.getElementById('questionform-div');
 
-        $(document).ready(function() {
-            $('#quiz-settings-form').submit(function(e) {
+        $(document).ready(function () {
+            $('#quiz-settings-form').submit(function (e) {
                 e.preventDefault(); // prevent the default form submission behavior
 
                 // get the form data
@@ -314,24 +328,24 @@ if ($stmt->rowCount() > 0) {
                     processData: false,
                     data: formData,
                     type: 'post',
-                    success: function(response) {
+                    success: function (response) {
 
                         if (response == "successful") {
                             $('#shareModal').modal('hide');
                             $('#liveToast').toast('show');
-                        } else{
+                        } else {
                             $('#upload-status').text(response);
                         }
 
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown);
                     }
                 });
             });
 
 
-            $('#share-form').submit(function(e) {
+            $('#share-form').submit(function (e) {
                 e.preventDefault();
 
                 var title = $('input[name="title-input"]').val();
@@ -341,7 +355,7 @@ if ($stmt->rowCount() > 0) {
                 $('#publishModal').modal('show');
             });
 
-            $('#questionform').submit(function(e) {
+            $('#questionform').submit(function (e) {
                 e.preventDefault();
                 let questionform = $('#questionform').serialize();
 
@@ -356,7 +370,7 @@ if ($stmt->rowCount() > 0) {
 
             });
 
-            $('#add-question').click(function(e) {
+            $('#add-question').click(function (e) {
                 e.preventDefault();
                 let questionform = $('#questionform').serialize();
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
@@ -377,7 +391,7 @@ if ($stmt->rowCount() > 0) {
                 url: "assets/ajax/questionform_dbh.php",
                 data: questionform,
 
-                success: function(response) {
+                success: function (response) {
                     console.log('addque-pressed success');
                     console.log(response);
                     if (isFormFilled()) {
@@ -392,7 +406,7 @@ if ($stmt->rowCount() > 0) {
 
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
@@ -418,16 +432,24 @@ if ($stmt->rowCount() > 0) {
 
         function isFormFilled() {
             var form = document.getElementById("questionform");
+            var isValid = true;
             for (var i = 0; i < form.elements.length; i++) {
                 var element = form.elements[i];
-                if (element.type !== "button" && element.value.trim() === "" && element.type !== "submit") {
-                    // If any field is empty, return false
-                    return false;
+                if (element.type !== "button" && element.type !== "submit") {
+                    if (element.value.trim() === "") {
+                        // Mark the field as invalid using Bootstrap's validation styles
+                        element.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        // Remove the invalid class if the field is filled
+                        element.classList.remove('is-invalid');
+                    }
                 }
             }
-            // If all fields are filled, return true
-            return true;
+            // Return the validation result
+            return isValid;
         }
+
 
         var text = document.getElementById("quizcode-copy");
 
