@@ -24,6 +24,14 @@ include('assets/php/ModalSubmitQ.php');
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Include Bootstrap JS from CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".choice-button").click(function () {
+                $(this).addClass("selected-choice");
+                $(this).siblings().removeClass("selected-choice");
+            });
+        });
+    </script>
     <style>
         /* Add any additional styles here */
         .selected-choice {
@@ -32,10 +40,6 @@ include('assets/php/ModalSubmitQ.php');
             border: none !important;
         }
 
-        /* Add margin to the right of the button */
-        .margin-bottom {
-            margin-bottom: 20px; /* Adjust margin as needed */
-        }
     </style>
 </head>
 
@@ -118,9 +122,9 @@ include('assets/php/ModalSubmitQ.php');
     ?>
 
     <form id="quizForm" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3 margin-bottom"> <!-- Center the button -->
-            <button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
-        </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-center mt-3">
+        <button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
+    </div>
     </form>
 
     <?php include('assets/php/modalSubmitQ.php'); ?>
