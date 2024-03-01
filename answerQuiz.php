@@ -6,7 +6,8 @@ session_start();
 include "assets/php/dbh_quiz.inc.php";
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
-include('ModalUnansweredQ.php');
+// Update the inclusion to use the correct path for the ModalSubmitQ.php file
+include('assets/php/ModalSubmitQ.php');
 ?>
 
 <!DOCTYPE html>
@@ -15,13 +16,15 @@ include('ModalUnansweredQ.php');
 <head>
     <!-- Other head content -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include Bootstrap JS from CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
         function checkUnansweredQuestions() {
             var unansweredQuestions = $(".choice-button:not(.selected-choice)").length;
 
             if (unansweredQuestions > 0) {
                 // Unanswered questions found, show modal
-                $("#modalUnansweredQuestions").modal('show');
+                $("#modalSubmitQuiz").modal('show');
                 return false; // Prevent form submission
             }
 
@@ -116,16 +119,18 @@ include('ModalUnansweredQ.php');
     }
     ?>
 
-    <div class="container">
-        <form action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                <button class="btn btn-success text-light border-dark btn-md" type="submit" name="submit-quiz">Submit Quiz</button>
-            </div>
-        </form>
-    </div>
+<div class="container">
+    <!-- Update the form ID to 'quizForm' -->
+    <form id="quizForm" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+            <!-- Update the data-target to use the renamed modal ID -->
+            <button class="btn btn-success text-light border-dark btn-md" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
+        </div>
+    </form>
+</div>
 
-    <?php include('ModalUnansweredQ.php'); ?>
-    <?php require('assets/php/footer.inc.php'); ?>
+<?php include('assets/php/modalSubmitQ.php'); ?>
+<?php require('assets/php/footer.inc.php'); ?>
 
 </body>
 
