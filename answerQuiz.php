@@ -45,6 +45,11 @@ include('assets/php/ModalSubmitQ.php');
             color: white !important;
             border: none !important;
         }
+
+        /* Add margin to the right of the button */
+        .btn-submit-quiz {
+            margin-right: 150px; /* Adjust margin as needed */
+        }
     </style>
 </head>
 
@@ -128,7 +133,7 @@ include('assets/php/ModalSubmitQ.php');
 
     <form id="quizForm" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-            <button class="btn btn-success text-light border-dark btn-md" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
+            <button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
         </div>
     </form>
 
