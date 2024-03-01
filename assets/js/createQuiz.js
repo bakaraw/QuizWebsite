@@ -104,15 +104,6 @@ function changeQuizType() {
 
             form.classList.add('was-validated')
         }, false)
-
-        form.addEventListener('click', event => {
-            if (!form.checkValidity(forms)) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-        }, false)
     })
 })()
 
