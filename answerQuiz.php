@@ -6,6 +6,7 @@ session_start();
 include "assets/php/dbh_quiz.inc.php";
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
+include('ModalUnansweredQ.php');
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +15,26 @@ include('assets/php/navbar.inc.php');
 <head>
     <!-- Other head content -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function checkUnansweredQuestions() {
+            var unansweredQuestions = $(".choice-button:not(.selected-choice)").length;
+
+            if (unansweredQuestions > 0) {
+                // Unanswered questions found, show modal
+                $("#modalUnansweredQuestions").modal('show');
+                return false; // Prevent form submission
+            }
+
+            return true; // Continue with form submission
+        }
+
+        $(document).ready(function () {
+            $(".choice-button").click(function () {
+                $(this).addClass("selected-choice");
+                $(this).siblings().removeClass("selected-choice");
+            });
+        });
+    </script>
     <style>
         /* Add any additional styles here */
         .selected-choice {
@@ -49,16 +70,6 @@ include('assets/php/navbar.inc.php');
             $fetchStmt = $pdo->prepare($fetchSql);
             $fetchStmt->execute([$quizCode]);
             $allQuestions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // Display JavaScript code for button click handling
-            echo '<script>
-            $(document).ready(function() {
-                $(".choice-button").click(function() {
-                    $(this).addClass("selected-choice");
-                    $(this).siblings().removeClass("selected-choice");
-                });
-            });
-        </script>';
 
             // Shuffle the order of choices for each question
             $questionNumber = 1; // Initialize the question number counter
@@ -106,13 +117,14 @@ include('assets/php/navbar.inc.php');
     ?>
 
     <div class="container">
-        <form action="submit_quiz.php" method="post">
+        <form action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                 <button class="btn btn-success text-light border-dark btn-md" type="submit" name="submit-quiz">Submit Quiz</button>
             </div>
         </form>
     </div>
 
+    <?php include('ModalUnansweredQ.php'); ?>
     <?php require('assets/php/footer.inc.php'); ?>
 
 </body>
