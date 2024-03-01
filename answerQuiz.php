@@ -68,6 +68,12 @@ include('assets/php/ModalSubmitQ.php');
             $updateStmt = $pdo->prepare($updateSql);
             $updateStmt->execute([$quizCode]);
 
+            // Display quiz details above the first question
+            echo '<div class="container text-center mt-4">';
+            echo '<h2 class="text-dark">' . htmlspecialchars($quizDetails['title']) . '</h2>';
+            echo '<p class="text-muted">Quiz Code: ' . htmlspecialchars($quizDetails['code']) . ' | Creator: ' . htmlspecialchars($quizDetails['creator']) . '</p>';
+            echo '</div>';
+
             // Fetch all questions related to the quiz
             $fetchSql = "SELECT * FROM `questions` WHERE quizcode = ?";
             $fetchStmt = $pdo->prepare($fetchSql);
