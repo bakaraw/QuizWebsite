@@ -2,6 +2,12 @@
 // Start the session before any output is sent
 session_start();
 
+// if using url to access quiz, user needs to login
+if (!isset($_SESSION["username"])){
+    header("Location: assets/php/via_url_redirection.php");
+    exit();
+}   
+
 // Include necessary files
 include "assets/php/dbh_quiz.inc.php";
 require('assets/php/head.inc.php');

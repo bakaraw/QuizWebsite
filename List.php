@@ -202,7 +202,7 @@ if (isset($_SESSION['quizCode'])) {
             }
                 echo '<h5 class="card-subtitle" style="color: black;">Quiz found code: ' . $quizCode . '</h5>';
 
-            echo '<div class="col-lg-4 col-md-6 mb-4">';
+            echo '<div class="col-xl-4 col-lg-6 mb-4">';
             echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
                 . '<div class="card-body d-flex align-items-center">'
                 . '<div class="img-container me-3">'
