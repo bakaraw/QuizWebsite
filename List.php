@@ -7,7 +7,8 @@
     <title>Quiz List</title>
     <style>
         .card {
-            padding: 5px;
+            padding: 20px; 
+            margin: 20px auto; 
             border: 1px solid #bd1717;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -15,8 +16,9 @@
             color: #2f11f2;
             text-align: left;
             cursor: pointer;
-            margin: 20px auto;
-            width: 58%;
+            width: 100%; 
+            max-width: 600px; 
+
         }
 
         .card:hover {
@@ -113,7 +115,7 @@
 
         .main-content {
             flex-grow: 1;
-             overflow: auto; /* Adjust padding as needed */
+             overflow: auto; 
         }
 
         .footer-content {
@@ -121,10 +123,16 @@
              overflow: hidden;
         }
         @media (max-width: 768px) {
-    .card-body {
-        flex-direction: column; 
-    }
-}
+            .card-body {
+                flex-direction: column;
+            }
+            .card {
+                margin: 20px; 
+            }
+            .card-title {
+                font-size: 1rem; 
+            }
+        }
 
 
     </style>
@@ -133,7 +141,6 @@
 <body>
     <?php
     session_start();
-    // Check if the user is logged in
     if (!isset($_SESSION['username'])) {
         header("Location: login.php");
         exit;
@@ -143,14 +150,12 @@
     $dbUsername = 'root';
     $dbPassword = '';
     $database_name = 'web';
-
-    // Create connection
     $conn = new mysqli($servername, $dbUsername, $dbPassword, $database_name);
+
     ?>
     
-    <!-- header -->
     <?php require('assets/php/head.inc.php'); ?>
-    <!-- navbar -->
+
     <?php include('assets/php/navbar.inc.php'); ?>
 
     <script>
@@ -175,55 +180,64 @@
 
     <?php
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quizCode'])) {
-        $_SESSION['quizCode'] = $_POST['quizCode'];
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quizCode'])) {
+    $_SESSION['quizCode'] = $_POST['quizCode'];
+}
 
-    if (isset($_SESSION['quizCode'])) {
-        $quizCode = $_SESSION['quizCode'];
+if (isset($_SESSION['quizCode'])) {
+    $quizCode = $_SESSION['quizCode'];
 
-        $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE code = ? AND accessibility <> 'PRIVATE'");
-        $stmt->bind_param("s", $quizCode);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE code = ? AND accessibility <> 'PRIVATE'");
+    $stmt->bind_param("s", $quizCode);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
-                echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: black;">Quiz found</h5></div>';
-                $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
-                if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
-                    $thumbnailPath = 'assets/img/uploads/default_img.jpg';
-                }
-                echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
-                    . '<div class="card-body d-flex align-items-center justify-content-between">'
-                    . '<div class="left-content d-flex align-items-center">'
-                    . '<div class="img-container me-3">'
-                    . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
-                    . '</div>'
-                    . '<div>'
-                    . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-                    . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-                    . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-                    . '</div>'
-                    . '</div>'
-                    . '<div class="right-content">'
-                    . '<p class="views-text">Views: ' . htmlspecialchars($row["views"]) . '</p>'
-                    . '</div>'
-                    . '</div>'
-                    . '</div>';
-                echo '<hr style="border-top: 2px solid #ff4500; width: 60%; margin: auto;">';
-                unset($_SESSION['quizCode']);
+    echo '<div class="container mt-4">';
+    echo '<div class="row">';
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
+            if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
+                $thumbnailPath = 'assets/img/uploads/default_img.jpg';
             }
-        } else {
+                echo '<h5 class="card-subtitle" style="color: black;">Quiz found code: ' . $quizCode . '</h5>';
+
+            echo '<div class="col-lg-4 col-md-6 mb-4">';
+            echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
+                . '<div class="card-body d-flex align-items-center">'
+                . '<div class="img-container me-3">'
+                . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+                . '</div>'
+                . '<div class="flex-grow-1 d-flex flex-column">'
+                . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+                . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+                . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+                . '</div>'
+                . '<div class="ms-auto text-md-end">'
+                . '<p class="views-text">Views: ' . htmlspecialchars($row["views"]) . '</p>'
+                . '</div>'
+                . '</div>'
+                . '</div>';
+            echo '</div>';
+        
+    
             unset($_SESSION['quizCode']);
-            echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
-            echo '<br>';
-            echo '<div data-quiz-code class="d-flex justify-content-center"><h5 class="card-subtitle" style="color: black;">No quiz found with code: ' . $quizCode . '</h5></div>';
-            echo '<br>';
-            echo '<hr style="border-top: 2px solid #ff4500; width: 73%; margin: auto;">';
+
+
         }
+
+    } else {
+        echo '<div class="col-12 text-center">' 
+            . '<h5 class="card-subtitle" style="color: black;">No quiz found with code: ' . $quizCode . '</h5>'
+            . '</div>';
+            unset($_SESSION['quizCode']);
+
     }
+
+    echo '</div>';
+    echo '</div>'; 
+}
+    
     ?>
 
     <?php
@@ -246,39 +260,47 @@
     $sql = "SELECT * FROM quizlisttable WHERE accessibility != 'PRIVATE' LIMIT $itemsPerPage OFFSET $offset";
 
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
-            if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
-                $thumbnailPath = 'assets/img/uploads/default_img.jpg';
-            }
-
-            echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
-                . '<div class="card-body d-flex align-items-center justify-content-between">'
-                . '<div class="left-content d-flex align-items-center">'
-                . '<div class="img-container me-3">'
-                . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
-                . '</div>'
-                . '<div>'
-                . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
-                . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
-                . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
-                . '</div>'
-                . '</div>'
-                . '<div class="right-content">'
-                . '<p class="views-text">Views: ' . htmlspecialchars($row["views"]) . '</p>'
-                . '</div>'
-                . '</div>'
-                . '</div>';
+if ($result->num_rows > 0) {
+    echo '<div class="container mt-4 text-center">'; 
+    echo '<div class="row justify-content-center">'; 
+    while ($row = $result->fetch_assoc()) {
+        $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
+        if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
+            $thumbnailPath = 'assets/img/uploads/default_img.jpg';
         }
-    } else {
-        echo '<div class="card quiz-card">'
-            . '<div class="card-body d-flex align-items-center justify-content-between">'
-            . '<div class="left-content d-flex align-items-center">'
-            . '<p>No quiz found.</p>'
+
+        echo '<div class="col-lg-6 col-md-6 mb-2">'; 
+        echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
+            . '<div class="card-body d-flex align-items-center">'
+            . '<div class="img-container me-3">'
+            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+            . '</div>'
+            . '<div class="flex-grow-1 d-flex flex-column">'
+            . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
+            . '<h6 class="card-subtitle mb-2 text-muted">Quiz Code: ' . htmlspecialchars($row["code"]) . '</h6>'
+            . '<p class="card-text">Creator: ' . htmlspecialchars($row["creator"]) . '</p>'
+            . '</div>'
+            . '<div class="ms-auto text-md-end">'
+            . '<p class="views-text">Views: ' . htmlspecialchars($row["views"]) . '</p>'
             . '</div>'
             . '</div>'
             . '</div>';
+        echo '</div>'; 
+    }     
+    echo '</div>';
+    echo '</div>';
+
+    } else {
+        echo '<div class="col-12">';
+        echo '<div class="card quiz-card text-center">'
+            . '<div class="card-body">'
+            . '<h5 class="card-title text-muted">Search Results</h5>' 
+            . '<p class="card-text">No quiz found matching the provided code. Please try a different search.</p>' 
+            . '</div>'
+            . '</div>';
+        echo '</div>'; 
+        echo '</div>'; 
+        echo '</div>'; 
     }
    
          echo '<nav aria-label="page nav">';
