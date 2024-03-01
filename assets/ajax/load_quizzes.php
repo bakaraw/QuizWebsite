@@ -19,18 +19,18 @@ if ($stmt->rowCount() > 0) :
 
 <a class="my-quiz my-quiz<?php echo $row['code']; ?> list-group-item list-group-item-action border border-dark text-dark " aria-current="true" style="--bs-border-opacity: 0.15;">
     <div class="row align-items-center">
-        <div class="col-lg-1 col-12 mb-sm-2">
+        <div class="col-lg-2 col-12 mb-sm-2 mb-md-2 mb-lg-2">
             <div class="ratio ratio-16x9">
                 <img src="assets/img/uploads/<?php echo $row['thumbnail']?>" class="img-thumbnail rounded mx-auto d-block" alt="...">
-            </div>
+            </div>  
         </div>
-        <div class="col-sm d-flex align-items-center justify-content-start">
+        <div class="col-sm mt-sm-2 d-flex align-items-center justify-content-start">
             <div>
                 <h5 class="mb-1 text-dark text-break"><?php echo $row['title'] ?></h5>
                 <p class="mb-0">Views: <?php echo $row['views'] ?></p>
             </div>
         </div>
-        <div class="col-sm-auto">
+        <div class="col-sm-auto mt-sm-2">
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-end align-items-center">
                 <select class="form-select bg-transparent border border-dark fw-semibold access-option me-3 text-dark me-sm-1 mb-sm-1" aria-label="Default select example" style="height: 40px; border-radius: 15px;" id="access-option<?php echo $row['code'] ?>" name="access-option" onclick="event.stopPropagation();" data-bs-dismiss="toast" data-bs-target="#access-toast">
                     <option <?php echo $select_private; ?> value="PRIVATE">Private</option>
@@ -43,6 +43,7 @@ if ($stmt->rowCount() > 0) :
         </div>
     </div>
 </a>
+
 
         <script>
             $(document).ready(function() {

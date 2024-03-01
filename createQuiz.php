@@ -39,7 +39,7 @@ if ($stmt->rowCount() > 0) {
     <div class="container mt-5 mb-5"></div>
     <form action="" method="post" id="share-form">
         <div class="input-group mb-3 border-light">
-            <span class="input-group-text solid-shadow-orange bg-orange fw-semibold text-light" id="inputGroup-sizing-default ">Quiz title</span>
+            <span class="input-group-text solid-shadow-orange bg-orange fw-medium" id="inputGroup-sizing-default ">Quiz title</span>
             <input type="text" class="form-control me-3 solid-shadow" aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default" value="<?php echo $quiztitle; ?>" name="title-input">
             <button class="btn btn-success text-light border-dark btn-md" type="submit" data-bs-toggle="modal"
