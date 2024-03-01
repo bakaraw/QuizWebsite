@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz List</title>
+
+    <!-- Add these lines to include Bootstrap and jQuery -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iK7t1TIq0v8FqFjcJ6pajs/rfdfsGFDKGI5tr5Szkbe5P/SFIIJdA2ybp" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEX/ndFUeUnRSuwFtBUV2jXdkn4f9En4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
     <style>
         .card {
             padding: 20px; 
@@ -158,17 +164,27 @@
 
     <?php include('assets/php/navbar.inc.php'); ?>
 
+    <?php include('assets/php/ModalStartQ.php'); ?>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var quizCards = document.querySelectorAll('.card.quiz-card');
-            quizCards.forEach(function (card) {
-                card.addEventListener('click', function () {
-                    var code_for_quiz = this.getAttribute('data-quiz-code');
-                    window.location.href = 'answerQuiz.php?code_for_quiz=' + code_for_quiz;
+    document.addEventListener('DOMContentLoaded', function () {
+        var quizCards = document.querySelectorAll('.card.quiz-card');
+        quizCards.forEach(function (card) {
+            card.addEventListener('click', function () {
+                // Remove 'active' class from all cards
+                quizCards.forEach(function (c) {
+                    c.classList.remove('active');
                 });
+
+                // Add 'active' class to the clicked card
+                this.classList.add('active');
+
+                // Show the modal
+                $('#modalStartQuiz').modal('show');
             });
         });
-    </script>
+    });
+</script>
 
     <br>
 
