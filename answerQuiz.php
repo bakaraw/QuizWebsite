@@ -68,17 +68,18 @@ include('assets/php/ModalSubmitQ.php');
             $updateStmt = $pdo->prepare($updateSql);
             $updateStmt->execute([$quizCode]);
 
+            // Fetch all questions related to the quiz and shuffle the array
+            $fetchSql = "SELECT * FROM `questions` WHERE quizcode = ?";
+            $fetchStmt = $pdo->prepare($fetchSql);
+            $fetchStmt->execute([$quizCode]);
+            $allQuestions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
+            shuffle($allQuestions);
+
             // Display quiz details above the first question
             echo '<div class="container text-center mt-4">';
             echo '<h2 class="text-dark">' . htmlspecialchars($quizDetails['title']) . '</h2>';
             echo '<p class="text-muted">Quiz Code: ' . htmlspecialchars($quizDetails['code']) . ' | Creator: ' . htmlspecialchars($quizDetails['creator']) . '</p>';
             echo '</div>';
-
-            // Fetch all questions related to the quiz
-            $fetchSql = "SELECT * FROM `questions` WHERE quizcode = ?";
-            $fetchStmt = $pdo->prepare($fetchSql);
-            $fetchStmt->execute([$quizCode]);
-            $allQuestions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
 
             // Shuffle the order of choices for each question
             $questionNumber = 1; // Initialize the question number counter
@@ -125,18 +126,14 @@ include('assets/php/ModalSubmitQ.php');
     }
     ?>
 
-<div class="container">
-    <!-- Update the form ID to 'quizForm' -->
     <form id="quizForm" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-            <!-- Update the data-target to use the renamed modal ID -->
             <button class="btn btn-success text-light border-dark btn-md" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
         </div>
     </form>
-</div>
 
-<?php include('assets/php/modalSubmitQ.php'); ?>
-<?php require('assets/php/footer.inc.php'); ?>
+    <?php include('assets/php/modalSubmitQ.php'); ?>
+    <?php require('assets/php/footer.inc.php'); ?>
 
 </body>
 
