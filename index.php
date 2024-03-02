@@ -82,9 +82,11 @@ session_start();
           echo $currentYear; // Output: 2024 (or whatever the current year is)
           ?> QuizHero. All rights reserved.
         </small>
-        <p>
+        <small>
           Arts from freepik.com
-        </p>
+        </small>
+
+
       </div>
     </div>
   </div>
