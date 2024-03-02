@@ -39,7 +39,10 @@ include('assets/php/ModalSubmitQ.php');
             /* Change the color as desired */
             color: white !important;
             border: none !important;
+            
         }
+
+        
     </style>
 </head>
 
@@ -98,10 +101,12 @@ if (isset($_GET['code_for_quiz'])) {
                 shuffle($choices);
 
                 // Display the question with its number
-                echo '<div class="container ms-auto me-auto">';
-                echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49;">';
-                echo '<h5 style="color: black; ' . $fontStyle . '"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
+                echo '<div class="container ms-auto me-auto" style="width: 90%; max-width: 1000px;">'; // Adjust the width as needed
+                echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49; padding: 20px;">'; // Added padding for internal spacing
+                echo '<h5 style="color: black; ' . $fontStyle . '; min-height: 60px;">' . $questionNumber . '. ' . $question['question'] . '</h5>'; // Adjust min-height as needed
+                
 
+<<<<<<< Updated upstream
 
                 switch ($question['questiontype']) {
                     case "MCQ":
@@ -117,8 +122,31 @@ if (isset($_GET['code_for_quiz'])) {
                         break;
                     case "IDEN":
                         echo "<div><label>Your answer: <input type='text' name='answer[{$question['qid']}]'></label></div>";
+=======
+                switch ($question['questiontype']) {
+                    case "MCQ":
+                    case "TOF":
+                        $choices = $question['questiontype'] == "MCQ" ? 
+                            [$question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']] : 
+                            ['True', 'False'];
+                        shuffle($choices);
+                        
+                        echo "<div class='choices-container' data-question-id='{$question['qid']}' style='display: flex; flex-direction: column; gap: 10px;'>"; // Added flex styles for consistent spacing
+                        foreach ($choices as $choice) {
+                            echo "<button type='button' class='btn btn-primary choice-button' data-value='{$choice}'>{$choice}</button>";
+                        }
+                        echo "<input type='hidden' name='answer[{$question['qid']}]' class='selected-answer'>";
+                        echo "</div>";
+                        break;
+                    case "IDEN":
+                        echo "<div class='form-group'>";
+                        echo "<label>Your answer:</label>";
+                 echo "<input type='text' class='form-control' name='answer[{$question['qid']}]' style='height: 50px;'>";
+                        echo "</div>";
+>>>>>>> Stashed changes
                         break;
                 }
+                echo "</div>"; // Close question div
 
                 echo "</div>"; // Close question div
                 $questionNumber++;
@@ -140,6 +168,24 @@ if (isset($_GET['code_for_quiz'])) {
     }
 }
 ?>
+<<<<<<< Updated upstream
+=======
+
+<script>
+$(document).ready(function() {
+    $('.choice-button').click(function() {
+        var $parentContainer = $(this).closest('.choices-container');
+        $parentContainer.find('.choice-button').removeClass('selected-choice');
+        $(this).addClass('selected-choice');
+        
+        // Update the hidden input with the selected value
+        var selectedValue = $(this).data('value');
+        $parentContainer.find('.selected-answer').val(selectedValue);
+    });
+});
+</script>
+
+>>>>>>> Stashed changes
     <?php include('assets/php/modalSubmitQ.php'); ?>
 
     <!-- modal popup when user is out of tab -->
@@ -208,6 +254,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
             }
         }
     }
+<<<<<<< Updated upstream
+=======
 
     // Fetch the existing score, if any
     $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
@@ -226,8 +274,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
         $insertStmt->execute([$username, $quizCode, $newScore]);
     }
 
+    echo "<script>$(document).ready(function() { $('#scoreModal').modal('show'); });</script>";
+>>>>>>> Stashed changes
+
+    // Fetch the existing score, if any
+    $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
+    $stmt->execute([$username, $quizCode]);
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $existingScore = $row['score'];
+        $cumulativeScore = $existingScore + $newScore; // Add new score to existing score
+
+<<<<<<< Updated upstream
+        // Update the cumulative score
+        $updateStmt = $pdo->prepare("UPDATE quiz_scores SET score = ? WHERE username = ? AND code = ?");
+        $updateStmt->execute([$cumulativeScore, $username, $quizCode]);
+    } else {
+        // If no existing score, insert the new score as is
+        $insertStmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
+        $insertStmt->execute([$username, $quizCode, $newScore]);
+    }
+
     echo "Your score is: $newScore"; // Display the new score for this attempt
 }
 ?>
     <?php require('assets/php/footer.inc.php'); ?>
+=======
+echo <<<HTML
+<div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-labelledby="scoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="scoreModalLabel">Quiz Score</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="redirectToQuizList()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Your score is: $newScore
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="redirectToQuizList()">Close and Go Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+>>>>>>> Stashed changes
 
+HTML;
+
+}
+
+
+
+?>
+<script>
+$(document).ready(function() {
+    $('#scoreModal').modal('show');
+});
+
+function redirectToQuizList() {
+    // Close the modal if you want, though it will automatically close on page redirection
+    $('#scoreModal').modal('hide');
+    // Redirect to list.php
+    window.location.href = 'list.php';
+}
+</script>
+    <?php require('assets/php/footer.inc.php'); ?>

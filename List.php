@@ -320,21 +320,31 @@ if ($result->num_rows > 0) {
         echo '</div>'; 
     }
    
-         echo '<nav aria-label="page nav">';
-        echo '<ul class="pagination pagination-lg">';
-
-        for ($i = 1; $i <= $totalPages; $i++) {
-            if ($i == $currentPage) {
-                echo '<li class="page-item active" aria-current="page">';
-                echo '<span class="page-link">' . $i . '</span>';
-                echo '</li>';
-            } else {
-                echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-            }
+    echo '<nav aria-label="page nav">';
+    echo '<ul class="pagination pagination-lg">';
+    
+    // Previous button
+    if ($currentPage > 1) {
+        echo '<li class="page-item"><a class="page-link" href="?page=' . ($currentPage - 1) . '">Previous</a></li>';
+    }
+    
+    for ($i = 1; $i <= $totalPages; $i++) {
+        if ($i == $currentPage) {
+            echo '<li class="page-item active" aria-current="page">';
+            echo '<span class="page-link">' . $i . '</span>';
+            echo '</li>';
+        } else {
+            echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
         }
-
-        echo '</ul>';
-        echo '</nav>';
+    }
+    
+    // Next button
+    if ($currentPage < $totalPages) {
+        echo '<li class="page-item"><a class="page-link" href="?page=' . ($currentPage + 1) . '">Next</a></li>';
+    }
+    
+    echo '</ul>';
+    echo '</nav>';
 
 
     
