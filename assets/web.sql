@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2024 at 11:39 AM
+-- Generation Time: Mar 02, 2024 at 07:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,10 +37,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`pass`, `username`) VALUES
-('$2y$10$YTWSjlkzq0sqHY.txiEWsOFDT/2e1xKCAfbsECwYiOOIvPz33EbLe', 'lean'),
-('$2y$10$SBIf07PuOy.zOcZjsA3m3uVr1CEp5x0f/v.d.eZY7LK8fqKpJkpS.', 'pans'),
-('$2y$10$4NxknTtC344TWRXZeaBUA.Zs8xCXdBSgnLEhBU3Ayi8VhQ7gH7/3G', 'yans'),
-('$2y$10$nP/elDAwmc8RV5L90HaubuVNyABGHs/OTLDWw549mQoYXc3ap83p2', 'yawa');
+('$2y$10$ZrG/yxdf9S.U9WrQliFnw.QRpcSPG/Fb5eWMEuOqGNuGkbuP5Ix4a', 'pans'),
+('$2y$10$pLL/gfA3sf5w99CsfIZAxe6h2m3KiUo065tdqywbOkerKFJtl8DkK', 'yans');
 
 -- --------------------------------------------------------
 
@@ -65,13 +63,12 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qid`, `quizcode`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
-(91, 'cSHwszQ', 'is it?', 'TOF', 'TRUE', '', '', '', ''),
-(92, 'E4XufQk', 'awww', 'TOF', 'TRUE', '', '', '', ''),
-(93, 'NVGg60d', 'yesss', 'TOF', 'TRUE', '', '', '', ''),
-(94, 'l06ZoYv', 'yesss', 'TOF', 'TRUE', '', '', '', ''),
-(95, 'E1dANP0', 'yes', 'IDEN', 'yes', '', '', '', ''),
-(96, 'E1dANP0', 'yes', 'MCQ', 'choiceA', 'yes', 'asda', 'dasdasda', 'dasdasd'),
-(97, 'E1dANP0', 'yes', 'TOF', 'TRUE', '', '', '', '');
+(101, 'UrYcn3x', 'asdas', 'IDEN', 'yes', '', '', '', ''),
+(102, 'UrYcn3x', 'sdfsdfs', 'TOF', 'TRUE', '', '', '', ''),
+(103, 'UrYcn3x', 'sdgsdg', 'MCQ', 'choiceA', 'yes', 'asfas', 'fasfas', 'fasfas'),
+(104, 'R2wHuhY', 'is it one only?', 'IDEN', 'yes', '', '', '', ''),
+(105, 'R2wHuhY', 'for one', 'MCQ', 'choiceA', 'yes', 'asda', 'sdasda', 'asdasd'),
+(106, 'R2wHuhY', 'is it ture???', 'TOF', 'TRUE', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -93,11 +90,8 @@ CREATE TABLE `quizlisttable` (
 --
 
 INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`) VALUES
-('cSHwszQ', 'for score', '65e19a57a646b9.31009452.png', 'PUBLIC', 'yans', 26),
-('E1dANP0', 'score', 'default_img.jpg', 'PUBLIC', 'yawa', 10),
-('E4XufQk', 'pans for title', 'default_img.jpg', 'PUBLIC', 'pans', 1),
-('l06ZoYv', 'titi', 'default_img.jpg', 'PUBLIC', 'yawa', 1),
-('NVGg60d', 'lean', 'default_img.jpg', 'PUBLIC', 'lean', 5);
+('R2wHuhY', 'For adding score', 'default_img.jpg', 'PUBLIC', 'pans', 19),
+('UrYcn3x', 'for score', '65e29557323f80.70019434.png', 'PUBLIC', 'pans', 81);
 
 -- --------------------------------------------------------
 
@@ -116,17 +110,8 @@ CREATE TABLE `quiz_scores` (
 --
 
 INSERT INTO `quiz_scores` (`code`, `username`, `score`) VALUES
-('cSHwszQ', 'yawa', NULL),
-('cSHwszQ', 'yawa', 1),
-('cSHwszQ', 'yawa', 1),
-('E1dANP0', 'yawa', 1),
-('E1dANP0', 'yawa', 0),
-('E1dANP0', 'pans', NULL),
-('E1dANP0', 'pans', NULL),
-('E1dANP0', 'pans', 0),
-('cSHwszQ', 'pans', 0),
-('E1dANP0', 'pans', 0),
-('E1dANP0', 'lean', 1);
+('R2wHuhY', 'pans', 9),
+('UrYcn3x', 'pans', 14);
 
 --
 -- Indexes for dumped tables
@@ -156,8 +141,8 @@ ALTER TABLE `quizlisttable`
 -- Indexes for table `quiz_scores`
 --
 ALTER TABLE `quiz_scores`
-  ADD KEY `fk_quiz_code_score` (`code`),
-  ADD KEY `fk_username_score` (`username`);
+  ADD PRIMARY KEY (`username`,`code`),
+  ADD KEY `fk_quiz_scores_quiz_code` (`code`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -167,7 +152,7 @@ ALTER TABLE `quiz_scores`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- Constraints for dumped tables
@@ -190,6 +175,8 @@ ALTER TABLE `quizlisttable`
 --
 ALTER TABLE `quiz_scores`
   ADD CONSTRAINT `fk_quiz_code_score` FOREIGN KEY (`code`) REFERENCES `quizlisttable` (`code`),
+  ADD CONSTRAINT `fk_quiz_scores_quiz_code` FOREIGN KEY (`code`) REFERENCES `questions` (`quizcode`),
+  ADD CONSTRAINT `fk_quiz_scores_username` FOREIGN KEY (`username`) REFERENCES `account` (`username`),
   ADD CONSTRAINT `fk_username_score` FOREIGN KEY (`username`) REFERENCES `account` (`username`);
 COMMIT;
 
