@@ -10,31 +10,31 @@ const identHtml = [
 const mcqHtml = [
     '<p>Input choices then select the answer</p>',
     '<div class="input-group mt-3">',
-    '<div class="input-group-text">',
+    '<div class="input-group-text solid-shadow-orange">',
     '<input class="form-check-input mt-0" type="radio" value="choiceA" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
-    '<input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice A" name="choiceA" required>',
+    '<input type="text" class="form-control solid-shadow-orange" aria-label="Text input with radio button" placeholder="Choice A" name="choiceA" required>',
     '</div>',
 
     '<div class="input-group mt-3">',
-    '<div class="input-group-text">',
+    '<div class="input-group-text solid-shadow-orange">',
     '<input class="form-check-input mt-0" type="radio" value="choiceB" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
-    '<input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Choice B" name="choiceB"  required>',
+    '<input type="text" class="form-control solid-shadow-orange" aria-label="Text input with radio button" placeholder="Choice B" name="choiceB"  required>',
     '</div>',
 
     '<div class="input-group mt-3">',
-    '<div class="input-group-text">',
+    '<div class="input-group-text solid-shadow-orange">',
     '<input class="form-check-input mt-0" type="radio" value="choiceC" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
-    '<input type="text" class="form-control" aria-label="Text input with radio button"  placeholder="Choice C" name="choiceC" required>',
+    '<input type="text" class="form-control solid-shadow-orange" aria-label="Text input with radio button"  placeholder="Choice C" name="choiceC" required>',
     '</div>',
 
     '<div class="input-group mt-3">',
-    '<div class="input-group-text" >',
+    '<div class="input-group-text solid-shadow-orange" >',
     '<input class="form-check-input mt-0" type="radio" value="choiceD" aria-label="Radio button for following text input" name="answerMCQ" required>',
     '</div>',
-    '<input type="text" class="form-control" aria-label="Text input with radio button"  placeholder="Choice D" name="choiceD" required>',
+    '<input type="text" class="form-control solid-shadow-orange" aria-label="Text input with radio button"  placeholder="Choice D" name="choiceD" required>',
     '</div>',
 ];
 
@@ -97,15 +97,6 @@ function changeQuizType() {
     // Loop over them and prevent submission
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
-            if (!form.checkValidity(forms)) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-        }, false)
-
-        form.addEventListener('click', event => {
             if (!form.checkValidity(forms)) {
                 event.preventDefault()
                 event.stopPropagation()
