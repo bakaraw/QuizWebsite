@@ -4,6 +4,19 @@ $quizcode = $_POST['quizcode'];
 $quiztitle = $_POST['new-title'];
 $access_option = $_POST['access-option'];
 
+$attempts = "-1";
+// Check if the checkbox is checked
+if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == '1') {
+    // Checkbox is checked
+    $attempts = "-1";
+} else {
+    $attempts = $_POST['max_attempts'];
+}
+
+
+
+
+
 // Check if a file is uploaded
 if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
     $thmb_img = $_FILES['file'];
@@ -30,7 +43,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
                 $file_destination = '../img/uploads/' . $new_file_name;
                 move_uploaded_file($thmb_tmp, $file_destination);
 
-                updateQuizWithThmb($pdo, $quiztitle, $access_option, $new_file_name, $quizcode);
+                updateQuizWithThmb($pdo, $quiztitle, $access_option, $new_file_name, $quizcode, $attempts);
                 echo "successful";
             } else {
                 echo "Image too large";
@@ -43,14 +56,14 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
     }
 } else {
     //if file input is empty
-    updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode);
+    updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $attempts);
 }
 
-function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizcode)
+function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizcode, $max_attempts)
 {
     // deletes first the thumbnail in file if the thumbnail is not = 'default_img.jpg'
     // then uploads a new thumbnail image
-    
+
     try {
 
         $stmt = $pdo->prepare("SELECT thumbnail FROM quizlisttable WHERE code = ?");
@@ -65,7 +78,7 @@ function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizc
             if (file_exists($filePath)) {
                 // Attempt to delete the file
                 if (unlink($filePath)) {
-                    
+
                 } else {
                     echo "Failed to delete file $thumbnailFilename.";
                 }
@@ -76,13 +89,14 @@ function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizc
         }
 
 
-        $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility, thumbnail=:thumbnail WHERE code=:quizcode");
+        $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility, thumbnail=:thumbnail, max_attempts=:max_attempts WHERE code=:quizcode");
 
         // // Bind parameters
         $stmt->bindParam(':title', $quiztitle);
         $stmt->bindParam(':accessibility', $access_option);
         $stmt->bindParam(':thumbnail', $thumbnail);
         $stmt->bindParam(':quizcode', $quizcode);
+        $stmt->bindParam(':max_attempts', $max_attempts);
         // Execute the statement
         $stmt->execute();
     } catch (PDOException $e) {
@@ -90,15 +104,16 @@ function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizc
     }
 }
 
-function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode)
+function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $max_attempts)
 {
     try {
-        $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility WHERE code=:quizcode");
+        $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility, max_attempts=:max_attempts WHERE code=:quizcode");
 
         // // Bind parameters
         $stmt->bindParam(':title', $quiztitle);
         $stmt->bindParam(':accessibility', $access_option);
         $stmt->bindParam(':quizcode', $quizcode);
+        $stmt->bindParam(':max_attempts', $max_attempts);
         // Execute the statement
         $stmt->execute();
 

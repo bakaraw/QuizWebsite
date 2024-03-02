@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 01, 2024 at 11:39 AM
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 02, 2024 at 01:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,8 +37,10 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`pass`, `username`) VALUES
+('$2y$10$87RD/TIApqo/oVC8OydsQehJ7IWGl2UaNDT.ph9/zbg3JmD8yVf/i', 'lai'),
 ('$2y$10$YTWSjlkzq0sqHY.txiEWsOFDT/2e1xKCAfbsECwYiOOIvPz33EbLe', 'lean'),
 ('$2y$10$SBIf07PuOy.zOcZjsA3m3uVr1CEp5x0f/v.d.eZY7LK8fqKpJkpS.', 'pans'),
+('$2y$10$mTRfBID5I7kH4wN9jxqr7ulMp0dhMz9Nb3pC8QPMG6ELcAHVjb/ku', 'shit'),
 ('$2y$10$4NxknTtC344TWRXZeaBUA.Zs8xCXdBSgnLEhBU3Ayi8VhQ7gH7/3G', 'yans'),
 ('$2y$10$nP/elDAwmc8RV5L90HaubuVNyABGHs/OTLDWw549mQoYXc3ap83p2', 'yawa');
 
@@ -65,13 +67,8 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qid`, `quizcode`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
-(91, 'cSHwszQ', 'is it?', 'TOF', 'TRUE', '', '', '', ''),
-(92, 'E4XufQk', 'awww', 'TOF', 'TRUE', '', '', '', ''),
-(93, 'NVGg60d', 'yesss', 'TOF', 'TRUE', '', '', '', ''),
-(94, 'l06ZoYv', 'yesss', 'TOF', 'TRUE', '', '', '', ''),
-(95, 'E1dANP0', 'yes', 'IDEN', 'yes', '', '', '', ''),
-(96, 'E1dANP0', 'yes', 'MCQ', 'choiceA', 'yes', 'asda', 'dasdasda', 'dasdasd'),
-(97, 'E1dANP0', 'yes', 'TOF', 'TRUE', '', '', '', '');
+(103, '9dJyn7x', '123', 'IDEN', '123', '', '', '', ''),
+(104, 'u5leirn', '123', 'MCQ', 'choiceC', '1', '2', '3', '4');
 
 -- --------------------------------------------------------
 
@@ -85,19 +82,20 @@ CREATE TABLE `quizlisttable` (
   `thumbnail` varchar(255) NOT NULL,
   `accessibility` varchar(8) NOT NULL,
   `creator` varchar(255) NOT NULL,
-  `views` int(11) DEFAULT 0
+  `views` int(11) DEFAULT 0,
+  `max_attempts` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `quizlisttable`
 --
 
-INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`) VALUES
-('cSHwszQ', 'for score', '65e19a57a646b9.31009452.png', 'PUBLIC', 'yans', 26),
-('E1dANP0', 'score', 'default_img.jpg', 'PUBLIC', 'yawa', 10),
-('E4XufQk', 'pans for title', 'default_img.jpg', 'PUBLIC', 'pans', 1),
-('l06ZoYv', 'titi', 'default_img.jpg', 'PUBLIC', 'yawa', 1),
-('NVGg60d', 'lean', 'default_img.jpg', 'PUBLIC', 'lean', 5);
+INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`, `max_attempts`) VALUES
+('9dJyn7x', 'awdad', 'default_img.jpg', 'PUBLIC', 'lai', 10, 2),
+('eRmxAbv', 'laightger', 'default_img.jpg', 'PUBLIC', 'lai', 24, 3),
+('IFJ462c', 'ako si badoy', 'default_img.jpg', 'PUBLIC', 'lai', 23, 3),
+('nVoyJ5u', 'laighton', 'default_img.jpg', 'PUBLIC', 'lai', 7, 2),
+('u5leirn', '1231231', 'default_img.jpg', 'PUBLIC', 'lai', 23, 123);
 
 -- --------------------------------------------------------
 
@@ -111,22 +109,29 @@ CREATE TABLE `quiz_scores` (
   `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `quiz_scores`
+-- Table structure for table `user_quiz_attempts`
 --
 
-INSERT INTO `quiz_scores` (`code`, `username`, `score`) VALUES
-('cSHwszQ', 'yawa', NULL),
-('cSHwszQ', 'yawa', 1),
-('cSHwszQ', 'yawa', 1),
-('E1dANP0', 'yawa', 1),
-('E1dANP0', 'yawa', 0),
-('E1dANP0', 'pans', NULL),
-('E1dANP0', 'pans', NULL),
-('E1dANP0', 'pans', 0),
-('cSHwszQ', 'pans', 0),
-('E1dANP0', 'pans', 0),
-('E1dANP0', 'lean', 1);
+CREATE TABLE `user_quiz_attempts` (
+  `username` varchar(300) DEFAULT NULL,
+  `quizcode` varchar(7) DEFAULT NULL,
+  `remaining_attempts` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_quiz_attempts`
+--
+
+INSERT INTO `user_quiz_attempts` (`username`, `quizcode`, `remaining_attempts`) VALUES
+('lai', 'IFJ462c', -3),
+('shit', 'IFJ462c', 0),
+('lai', 'nVoyJ5u', 0),
+('lai', 'eRmxAbv', 0),
+('lai', '9dJyn7x', 0),
+('lai', 'u5leirn', 120);
 
 --
 -- Indexes for dumped tables
@@ -160,6 +165,13 @@ ALTER TABLE `quiz_scores`
   ADD KEY `fk_username_score` (`username`);
 
 --
+-- Indexes for table `user_quiz_attempts`
+--
+ALTER TABLE `user_quiz_attempts`
+  ADD KEY `username` (`username`),
+  ADD KEY `quizcode` (`quizcode`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -167,7 +179,7 @@ ALTER TABLE `quiz_scores`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- Constraints for dumped tables
@@ -191,6 +203,13 @@ ALTER TABLE `quizlisttable`
 ALTER TABLE `quiz_scores`
   ADD CONSTRAINT `fk_quiz_code_score` FOREIGN KEY (`code`) REFERENCES `quizlisttable` (`code`),
   ADD CONSTRAINT `fk_username_score` FOREIGN KEY (`username`) REFERENCES `account` (`username`);
+
+--
+-- Constraints for table `user_quiz_attempts`
+--
+ALTER TABLE `user_quiz_attempts`
+  ADD CONSTRAINT `user_quiz_attempts_ibfk_1` FOREIGN KEY (`username`) REFERENCES `account` (`username`),
+  ADD CONSTRAINT `user_quiz_attempts_ibfk_2` FOREIGN KEY (`quizcode`) REFERENCES `quizlisttable` (`code`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

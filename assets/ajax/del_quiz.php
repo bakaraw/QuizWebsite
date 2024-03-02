@@ -24,6 +24,16 @@ if ($result && $result['thumbnail'] !== 'default_img.jpg') {
     }
 }
 
+$sql = "DELETE FROM quiz_scores WHERE code = :quizcode";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':quizcode', $quizcode);
+$stmt->execute();
+
+$sql = "DELETE FROM user_quiz_attempts WHERE quizcode = :quizcode";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':quizcode', $quizcode);
+$stmt->execute();
+
 // then proceeds to delete questions associated with the quizcode in questions table
 $sql = "DELETE FROM questions WHERE quizcode = :quizcode";
 $stmt = $pdo->prepare($sql);
