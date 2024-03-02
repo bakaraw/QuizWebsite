@@ -166,4 +166,6 @@ include('assets/php/ModalSubmitQ.php');
         });
     </script>
 
+ main
     <?php require('assets/php/footer.inc.php'); ?>
+
