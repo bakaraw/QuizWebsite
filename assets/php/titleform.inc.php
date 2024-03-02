@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiztitle'])) {
         $quizcode = generateQuizCode($pdo);
 
         // Inserting Quizcode, title, and username into database
-        $query = "INSERT INTO quizlisttable(code, title, creator, accessibility, thumbnail) VALUES (?, ?, ?, ?, ?);";
+        $query = "INSERT INTO quizlisttable(code, title, creator, accessibility, thumbnail, max_attempts) VALUES (?, ?, ?, ?, ?, ?);";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([$quizcode, $quiztitle, $creator, "PRIVATE", $default_thmb]);
+        $stmt->execute([$quizcode, $quiztitle, $creator, "PRIVATE", $default_thmb, -1]);
 
         // Creating separate table for every quizcode
 

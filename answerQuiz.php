@@ -1,6 +1,7 @@
 <?php
 // Start the session before any output is sent
 session_start();
+include "assets/php/dbh_quiz.inc.php";
 
 // if using url to access quiz, user needs to login
 if (!isset($_SESSION["username"])) {
@@ -8,8 +9,63 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 
+//for attemps checker
+if (isset($_GET['code_for_quiz'])) {
+    $code = $_GET['code_for_quiz'];
+    $user = $_SESSION['username'];
+
+    $stmt = $pdo->prepare("SELECT * FROM user_quiz_attempts WHERE username = :username AND  quizcode = :quizcode");
+    // Bind parameters (if needed)
+    $stmt->bindParam(':username', $user);
+    $stmt->bindParam(':quizcode', $code);
+    // Execute the query
+    $stmt->execute();
+
+    // Fetch the result
+    if ($stmt->rowCount() > 0) {
+        // Fetch the result
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['remaining_attempts'] == 0) {
+            header("Location: assets/php/no_attempts_left.php");
+            exit();
+        }
+
+    } else {
+        $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
+        $stmt->bindParam(':quizcode', $code);
+        $stmt->execute();
+        // Fetch the result and store it in a PHP variable
+        $max_attempts_row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $max_attempts = $max_attempts_row['max_attempts'];
+
+        $stmt = $pdo->prepare("INSERT INTO user_quiz_attempts (username, quizcode, remaining_attempts) VALUES (:username, :quizcode, :remaining_attempts)");
+        $stmt->bindParam(':username', $user);
+        $stmt->bindParam(':quizcode', $code);
+        $stmt->bindParam(':remaining_attempts', $max_attempts);
+        $stmt->execute();
+
+    }
+}
+
+
+if (isset($_POST['kick-out-btn'])) {
+    $decrement_value = 1;
+    $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode");
+
+    // Bind parameters
+    $stmt->bindParam(':decrement_value', $decrement_value, PDO::PARAM_INT);
+    $stmt->bindParam(':quizcode', $code);
+
+    // Execute the prepared statement
+    $stmt->execute();
+
+    header("Location: List.php");
+    exit();
+
+}
+
+
 // Include necessary files
-include "assets/php/dbh_quiz.inc.php";
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
 // Update the inclusion to use the correct path for the ModalSubmitQ.php file
@@ -142,11 +198,34 @@ include('assets/php/ModalSubmitQ.php');
                     You have been kicked out
                 </div>
                 <div class="modal-footer">
-                    <a href="List.php" type="button" class="btn btn-primary">Omki :(</a>
+                    <form method="post">
+                        <input type="submit" class="btn btn-primary" name="kick-out-btn" id="kick-out-btn"
+                            value="Omki :(">
+                    </form>
+
                 </div>
             </div>
         </div>
-    </div>F
+    </div>
+
+    <!-- model when tab is closed or go backed -->
+    <div class="modal fade" id="exit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         var timer;
@@ -156,9 +235,9 @@ include('assets/php/ModalSubmitQ.php');
             seconds = 3;
             if (document.visibilityState === 'hidden') {
                 timer = setTimeout(function () {
-                    
+
                     $('#unclosableModal').modal('show');
-                }, seconds * 1000); 
+                }, seconds * 1000);
             } else {
                 clearTimeout(timer);
             }
@@ -172,6 +251,8 @@ include('assets/php/ModalSubmitQ.php');
             console.log('Window is in focus');
         });
 
+
     </script>
+
 
     <?php require('assets/php/footer.inc.php'); ?>

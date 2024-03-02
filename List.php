@@ -270,7 +270,7 @@
     $row = $result->fetch_assoc();
     $totalItems = $row['count'];
     $totalPages = ceil($totalItems / $itemsPerPage);
-    echo '<div class="d-flex justify-content-center text-dark mt-5"><h5 class="card-title">Quizzes For You</h5></div>';
+   
 
     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
         $currentPage = (int) $_GET['page'];
@@ -283,6 +283,7 @@
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
+        echo '<div class="d-flex justify-content-center text-dark mt-5"><h5 class="card-title">Quizzes For You</h5></div>';
         echo '<div class="container mt-4 text-center">';
         echo '<div class="row justify-content-center">';
         while ($row = $result->fetch_assoc()) {
@@ -314,11 +315,11 @@
 
     } else {
         echo '<div class="col-12">';
-        echo '<div class="card quiz-card text-center">'
-            . '<div class="card-body">'
-            . '<h5 class="card-title text-muted">Search Results</h5>'
-            . '<p class="card-text">No quiz found matching the provided code. Please try a different search.</p>'
-            . '</div>'
+        echo '<div class="text-center">'
+            . ''
+            . '<h5 class="mt-5 mb-5 text-muted">No Quiz Available</h5>'
+            . ''
+            . ''
             . '</div>';
         echo '</div>';
         echo '</div>';
