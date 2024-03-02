@@ -44,13 +44,14 @@ include('assets/php/ModalSubmitQ.php');
 </head>
 
 <body>
+<?php 
+if (isset($_GET['code_for_quiz'])) {
+    $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
-    <?php
-    if (isset($_GET['code_for_quiz'])) {
-        $quizCode = htmlspecialchars($_GET['code_for_quiz']);
-
+    try {
         // Assuming $pdo is your PDO database connection instance
-    
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         // Fetch quiz details, including 'views'
         $fetchSql = "SELECT * FROM quizlisttable WHERE code = ?";
         $fetchStmt = $pdo->prepare($fetchSql);
@@ -68,6 +69,12 @@ include('assets/php/ModalSubmitQ.php');
             $fetchStmt = $pdo->prepare($fetchSql);
             $fetchStmt->execute([$quizCode]);
             $allQuestions = $fetchStmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($allQuestions)) {
+                echo "No questions found for this quiz.";
+                exit;
+            }
+
             shuffle($allQuestions);
 
             // Display quiz details above the first question
@@ -76,58 +83,56 @@ include('assets/php/ModalSubmitQ.php');
             echo '<p class="text-muted">Quiz Code: ' . htmlspecialchars($quizDetails['code']) . ' | Creator: ' . htmlspecialchars($quizDetails['creator']) . '</p>';
             echo '</div>';
 
-            // Shuffle the order of choices for each question
-            $questionNumber = 1; // Initialize the question number counter
+            // Start the form for submitting quiz answers
+            echo '<form id="quizForm" action="answerQuiz.php" method="post">';
+            echo '<input type="hidden" name="quizCode" value="' . $quizCode . '">';
+
+            $questionNumber = 1;
             foreach ($allQuestions as $question) {
                 // Check if keys exist before using them
                 $fontStyle = isset($question['fontstyle']) ? 'font-family: ' . $question['fontstyle'] . ';' : '';
                 $fontColor = isset($question['fontcolor']) ? 'color: ' . $question['fontcolor'] . ' !important;' : '';
 
-                $choices = array($question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']);
-                shuffle($choices);
+                echo "<div class='question' style='{$fontStyle} {$fontColor}'>";
+                echo "<p><strong>Question {$questionNumber}:</strong> {$question['question']}</p>";
 
-                // Display the question with its number
-                echo '<div class="container ms-auto me-auto">';
-                echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49;">';
-                echo '<h5 style="color: black; ' . $fontStyle . '"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
-
-                if ($question['questiontype'] == "MCQ") {
-                    echo '<div style="color: black;">';
-                    echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'A\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="A"><strong>' . $choices[0] . '</strong></button><br>';
-                    echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'B\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="B"><strong>' . $choices[1] . '</strong></button><br>';
-                    echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'C\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="C"><strong>' . $choices[2] . '</strong></button><br>';
-                    echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'D\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="D"><strong>' . $choices[3] . '</strong></button><br>';
-                    echo '</div>';
-                } elseif ($question['questiontype'] == "TOF") {
-                    echo '<div style="color: black;">';
-                    echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'True\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="True"><strong>True</strong></button><br>';
-                    echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'False\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="False"><strong>False</strong></button><br>';
-                    echo '</div>';
-                } elseif ($question['questiontype'] == "IDEN") {
-                    echo '<div style="color: black;">';
-                    echo '<input type="text" name="answer[' . $question['qid'] . ']" placeholder="Type your answer here" style="width: 100%; color: black; border: none; border-radius: 16px; padding: 10px; font-size: 16px; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36);" class="form-control" placeholder="Type your answer here" style="color: gray;">';
-                    echo '</div>';
+                switch ($question['questiontype']) {
+                    case "MCQ":
+                        $choices = [$question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']];
+                        shuffle($choices);
+                        foreach ($choices as $choice) {
+                            echo "<div><label><input type='radio' name='answer[{$question['qid']}]' value='{$choice}'> {$choice}</label></div>";
+                        }
+                        break;
+                    case "TOF":
+                        echo "<div><label><input type='radio' name='answer[{$question['qid']}]' value='True'> True</label></div>";
+                        echo "<div><label><input type='radio' name='answer[{$question['qid']}]' value='False'> False</label></div>";
+                        break;
+                    case "IDEN":
+                        echo "<div><label>Your answer: <input type='text' name='answer[{$question['qid']}]'></label></div>";
+                        break;
                 }
 
-                echo '</div>';
-                echo '</div>';
-
+                echo "</div>"; // Close question div
                 $questionNumber++;
             }
+
+            // Close the form after all questions have been output
+            echo '<div class="d-grid gap-2 d-md-flex justify-content-center mt-3">';
+            echo '<button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="submit">Submit Quiz</button>';
+            echo '</div>';
+            echo '</form>';
         } else {
             echo 'Quiz not found.';
             exit;
         }
+    } catch (PDOException $e) {
+        // Handle the error
+        echo "Database error: " . $e->getMessage();
+        exit;
     }
-    ?>
-
-    <form id="quizForm" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
-        <div class="d-grid gap-2 d-md-flex justify-content-center mt-3">
-            <button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="button"
-                data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
-        </div>
-    </form>
-
+}
+?>
     <?php include('assets/php/modalSubmitQ.php'); ?>
 
     <!-- modal popup when user is out of tab -->
@@ -149,23 +154,60 @@ include('assets/php/ModalSubmitQ.php');
     </div>F
 
     <script>
-        var timer;
+    var timer;
+    $(document).on('visibilitychange', function () {
+        seconds = 3;
+        if (document.visibilityState === 'hidden') {
+            timer = setTimeout(function () {
+                $('#unclosableModal').modal('show');
+                console.log('smells fishy');
+            }, seconds * 1000);
+        } else {
+            clearTimeout(timer);
+        }
+    });
+</script>
 
-        $(document).on('visibilitychange', function () {
-            seconds = 3;
-            if (document.visibilityState === 'hidden') {
 
-                timer = setTimeout(function () {
-                    // window.location.href = 'another-page.html';
-                    $('#unclosableModal').modal('show');
-                    console.log('smells fishy');
-                }, seconds * 1000);
-            } else {
-                clearTimeout(timer);
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
+    $totalScore = 0;
+    $username = $_SESSION["username"];
+    $quizCode = $_POST['quizCode'];
+
+    // Calculate total score based on answers
+    if (isset($_POST['answer']) && is_array($_POST['answer'])) {
+        foreach ($_POST['answer'] as $questionId => $userAnswer) {
+            $stmt = $pdo->prepare("SELECT answer FROM questions WHERE qid = ?");
+            $stmt->execute([$questionId]);
+            $question = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($userAnswer === $question['answer']) {
+                $totalScore++;
             }
-        });
-    </script>
+        }
+    }
 
+    // Check if a score already exists for this user and quiz
+    $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
+    $stmt->execute([$username, $quizCode]);
+    $scoreExists = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // If a score exists, update it with the new total score
+    if ($scoreExists) {
+        $stmt = $pdo->prepare("UPDATE quiz_scores SET score = score + ? WHERE username = ? AND code = ?");
+        $stmt->execute([$totalScore, $username, $quizCode]);
+    } else {
+        // If no score exists, insert the new score
+        $stmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
+        $stmt->execute([$username, $quizCode, $totalScore]);
+    }
+
+    // Redirect or inform the user of their score
+    echo "Your score is: $totalScore"; // Temporary line for demonstration
+}
+?>
 
     <?php require('assets/php/footer.inc.php'); ?>
 

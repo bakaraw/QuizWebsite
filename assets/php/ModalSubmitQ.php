@@ -10,9 +10,8 @@
                 <p>Would you like to submit this quiz?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <!-- Add an onclick event to trigger the form submission -->
-                <button type="button" class="btn btn-primary" onclick="submitQuizForm()">Submit</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('quizForm').submit();">Submit Quiz</button>
             </div>
         </div>
     </div>
