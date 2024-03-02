@@ -133,7 +133,7 @@ include('assets/php/ModalSubmitQ.php');
     <!-- modal popup when user is out of tab -->
     <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Out of tab for too long</h1>
@@ -152,18 +152,26 @@ include('assets/php/ModalSubmitQ.php');
         var timer;
 
         $(document).on('visibilitychange', function () {
+
             seconds = 3;
             if (document.visibilityState === 'hidden') {
-
                 timer = setTimeout(function () {
-                    // window.location.href = 'another-page.html';
+                    
                     $('#unclosableModal').modal('show');
-                    console.log('smells fishy');
-                }, seconds * 1000);
+                }, seconds * 1000); 
             } else {
                 clearTimeout(timer);
             }
         });
+
+        $(window).on('blur', function () {
+            console.log('Window is out of focus');
+        });
+
+        $(window).on('focus', function () {
+            console.log('Window is in focus');
+        });
+
     </script>
 
     <?php require('assets/php/footer.inc.php'); ?>
