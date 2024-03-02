@@ -87,14 +87,21 @@ if (isset($_GET['code_for_quiz'])) {
             echo '<form id="quizForm" action="answerQuiz.php" method="post">';
             echo '<input type="hidden" name="quizCode" value="' . $quizCode . '">';
 
+
             $questionNumber = 1;
             foreach ($allQuestions as $question) {
                 // Check if keys exist before using them
                 $fontStyle = isset($question['fontstyle']) ? 'font-family: ' . $question['fontstyle'] . ';' : '';
                 $fontColor = isset($question['fontcolor']) ? 'color: ' . $question['fontcolor'] . ' !important;' : '';
 
-                echo "<div class='question' style='{$fontStyle} {$fontColor}'>";
-                echo "<p><strong>Question {$questionNumber}:</strong> {$question['question']}</p>";
+                $choices = array($question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']);
+                shuffle($choices);
+
+                // Display the question with its number
+                echo '<div class="container ms-auto me-auto">';
+                echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49;">';
+                echo '<h5 style="color: black; ' . $fontStyle . '"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
+
 
                 switch ($question['questiontype']) {
                     case "MCQ":
@@ -151,7 +158,7 @@ if (isset($_GET['code_for_quiz'])) {
                 </div>
             </div>
         </div>
-    </div>F
+    </div>
 
     <script>
     var timer;
@@ -161,7 +168,7 @@ if (isset($_GET['code_for_quiz'])) {
             timer = setTimeout(function () {
                 $('#unclosableModal').modal('show');
                 console.log('smells fishy');
-            }, seconds * 1000);
+            }, seconds * 100000);
         } else {
             clearTimeout(timer);
         }
@@ -172,42 +179,55 @@ if (isset($_GET['code_for_quiz'])) {
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
-    $totalScore = 0;
+    $newScore = 0; // This will hold the score for the current attempt
     $username = $_SESSION["username"];
     $quizCode = $_POST['quizCode'];
 
-    // Calculate total score based on answers
     if (isset($_POST['answer']) && is_array($_POST['answer'])) {
         foreach ($_POST['answer'] as $questionId => $userAnswer) {
-            $stmt = $pdo->prepare("SELECT answer FROM questions WHERE qid = ?");
+            $stmt = $pdo->prepare("SELECT * FROM questions WHERE qid = ?");
             $stmt->execute([$questionId]);
             $question = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($userAnswer === $question['answer']) {
-                $totalScore++;
+            if ($question) {
+                // Assuming 'ChoiceA', 'ChoiceB', etc., are the column names in the database
+                if ($question['questiontype'] == "MCQ") {
+                    $correctAnswerColumn = $question['answer']; // e.g., "ChoiceA"
+                    $correctAnswerColumn = strtolower($correctAnswerColumn); // to lowercase
+                    $correctAnswerColumn = substr($correctAnswerColumn, 0, -1) . strtoupper(substr($correctAnswerColumn, -1)); // Capitalize last letter
+                    $correctAnswer = $question[$correctAnswerColumn]; // Access the content
+                    
+                    if (strcasecmp(trim($userAnswer), trim($correctAnswer)) == 0) {
+                        $newScore++;
+                    }
+                } elseif ($question['questiontype'] == "TOF" || $question['questiontype'] == "IDEN") {
+                    if (strcasecmp(trim($userAnswer), trim($question['answer'])) == 0) {
+                        $newScore++;
+                    }
+                }
             }
         }
     }
 
-    // Check if a score already exists for this user and quiz
+    // Fetch the existing score, if any
     $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
     $stmt->execute([$username, $quizCode]);
-    $scoreExists = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $existingScore = $row['score'];
+        $cumulativeScore = $existingScore + $newScore; // Add new score to existing score
 
-    // If a score exists, update it with the new total score
-    if ($scoreExists) {
-        $stmt = $pdo->prepare("UPDATE quiz_scores SET score = score + ? WHERE username = ? AND code = ?");
-        $stmt->execute([$totalScore, $username, $quizCode]);
+        // Update the cumulative score
+        $updateStmt = $pdo->prepare("UPDATE quiz_scores SET score = ? WHERE username = ? AND code = ?");
+        $updateStmt->execute([$cumulativeScore, $username, $quizCode]);
     } else {
-        // If no score exists, insert the new score
-        $stmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
-        $stmt->execute([$username, $quizCode, $totalScore]);
+        // If no existing score, insert the new score as is
+        $insertStmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
+        $insertStmt->execute([$username, $quizCode, $newScore]);
     }
 
-    // Redirect or inform the user of their score
-    echo "Your score is: $totalScore"; // Temporary line for demonstration
+    echo "Your score is: $newScore"; // Display the new score for this attempt
 }
 ?>
-
     <?php require('assets/php/footer.inc.php'); ?>
 
