@@ -3,10 +3,10 @@
 session_start();
 
 // if using url to access quiz, user needs to login
-if (!isset($_SESSION["username"])){
+if (!isset($_SESSION["username"])) {
     header("Location: assets/php/via_url_redirection.php");
     exit();
-}   
+}
 
 // Include necessary files
 include "assets/php/dbh_quiz.inc.php";
@@ -35,11 +35,11 @@ include('assets/php/ModalSubmitQ.php');
     <style>
         /* Add any additional styles here */
         .selected-choice {
-            background-color: #EA9424 !important; /* Change the color as desired */
+            background-color: #EA9424 !important;
+            /* Change the color as desired */
             color: white !important;
             border: none !important;
         }
-
     </style>
 </head>
 
@@ -50,7 +50,7 @@ include('assets/php/ModalSubmitQ.php');
         $quizCode = htmlspecialchars($_GET['code_for_quiz']);
 
         // Assuming $pdo is your PDO database connection instance
-
+    
         // Fetch quiz details, including 'views'
         $fetchSql = "SELECT * FROM quizlisttable WHERE code = ?";
         $fetchStmt = $pdo->prepare($fetchSql);
@@ -90,7 +90,7 @@ include('assets/php/ModalSubmitQ.php');
                 echo '<div class="container ms-auto me-auto">';
                 echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49;">';
                 echo '<h5 style="color: black; ' . $fontStyle . '"><strong>' . $questionNumber . '.</strong> ' . $question['question'] . '</h5>';
-                
+
                 if ($question['questiontype'] == "MCQ") {
                     echo '<div style="color: black;">';
                     echo '<button type="button" class="btn btn-light mt-2 text-start font-weight-bold choice-button" onclick="selectChoice(' . $question['qid'] . ', \'A\')" style="width: 100%; box-shadow: 0px 5px 0px 0px rgb(234, 148, 36); border-radius: 16px; ' . $fontColor . '" name="answer[' . $question['qid'] . ']" value="A"><strong>' . $choices[0] . '</strong></button><br>';
@@ -122,14 +122,50 @@ include('assets/php/ModalSubmitQ.php');
     ?>
 
     <form id="quizForm" action="submit_quiz.php" method="post" onsubmit="return checkUnansweredQuestions();">
-    <div class="d-grid gap-2 d-md-flex justify-content-center mt-3">
-        <button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="button" data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
-    </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-center mt-3">
+            <button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="button"
+                data-toggle="modal" data-target="#modalSubmitQuiz">Submit Quiz</button>
+        </div>
     </form>
 
     <?php include('assets/php/modalSubmitQ.php'); ?>
+
+    <!-- modal popup when user is out of tab -->
+    <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Out of tab for too long</h1>
+                </div>
+                <div class="modal-body">
+                    You have been kicked out
+                </div>
+                <div class="modal-footer">
+                    <a href="List.php" type="button" class="btn btn-primary">Omki :(</a>
+                </div>
+            </div>
+        </div>
+    </div>F
+
+    <script>
+        var timer;
+
+        $(document).on('visibilitychange', function () {
+            seconds = 3;
+            if (document.visibilityState === 'hidden') {
+
+                timer = setTimeout(function () {
+                    // window.location.href = 'another-page.html';
+                    $('#unclosableModal').modal('show');
+                    console.log('smells fishy');
+                }, seconds * 1000);
+            } else {
+                clearTimeout(timer);
+            }
+        });
+    </script>
+
+
     <?php require('assets/php/footer.inc.php'); ?>
 
-</body>
-
-</html>

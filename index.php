@@ -15,7 +15,8 @@ session_start();
         <div class="card-body">
           <h1 class="card-title h1 font-moon-bold mb-4 text-orange">Create quiz with just a few clicks</h1>
           <p class="card-text font-roboto-light h5 mb-4">
-            QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
+            QuizHero is a website that lets you create fun and engaging quizzes for any topic or occasion. Whether you
+            want to test your knowledge, challenge your friends, or spice up your classroom, QuizHero has you covered.
           </p>
           <a id="start-now" class="btn btn-primary btn-lg text-dark border-dark">Start now</a>
         </div>
@@ -39,10 +40,14 @@ session_start();
           <div class="card-body">
             <h5 class="card-title h1 pb-4 font-moon-bold text-end">Test your knowledge</h5>
             <p class="card-text font-roboto-light mb-4 text-end">
-              Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase your brilliance!
+              Immerse yourself in a diverse range of quizzes created by fellow enthusiasts. From brain teasers to fun
+              facts, QuizHero is your playground for endless learning and entertainment. Answer with flair, share your
+              insights, and embark on a journey of discovery with QuizHero - where every quiz is a chance to showcase
+              your brilliance!
             </p>
             <form class="d-flex justify-content-end mt-4 mb-4" role="search" id="search-form">
-              <input class="form-control me-2 rounded" style="max-width: 15rem;" type="search" placeholder="Quiz Code" aria-label="Search" id="quizcode-search">
+              <input class="form-control me-2 rounded" style="max-width: 15rem;" type="search" placeholder="Quiz Code"
+                aria-label="Search" id="quizcode-search">
               <button class="btn btn-info border-dark" type="submit" id="search-btn">Search</button>
             </form>
           </div>
@@ -51,7 +56,6 @@ session_start();
     </div>
   </div>
 </div>
-<img src="assets/img/icons/curve2.svg" alt="" style="--bs-border-opacity: 0;">
 
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div id="no-quiz-found" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -66,15 +70,39 @@ session_start();
 </div>
 
 <?php include('assets/php/modalLogin.inc.php'); ?>
+<footer>
+  <div class="bg-dark d-flex justify-content-center align-items-center" style="height: 200px;">
+    <div class="text-center">
+      <img src="assets/img/icons/logo-white.png" alt="logo" style="width:150px; height: auto;">
+      <div class="text-light mt-3">
+        <small>
+          &copy;
+          <?php
+          $currentYear = date("Y");
+          echo $currentYear; // Output: 2024 (or whatever the current year is)
+          ?> QuizHero. All rights reserved.
+        </small>
+        <small>
+          Arts from freepik.com
+        </small>
 
+
+      </div>
+    </div>
+  </div>
+
+
+
+  </div>
+</footer>
 <script>
-  $(document).ready(function() {
-    $('#search-form').submit(function(e) {
+  $(document).ready(function () {
+    $('#search-form').submit(function (e) {
       e.preventDefault();
       var quizcode = $('#quizcode-search').val();
       var session_username = '<?php if (isset($_SESSION['username'])) {
-                                echo $_SESSION['username'];
-                              } ?>';
+        echo $_SESSION['username'];
+      } ?>';
 
       // Send an AJAX request to check if the quizcode exists
       if (session_username !== "") {
@@ -86,7 +114,7 @@ session_start();
             data: {
               quizcode: quizcode
             },
-            success: function(response) {
+            success: function (response) {
               if (response === 'exists') {
                 var url = "answerQuiz.php?code_for_quiz=" + quizcode;
                 window.location.href = url;
@@ -102,17 +130,17 @@ session_start();
           $('#no-quiz-found').toast('show');
         }
       } else {
-        
+
         $('#modalLogin').modal('show');
       }
     });
 
-    $('#start-now').click(function (e) { 
+    $('#start-now').click(function (e) {
       e.preventDefault();
       var session_username = '<?php if (isset($_SESSION['username'])) {
-                                echo $_SESSION['username'];
-                              } ?>';
-      if(session_username != "") {
+        echo $_SESSION['username'];
+      } ?>';
+      if (session_username != "") {
         window.location.href = 'MakeQuiz.php';
       } else {
         $('#modalLogin').modal('show');
