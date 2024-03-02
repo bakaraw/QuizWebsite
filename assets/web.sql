@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2024 at 07:45 AM
+-- Generation Time: Mar 02, 2024 at 12:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`pass`, `username`) VALUES
+('$2y$10$a9wj7P3ais91t.Dv/IksUetME8jmscqzxjM.PFs/G7pSOfHvjPEwu', 'asdasd'),
+('$2y$10$JOk4Sne1lBn0hlnr4b9.pOj/lWafwrhv9MmvSYt6mDWSYHFMDtyoO', 'lai'),
 ('$2y$10$ZrG/yxdf9S.U9WrQliFnw.QRpcSPG/Fb5eWMEuOqGNuGkbuP5Ix4a', 'pans'),
 ('$2y$10$pLL/gfA3sf5w99CsfIZAxe6h2m3KiUo065tdqywbOkerKFJtl8DkK', 'yans');
 
@@ -68,7 +70,11 @@ INSERT INTO `questions` (`qid`, `quizcode`, `question`, `questiontype`, `answer`
 (103, 'UrYcn3x', 'sdgsdg', 'MCQ', 'choiceA', 'yes', 'asfas', 'fasfas', 'fasfas'),
 (104, 'R2wHuhY', 'is it one only?', 'IDEN', 'yes', '', '', '', ''),
 (105, 'R2wHuhY', 'for one', 'MCQ', 'choiceA', 'yes', 'asda', 'sdasda', 'asdasd'),
-(106, 'R2wHuhY', 'is it ture???', 'TOF', 'TRUE', '', '', '', '');
+(106, 'R2wHuhY', 'is it ture???', 'TOF', 'TRUE', '', '', '', ''),
+(107, '7R3F7H6', 'asdas', 'IDEN', 'yes', '', '', '', ''),
+(108, '7R3F7H6', 'asdasda', 'MCQ', 'choiceC', 'asdas', 'dasdasd', 'yes', 'asdasd'),
+(109, '7R3F7H6', 'asdasda', 'IDEN', 'yes', '', '', '', ''),
+(110, '7R3F7H6', 'asdASDADAS', 'TOF', 'TRUE', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -90,7 +96,8 @@ CREATE TABLE `quizlisttable` (
 --
 
 INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`) VALUES
-('R2wHuhY', 'For adding score', 'default_img.jpg', 'PUBLIC', 'pans', 19),
+('7R3F7H6', 'someone', 'default_img.jpg', 'PUBLIC', 'yans', 11),
+('R2wHuhY', 'For adding score', 'default_img.jpg', 'PUBLIC', 'pans', 141),
 ('UrYcn3x', 'for score', '65e29557323f80.70019434.png', 'PUBLIC', 'pans', 81);
 
 -- --------------------------------------------------------
@@ -110,8 +117,10 @@ CREATE TABLE `quiz_scores` (
 --
 
 INSERT INTO `quiz_scores` (`code`, `username`, `score`) VALUES
-('R2wHuhY', 'pans', 9),
-('UrYcn3x', 'pans', 14);
+('R2wHuhY', 'pans', 60),
+('UrYcn3x', 'pans', 14),
+('7R3F7H6', 'yans', 7),
+('R2wHuhY', 'yans', 6);
 
 --
 -- Indexes for dumped tables
@@ -152,7 +161,7 @@ ALTER TABLE `quiz_scores`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- Constraints for dumped tables
