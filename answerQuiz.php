@@ -106,23 +106,6 @@ if (isset($_GET['code_for_quiz'])) {
                 echo '<h5 style="color: black; ' . $fontStyle . '; min-height: 60px;">' . $questionNumber . '. ' . $question['question'] . '</h5>'; // Adjust min-height as needed
                 
 
-<<<<<<< Updated upstream
-
-                switch ($question['questiontype']) {
-                    case "MCQ":
-                        $choices = [$question['choiceA'], $question['choiceB'], $question['choiceC'], $question['choiceD']];
-                        shuffle($choices);
-                        foreach ($choices as $choice) {
-                            echo "<div><label><input type='radio' name='answer[{$question['qid']}]' value='{$choice}'> {$choice}</label></div>";
-                        }
-                        break;
-                    case "TOF":
-                        echo "<div><label><input type='radio' name='answer[{$question['qid']}]' value='True'> True</label></div>";
-                        echo "<div><label><input type='radio' name='answer[{$question['qid']}]' value='False'> False</label></div>";
-                        break;
-                    case "IDEN":
-                        echo "<div><label>Your answer: <input type='text' name='answer[{$question['qid']}]'></label></div>";
-=======
                 switch ($question['questiontype']) {
                     case "MCQ":
                     case "TOF":
@@ -143,7 +126,6 @@ if (isset($_GET['code_for_quiz'])) {
                         echo "<label>Your answer:</label>";
                  echo "<input type='text' class='form-control' name='answer[{$question['qid']}]' style='height: 50px;'>";
                         echo "</div>";
->>>>>>> Stashed changes
                         break;
                 }
                 echo "</div>"; // Close question div
@@ -168,8 +150,6 @@ if (isset($_GET['code_for_quiz'])) {
     }
 }
 ?>
-<<<<<<< Updated upstream
-=======
 
 <script>
 $(document).ready(function() {
@@ -185,7 +165,6 @@ $(document).ready(function() {
 });
 </script>
 
->>>>>>> Stashed changes
     <?php include('assets/php/modalSubmitQ.php'); ?>
 
     <!-- modal popup when user is out of tab -->
@@ -254,8 +233,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
             }
         }
     }
-<<<<<<< Updated upstream
-=======
 
     // Fetch the existing score, if any
     $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
@@ -275,31 +252,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
     }
 
     echo "<script>$(document).ready(function() { $('#scoreModal').modal('show'); });</script>";
->>>>>>> Stashed changes
 
-    // Fetch the existing score, if any
-    $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
-    $stmt->execute([$username, $quizCode]);
-    if ($stmt->rowCount() > 0) {
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $existingScore = $row['score'];
-        $cumulativeScore = $existingScore + $newScore; // Add new score to existing score
 
-<<<<<<< Updated upstream
-        // Update the cumulative score
-        $updateStmt = $pdo->prepare("UPDATE quiz_scores SET score = ? WHERE username = ? AND code = ?");
-        $updateStmt->execute([$cumulativeScore, $username, $quizCode]);
-    } else {
-        // If no existing score, insert the new score as is
-        $insertStmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
-        $insertStmt->execute([$username, $quizCode, $newScore]);
-    }
-
-    echo "Your score is: $newScore"; // Display the new score for this attempt
-}
-?>
-    <?php require('assets/php/footer.inc.php'); ?>
-=======
 echo <<<HTML
 <div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-labelledby="scoreModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -319,7 +273,6 @@ echo <<<HTML
     </div>
   </div>
 </div>
->>>>>>> Stashed changes
 
 HTML;
 
