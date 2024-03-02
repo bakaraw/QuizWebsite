@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz List</title>
+
+    <!-- Add these lines to include Bootstrap and jQuery -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iK7t1TIq0v8FqFjcJ6pajs/rfdfsGFDKGI5tr5Szkbe5P/SFIIJdA2ybp" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEX/ndFUeUnRSuwFtBUV2jXdkn4f9En4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
     <style>
         .card {
             padding: 20px; 
@@ -91,15 +97,16 @@
         }
 
         .img-container {
-            flex: 0 0 50px;
-            height: 50px;
-            overflow: hidden;
-            margin-right: 15px;
+        flex: 0 0 50px;
+        height: 100px;
+        overflow: hidden;
+        margin-right: 15px;
         }
 
         .img-container img {
-            width: 100%;
-            height: auto;
+        width: 100%;
+        height: 100%; /* Change this to 100% to maintain the aspect ratio */
+        object-fit: contain; /* This property ensures the image fits while maintaining aspect ratio */
         }
 
         .text-content {
@@ -158,17 +165,27 @@
 
     <?php include('assets/php/navbar.inc.php'); ?>
 
+    <?php include('assets/php/ModalStartQ.php'); ?>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var quizCards = document.querySelectorAll('.card.quiz-card');
-            quizCards.forEach(function (card) {
-                card.addEventListener('click', function () {
-                    var code_for_quiz = this.getAttribute('data-quiz-code');
-                    window.location.href = 'answerQuiz.php?code_for_quiz=' + code_for_quiz;
+    document.addEventListener('DOMContentLoaded', function () {
+        var quizCards = document.querySelectorAll('.card.quiz-card');
+        quizCards.forEach(function (card) {
+            card.addEventListener('click', function () {
+                // Remove 'active' class from all cards
+                quizCards.forEach(function (c) {
+                    c.classList.remove('active');
                 });
+
+                // Add 'active' class to the clicked card
+                this.classList.add('active');
+
+                // Show the modal
+                $('#modalStartQuiz').modal('show');
             });
         });
-    </script>
+    });
+</script>
 
     <br>
 
@@ -202,7 +219,7 @@ if (isset($_SESSION['quizCode'])) {
             }
                 echo '<h5 class="card-subtitle" style="color: black;">Quiz found code: ' . $quizCode . '</h5>';
 
-            echo '<div class="col-lg-4 col-md-6 mb-4">';
+            echo '<div class="col-xl-4 col-lg-6 mb-4">';
             echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
                 . '<div class="card-body d-flex align-items-center">'
                 . '<div class="img-container me-3">'
@@ -248,7 +265,7 @@ if (isset($_SESSION['quizCode'])) {
     $row = $result->fetch_assoc();
     $totalItems = $row['count'];
     $totalPages = ceil($totalItems / $itemsPerPage);
-    echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: black;">Quiz List</h5></div>';
+    echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz List</h5></div>';
 
     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
         $currentPage = (int) $_GET['page'];
@@ -272,8 +289,8 @@ if ($result->num_rows > 0) {
         echo '<div class="col-lg-6 col-md-6 mb-2">'; 
         echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
             . '<div class="card-body d-flex align-items-center">'
-            . '<div class="img-container me-3">'
-            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" style="width: 100%; height: auto;">'
+            . '<div class="col-6 col-md-5 col-lg-4  img-container me-3">'
+            . '<img src="' . $thumbnailPath . '" alt="Quiz Thumbnail" class="img-fluid">'
             . '</div>'
             . '<div class="flex-grow-1 d-flex flex-column">'
             . '<h5 class="card-title">Quiz Title: ' . htmlspecialchars($row["title"]) . '</h5>'
