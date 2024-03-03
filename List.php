@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz List</title>
-
+    <title>QuizHero - Browse</title>
+    <link rel="icon" href="assets/img/icons/page-icon.ico" type="image/x-icon">
     <!-- Add these lines to include Bootstrap and jQuery -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -210,20 +210,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quizCode'])) {
 if (isset($_SESSION['quizCode'])) {
     $quizCode = $_SESSION['quizCode'];
 
-    $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE code = ? AND accessibility <> 'PRIVATE'");
-    $stmt->bind_param("s", $quizCode);
+    $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE (title LIKE '%$quizCode%' OR code LIKE '%$quizCode%') AND accessibility <> 'PRIVATE'");
     $stmt->execute();
     $result = $stmt->get_result();
 
     echo '<div class="container mt-4">';
     echo '<div class="row">';
     if ($result->num_rows > 0) {
+        echo '<h5 class="card-subtitle" style="color: black;">Quiz found with ' . $quizCode . '</h5>';
         while ($row = $result->fetch_assoc()) {
             $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
             if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
                 $thumbnailPath = 'assets/img/uploads/default_img.jpg';
             }
-                echo '<h5 class="card-subtitle" style="color: black;">Quiz found code: ' . $quizCode . '</h5>';
+                
 
             echo '<div class="col-xl-4 col-lg-6 mb-4">';
             echo '<div class="card quiz-card" data-quiz-code="' . htmlspecialchars($row["code"]) . '">'
@@ -271,7 +271,7 @@ if (isset($_SESSION['quizCode'])) {
     $row = $result->fetch_assoc();
     $totalItems = $row['count'];
     $totalPages = ceil($totalItems / $itemsPerPage);
-    echo '<div class="d-flex justify-content-center"><h5 class="card-title" style="color: white;">Quiz List</h5></div>';
+  
 
     if (isset($_GET['page']) && is_numeric($_GET['page'])) {
         $currentPage = (int) $_GET['page'];
@@ -284,6 +284,7 @@ if (isset($_SESSION['quizCode'])) {
 
     $result = $conn->query($sql);
 if ($result->num_rows > 0) {
+    echo '<div class="d-flex justify-content-center"><h5 class="card-title text-dark">Quiz List</h5></div>';
     echo '<div class="container mt-4 text-center">'; 
     echo '<div class="row justify-content-center">'; 
     while ($row = $result->fetch_assoc()) {
@@ -315,11 +316,11 @@ if ($result->num_rows > 0) {
 
     } else {
         echo '<div class="col-12">';
-        echo '<div class="card quiz-card text-center">'
-            . '<div class="card-body">'
-            . '<h5 class="card-title text-muted">Search Results</h5>' 
-            . '<p class="card-text">No quiz found matching the provided code. Please try a different search.</p>' 
-            . '</div>'
+        echo '<div class=" text-center">'
+            . ''
+            . '<h5 class="card-title text-muted mt-5 mb-5">No Quizzes available</h5>' 
+            . '' 
+            . ''
             . '</div>';
         echo '</div>'; 
         echo '</div>'; 
