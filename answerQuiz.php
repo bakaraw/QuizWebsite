@@ -2,7 +2,7 @@
 // Start the session before any output is sent
 session_start();
 include "assets/php/dbh_quiz.inc.php";
-// if using url to access quiz, user needs to login
+// if using the URL to access the quiz, the user needs to login
 if (!isset($_SESSION["username"])) {
     header("Location: assets/php/via_url_redirection.php");
     exit();
@@ -97,6 +97,19 @@ include('assets/php/ModalSubmitQ.php');
             color: black !important; /* Set text color to black */
             border: none !important; /* Remove button borders */
         }
+
+        /* Style for identification question textbox */
+        .iden-answer {
+            border: none !important;
+            border-radius: 1.5rem !important; /* Set more rounded border-radius */
+            color: white !important; /* Set text color to white */
+        }
+
+        /* Style for "Your answer:" text */
+        .your-answer-label {
+            font-weight: bold; /* Set font-weight to bold */
+            color: white !important; /* Set text color to white */
+        }
     </style>
 </head>
 
@@ -131,6 +144,8 @@ include('assets/php/ModalSubmitQ.php');
                     echo "No questions found for this quiz.";
                     exit;
                 }
+
+                shuffle($allQuestions);
 
                 // Display quiz details above the first question
                 echo '<div class="container text-center mt-4">';
@@ -173,8 +188,8 @@ include('assets/php/ModalSubmitQ.php');
                             break;
                         case "IDEN":
                             echo "<div class='form-group'>";
-                            echo "<label>Your answer:</label>";
-                            echo "<input type='text' class='form-control' name='answer[{$question['qid']}]' style='height: 50px;'>";
+                            echo "<label class='your-answer-label'>Your answer:</label>";
+                            echo "<input type='text' class='form-control iden-answer' name='answer[{$question['qid']}]' style='height: 50px;'>";
                             echo "</div>";
                             break;
                     }
