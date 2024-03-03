@@ -1,3 +1,4 @@
+
 <?php
 // Start the session before any output is sent
 session_start();
@@ -327,3 +328,4 @@ function redirectToQuizList() {
 }
 </script>
     <?php require('assets/php/footer.inc.php'); ?>
+

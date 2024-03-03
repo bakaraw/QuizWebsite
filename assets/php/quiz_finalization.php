@@ -1,3 +1,4 @@
+
 <?php
 include "dbh_quiz.inc.php";
 $quizcode = $_POST['quizcode'];
@@ -129,3 +130,4 @@ function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $max_atte
         echo "Error: " . $e->getMessage();
     }
 }
+
