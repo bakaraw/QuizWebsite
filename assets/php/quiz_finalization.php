@@ -1,4 +1,3 @@
-
 <?php
 include "dbh_quiz.inc.php";
 $quizcode = $_POST['quizcode'];
@@ -20,10 +19,6 @@ if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == 'on') {
         echo "somethings wrong with max_attempts input element";
     }
 }
-
-
-
-
 
 // Check if a file is uploaded
 if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -65,6 +60,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
 } else {
     //if file input is empty
     updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $attempts);
+    echo "successful";
 }
 
 function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizcode, $max_attempts)
@@ -124,10 +120,7 @@ function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $max_atte
         $stmt->bindParam(':max_attempts', $max_attempts);
         // Execute the statement
         $stmt->execute();
-
-        echo "successful";
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
-

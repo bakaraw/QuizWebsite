@@ -360,7 +360,7 @@ if ($stmt->rowCount() > 0) {
                     data: formData,
                     type: 'post',
                     success: function (response) {
-
+                        console.log(response);
                         if (response == "successful") {
                             $('#shareModal').modal('hide');
                             $('#liveToast').toast('show');
