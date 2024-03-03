@@ -1,4 +1,3 @@
-
 <?php
 
 if (isset($_GET['logout']) && $_GET['logout'] == '1') {
@@ -39,17 +38,6 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
               <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modalLogin">Browse Quiz</a>
             <?php endif; ?>
           </li>
-
-          <li class="nav-item">
-            <?php if (isset($_SESSION['username'])) : ?>
-
-              <a class="nav-link" href="leaderboard.php">leaderboard</a>
-            <?php else : ?>
-              <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#modalLogin">leaderboard</a>
-            <?php endif; ?>
-          </li>
-       
-  
         </ul>
 
         <div class="navbar-text invisible">
@@ -79,7 +67,4 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
       </div>
     </div>
   </nav>
-  
 </section>
-
-
