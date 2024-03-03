@@ -27,7 +27,6 @@ if (isset($_GET['code_for_quiz'])) {
             header("Location: assets/php/no_attempts_left.php");
             exit();
         }
-
     } else {
         $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
         $stmt->bindParam(':quizcode', $code);
@@ -41,17 +40,14 @@ if (isset($_GET['code_for_quiz'])) {
         $stmt->bindParam(':quizcode', $code);
         $stmt->bindParam(':remaining_attempts', $max_attempts);
         $stmt->execute();
-
     }
 }
-
 
 if (isset($_POST['kick-out-btn'])) {
     $decrement_value = 1;
 
     $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
     // Bind parameters (if needed)
-
     $stmt->bindParam(':quizcode', $code);
     // Execute the query
     $stmt->execute();
@@ -70,12 +66,10 @@ if (isset($_POST['kick-out-btn'])) {
 
         header("Location: List.php");
         exit();
-
     }
 }
 
 // Include necessary files
-
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
 // Update the inclusion to use the correct path for the ModalSubmitQ.php file
@@ -90,22 +84,16 @@ include('assets/php/ModalSubmitQ.php');
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Include Bootstrap JS from CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".choice-button").click(function () {
-                $(this).addClass("selected-choice");
-                $(this).siblings().removeClass("selected-choice");
-            });
-        });
-    </script>
     <style>
         /* Add any additional styles here */
         .selected-choice {
             background-color: #EA9424 !important;
-            /* Change the color as desired */
             color: white !important;
             border: none !important;
+        }
 
+        .choice-button {
+            border: 1px solid #ea9424;
         }
     </style>
 </head>
@@ -154,7 +142,6 @@ include('assets/php/ModalSubmitQ.php');
                 echo '<form id="quizForm" action="answerQuiz.php" method="post">';
                 echo '<input type="hidden" name="quizCode" value="' . $quizCode . '">';
 
-
                 $questionNumber = 1;
                 foreach ($allQuestions as $question) {
                     // Check if keys exist before using them
@@ -168,7 +155,6 @@ include('assets/php/ModalSubmitQ.php');
                     echo '<div class="container ms-auto me-auto" style="width: 90%; max-width: 1000px;">'; // Adjust the width as needed
                     echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49; padding: 20px;">'; // Added padding for internal spacing
                     echo '<h5 style="color: black; ' . $fontStyle . '; min-height: 60px;">' . $questionNumber . '. ' . $question['question'] . '</h5>'; // Adjust min-height as needed
-    
 
                     switch ($question['questiontype']) {
                         case "MCQ":
@@ -193,7 +179,7 @@ include('assets/php/ModalSubmitQ.php');
                             break;
                     }
                     echo "</div>"; // Close question div
-    
+
                     echo "</div>"; // Close question div
                     $questionNumber++;
                 }
@@ -233,7 +219,6 @@ include('assets/php/ModalSubmitQ.php');
                         <input type="submit" class="btn btn-primary" name="kick-out-btn" id="kick-out-btn"
                             value="Omki :(">
                     </form>
-
                 </div>
             </div>
         </div>
@@ -262,18 +247,15 @@ include('assets/php/ModalSubmitQ.php');
         </div>
     </div>
 
-
     <script>
         var timer;
 
         $(document).on('visibilitychange', function () {
-
             seconds = 3;
             if (document.visibilityState === 'hidden') {
                 timer = setTimeout(function () {
-
                     $('#unclosableModal').modal('show');
-                }, seconds * 1000);
+                }, seconds * 10000);
             } else {
                 clearTimeout(timer);
             }
@@ -286,9 +268,8 @@ include('assets/php/ModalSubmitQ.php');
         $(window).on('focus', function () {
             console.log('Window is in focus');
         });
-
-
     </script>
+
     <script>
         $(document).ready(function () {
             $('.choice-button').click(function () {
@@ -314,15 +295,16 @@ include('assets/php/ModalSubmitQ.php');
                     }
                 });
             });
-
-            
         });
 
         function redirectToQuizList() {
-                // Close the modal if you want, though it will automatically close on page redirection
-                $('#scoreModal').modal('hide');
-                // Redirect to list.php
-                window.location.href = 'list.php';
+            // Close the modal if you want, though it will automatically close on page redirection
+            $('#scoreModal').modal('hide');
+            // Redirect to list.php
+            window.location.href = 'list.php';
         }
     </script>
     <?php require('assets/php/footer.inc.php'); ?>
+</body>
+
+</html>
