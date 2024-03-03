@@ -6,11 +6,18 @@ $access_option = $_POST['access-option'];
 
 $attempts = "-1";
 // Check if the checkbox is checked
-if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == '1') {
+// Check if the checkbox is checked
+if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == 'on') {
     // Checkbox is checked
     $attempts = "-1";
 } else {
-    $attempts = $_POST['max_attempts'];
+    // Checkbox is not checked, use the value from the form
+    if(isset($_POST['max_attempts'])){
+        $attempts = $_POST['max_attempts'];
+    }
+    else {
+        echo "somethings wrong with max_attempts input element";
+    }
 }
 
 
