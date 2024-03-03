@@ -93,7 +93,9 @@ include('assets/php/ModalSubmitQ.php');
         }
 
         .choice-button {
-            border: 1px solid #ea9424;
+            background-color: white; /* Set background color to white */
+            color: black !important; /* Set text color to black */
+            border: none !important; /* Remove button borders */
         }
     </style>
 </head>
@@ -129,8 +131,6 @@ include('assets/php/ModalSubmitQ.php');
                     echo "No questions found for this quiz.";
                     exit;
                 }
-
-                shuffle($allQuestions);
 
                 // Display quiz details above the first question
                 echo '<div class="container text-center mt-4">';
@@ -203,7 +203,7 @@ include('assets/php/ModalSubmitQ.php');
 
     <?php include('assets/php/modalSubmitQ.php'); ?>
 
-    <!-- modal popup when user is out of tab -->
+    <!-- modal popup when the user is out of tab -->
     <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
