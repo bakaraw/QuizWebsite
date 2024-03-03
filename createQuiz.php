@@ -9,6 +9,7 @@ $private_selected = "";
 $public_selected = "";
 $unli_attempts_checked = "";
 $attempts_input_disbled = "";
+$max_attempts = "";
 // for access option
 // Prepare the statement
 $stmt = $pdo->prepare($sql);
@@ -19,6 +20,7 @@ if ($stmt->rowCount() > 0) {
     $access_option = $row['accessibility'];
     $quiztitle = $row['title'];
 
+
     if ($access_option == "PRIVATE") {
         $private_selected = "selected";
     } else {
@@ -28,6 +30,8 @@ if ($stmt->rowCount() > 0) {
     if ($row['max_attempts'] == -1) {
         $unli_attempts_checked = 'checked';
         $attempts_input_disbled = 'disabled';
+    } else {
+        $max_attempts = $row['max_attempts'];
     }
 }
 
@@ -69,28 +73,9 @@ if ($stmt->rowCount() > 0) {
                 <form action="assets/php/quiz_finalization.php" method="post" enctype="multipart/form-data"
                     id="quiz-settings-form">
                     <div class="modal-body">
-                        <div class="mb-4">
-                            <input type="hidden" id="new-title" name="new-title">
-                            <label class="fw-medium ms-3 mb-0">Set Attempts</label>
-                            <div class="access-div pb-2 pt-2">
-                                <div class="form-check form-switch ms-3 mb-2">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                        id="flexSwitchCheckChecked" <?php echo $unli_attempts_checked; ?> name="is_unli_attempts">
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">Unlimited
-                                        Attempts</label>
-                                </div>
-                                <div class="ms-3 me-3">
-                                    <input class="form-control form-control-sm" type="text" id="attemptsInput" name="max_attempts"
-                                        placeholder="Specify max attempts" aria-label=".form-control-sm example"
-                                        pattern="\d+" title="Please enter a positive integer" <?php echo $attempts_input_disbled; ?>>
-                                </div>
-                            </div>
-                        </div>
-
-
 
                         <label class="fw-medium ms-3 mb-0">General access</label>
-                        <div class="mt-0 access-div">
+                        <div class="mt-0 access-div mb-4">
                             <div class="dropdown border border-dark d-flex flex-row align-items-center ms-3"
                                 style="--bs-border-opacity: 0;">
                                 <div class="text-dark" id="access-icon">
@@ -119,6 +104,25 @@ if ($stmt->rowCount() > 0) {
                                 }
 
                                 ?>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <input type="hidden" id="new-title" name="new-title">
+                            <label class="fw-medium ms-3 mb-0">Set Attempts</label>
+                            <div class="access-div pb-2 pt-2">
+                                <div class="form-check form-switch ms-3 mb-2">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="flexSwitchCheckChecked" <?php echo $unli_attempts_checked; ?>
+                                        name="is_unli_attempts">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">Unlimited
+                                        Attempts</label>
+                                </div>
+                                <div class="ms-3 me-3">
+                                    <input class="form-control form-control-sm" type="text" id="attemptsInput"
+                                        value="<?php echo $max_attempts; ?>" name="max_attempts"
+                                        placeholder="Specify max attempts" aria-label=".form-control-sm example"
+                                        pattern="\d+" title="Please enter a positive integer" <?php echo $attempts_input_disbled; ?>>
+                                </div>
                             </div>
                         </div>
 

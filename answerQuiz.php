@@ -50,18 +50,30 @@ if (isset($_GET['code_for_quiz'])) {
 
 if (isset($_POST['kick-out-btn'])) {
     $decrement_value = 1;
-    $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode");
 
-    // Bind parameters
-    $stmt->bindParam(':decrement_value', $decrement_value, PDO::PARAM_INT);
+    $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
+    // Bind parameters (if needed)
+
     $stmt->bindParam(':quizcode', $code);
-
-    // Execute the prepared statement
+    // Execute the query
     $stmt->execute();
 
-    header("Location: List.php");
-    exit();
+    if ($stmt->rowCount() > 0) {
+        // Fetch the result
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['max_attempts'] != -1) {
+            $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode");
+            // Bind parameters
+            $stmt->bindParam(':decrement_value', $decrement_value, PDO::PARAM_INT);
+            $stmt->bindParam(':quizcode', $code);
+            // Execute the prepared statement
+            $stmt->execute();
+        }
+        
+        header("Location: List.php");
+        exit();
 
+    }
 }
 
 
