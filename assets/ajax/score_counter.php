@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
             $insertStmt->execute([$username, $quizCode, $newScore]);
         }
 
+        // decrese attempts when submitting
         $decrement_value = 1;
-
         // Prepare and execute the SELECT query
         $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
         $stmt->bindParam(':quizcode', $quizCode);
@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["username"])) {
             // Check if max_attempts is not unlimited (-1)
             if ($row['max_attempts'] != -1) {
                 // Prepare and execute the UPDATE query
+                
                 $updateStmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE username = :username AND quizcode = :quizcode");
                 $updateStmt->bindParam(':username', $username);
                 $updateStmt->bindParam(':quizcode', $quizCode);
