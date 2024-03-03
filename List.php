@@ -196,7 +196,7 @@
     <br>
 
     <form class="d-flex justify-content-center" role="search" method="post">
-        <input class="form-control me-2" style="width: 15rem;" type="search" name="search" placeholder="Quiz Code"
+        <input class="form-control me-2" style="width: 15rem;" type="search" name="search" placeholder="Title/Code"
             aria-label="Search">
         <button class="btn btn-primary border-dark" type="submit">Search</button>
     </form>
