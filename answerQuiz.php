@@ -240,8 +240,8 @@ include('assets/php/ModalSubmitQ.php');
     </div>
 
     <!-- score modal -->
-    <div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-labelledby="scoreModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="scoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -267,13 +267,14 @@ include('assets/php/ModalSubmitQ.php');
 
         $(document).on('visibilitychange', function () {
             seconds = 3;
-            if (document.visibilityState === 'hidden') {
+            if (document.visibilityState === 'hidden' && !$('#scoreModal').is(':visible')) {
                 timer = setTimeout(function () {
                     $('#unclosableModal').modal('show');
                 }, seconds * 10000);
             } else {
                 clearTimeout(timer);
             }
+
         });
 
         $(window).on('blur', function () {
@@ -310,11 +311,11 @@ include('assets/php/ModalSubmitQ.php');
                     }
                 });
             });
+
+
         });
 
         function redirectToQuizList() {
-            // Close the modal if you want, though it will automatically close on page redirection
-            $('#scoreModal').modal('hide');
             // Redirect to list.php
             window.location.href = 'list.php';
         }
