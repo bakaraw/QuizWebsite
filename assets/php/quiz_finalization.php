@@ -6,16 +6,14 @@ $access_option = $_POST['access-option'];
 
 $attempts = "-1";
 // Check if the checkbox is checked
-// Check if the checkbox is checked
 if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == 'on') {
     // Checkbox is checked
     $attempts = "-1";
 } else {
     // Checkbox is not checked, use the value from the form
-    if(isset($_POST['max_attempts'])){
+    if (isset($_POST['max_attempts'])) {
         $attempts = $_POST['max_attempts'];
-    }
-    else {
+    } else {
         echo "somethings wrong with max_attempts input element";
     }
 }
@@ -111,14 +109,43 @@ function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizc
 function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $max_attempts)
 {
     try {
-        $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility, max_attempts=:max_attempts WHERE code=:quizcode");
+        $stmt = $pdo->prepare("SELECT max_attempts FROM `quizlisttable` WHERE code=:quizcode");
+        $stmt->bindParam(':quizcode', $quizcode);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $curr_max_attempts = $result['max_attempts'];
 
+        $stmt = $pdo->prepare("UPDATE `quizlisttable` SET title=:title, accessibility=:accessibility, max_attempts=:max_attempts WHERE code=:quizcode");
         // // Bind parameters
         $stmt->bindParam(':title', $quiztitle);
         $stmt->bindParam(':accessibility', $access_option);
         $stmt->bindParam(':quizcode', $quizcode);
-        $stmt->bindParam(':max_attempts', $max_attempts);
-        // Execute the statement
+        if ($curr_max_attempts != $max_attempts) {
+
+            $stmt->bindParam(':max_attempts', $max_attempts);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare("SELECT remaining_attempts FROM `user_quiz_attempts` WHERE quizcode=:quizcode");
+            $stmt->bindParam(':quizcode', $quizcode);
+            $stmt->execute();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                $remaining_attempts = $row['remaining_attempts'];
+
+
+                $updated_remaining_attempts = $max_attempts; // For example, decrementing by 1
+                $update_stmt = $pdo->prepare("UPDATE `user_quiz_attempts` SET remaining_attempts = :updated_remaining_attempts WHERE quizcode = :quizcode");
+                $update_stmt->bindParam(':updated_remaining_attempts', $updated_remaining_attempts);
+                $update_stmt->bindParam(':quizcode', $quizcode);
+                $update_stmt->execute();
+            }
+            return;
+
+        } else {
+            $stmt->bindParam(':max_attempts', $max_attempts);
+        }
+
         $stmt->execute();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
