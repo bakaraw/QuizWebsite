@@ -6,16 +6,19 @@ $access_option = $_POST['access-option'];
 
 $attempts = "-1";
 // Check if the checkbox is checked
-if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == '1') {
+// Check if the checkbox is checked
+if (isset($_POST['is_unli_attempts']) && $_POST['is_unli_attempts'] == 'on') {
     // Checkbox is checked
     $attempts = "-1";
 } else {
-    $attempts = $_POST['max_attempts'];
+    // Checkbox is not checked, use the value from the form
+    if(isset($_POST['max_attempts'])){
+        $attempts = $_POST['max_attempts'];
+    }
+    else {
+        echo "somethings wrong with max_attempts input element";
+    }
 }
-
-
-
-
 
 // Check if a file is uploaded
 if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -57,6 +60,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
 } else {
     //if file input is empty
     updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $attempts);
+    echo "successful";
 }
 
 function updateQuizWithThmb($pdo, $quiztitle, $access_option, $thumbnail, $quizcode, $max_attempts)
@@ -116,8 +120,6 @@ function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $max_atte
         $stmt->bindParam(':max_attempts', $max_attempts);
         // Execute the statement
         $stmt->execute();
-
-        echo "successful";
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
