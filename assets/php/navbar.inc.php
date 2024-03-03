@@ -1,3 +1,4 @@
+
 <?php
 
 if (isset($_GET['logout']) && $_GET['logout'] == '1') {
@@ -77,3 +78,4 @@ if (isset($_GET['logout']) && $_GET['logout'] == '1') {
     </div>
   </nav>
 </section>
+
