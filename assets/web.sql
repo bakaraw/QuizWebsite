@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Mar 02, 2024 at 01:57 PM
+-- Host: 127.0.0.1
+-- Generation Time: Mar 03, 2024 at 03:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,12 +37,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`pass`, `username`) VALUES
-('$2y$10$87RD/TIApqo/oVC8OydsQehJ7IWGl2UaNDT.ph9/zbg3JmD8yVf/i', 'lai'),
-('$2y$10$YTWSjlkzq0sqHY.txiEWsOFDT/2e1xKCAfbsECwYiOOIvPz33EbLe', 'lean'),
-('$2y$10$SBIf07PuOy.zOcZjsA3m3uVr1CEp5x0f/v.d.eZY7LK8fqKpJkpS.', 'pans'),
-('$2y$10$mTRfBID5I7kH4wN9jxqr7ulMp0dhMz9Nb3pC8QPMG6ELcAHVjb/ku', 'shit'),
-('$2y$10$4NxknTtC344TWRXZeaBUA.Zs8xCXdBSgnLEhBU3Ayi8VhQ7gH7/3G', 'yans'),
-('$2y$10$nP/elDAwmc8RV5L90HaubuVNyABGHs/OTLDWw549mQoYXc3ap83p2', 'yawa');
+('$2y$10$MQ4CsnAygZMgTLLWg53XAe6AmQHnY2uGOnaU5et5rcXbodw66vzai', 'o'),
+('$2y$10$q9ahwziDtGCIyD/S8ICqD.ltuKc/vqAze4RqAHajSgefG2dw0nWeK', 'yan');
 
 -- --------------------------------------------------------
 
@@ -67,8 +63,22 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qid`, `quizcode`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
-(103, '9dJyn7x', '123', 'IDEN', '123', '', '', '', ''),
-(104, 'u5leirn', '123', 'MCQ', 'choiceC', '1', '2', '3', '4');
+(106, 'Rhuj0BJ', 'asdasd', 'TOF', 'TRUE', '', '', '', ''),
+(107, 'R4C0WXt', 'asdasd', 'IDEN', 'o', '', '', '', ''),
+(108, 'V6PZb12', 'asfasfa', 'TOF', 'TRUE', '', '', '', ''),
+(109, 'nM8P3xY', 'is it?', 'TOF', 'TRUE', '', '', '', ''),
+(110, 'nM8P3xY', 'asdasdas', 'MCQ', 'choiceB', 'sdasdasd', 'yes', 'asdasd', 'asdasdasda'),
+(111, 'nM8P3xY', 'asfasf', 'IDEN', 'yes', '', '', '', ''),
+(112, 'uWGB1rt', 'asdasd', 'IDEN', 'yes', '', '', '', ''),
+(113, 'JGa3zy1', 'fasfasfa', 'IDEN', 'yes', '', '', '', ''),
+(114, 'JGa3zy1', 'asfasdasd', 'MCQ', 'choiceB', 'asdasd', 'yes', 'asdasdas', 'dasdasd'),
+(115, 'JGa3zy1', 'asdasdasd', 'TOF', 'TRUE', '', '', '', ''),
+(116, 'rdb4Q5g', 'asdas', 'TOF', 'TRUE', '', '', '', ''),
+(117, 'rdb4Q5g', 'asdasd', 'IDEN', 'yes', '', '', '', ''),
+(118, 'rdb4Q5g', 'asdasdasd', 'MCQ', 'choiceD', 'asdasdasd', 'asdas', 'asdasdas', 'yes'),
+(119, '5TFDsll', 'yesasdasd', 'TOF', 'TRUE', '', '', '', ''),
+(120, '5TFDsll', 'asdasda', 'IDEN', 'yes', '', '', '', ''),
+(121, '5TFDsll', 'asdasdas', 'MCQ', 'choiceA', 'yes', 'dasfas', 'fasfasdf', 'asfasfa');
 
 -- --------------------------------------------------------
 
@@ -91,11 +101,23 @@ CREATE TABLE `quizlisttable` (
 --
 
 INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`, `max_attempts`) VALUES
-('9dJyn7x', 'awdad', 'default_img.jpg', 'PUBLIC', 'lai', 10, 2),
-('eRmxAbv', 'laightger', 'default_img.jpg', 'PUBLIC', 'lai', 24, 3),
-('IFJ462c', 'ako si badoy', 'default_img.jpg', 'PUBLIC', 'lai', 23, 3),
-('nVoyJ5u', 'laighton', 'default_img.jpg', 'PUBLIC', 'lai', 7, 2),
-('u5leirn', '1231231', 'default_img.jpg', 'PUBLIC', 'lai', 23, 123);
+('5TFDsll', 'asd', 'default_img.jpg', 'PUBLIC', 'o', 3, -1),
+('8cte6H2', 'asdasdasd', '65e3def5e242a7.43845216.jpg', 'PUBLIC', 'o', 2, -1),
+('AuNvxIa', 'asdasd', 'default_img.jpg', 'PRIVATE', 'o', 0, -1),
+('b4lr6c3', 'asdasd', 'default_img.jpg', 'PRIVATE', 'yan', 0, -1),
+('F7aJBJ0', 'asdasd', 'default_img.jpg', 'PRIVATE', 'yan', 0, -1),
+('JGa3zy1', 'Yawas', 'default_img.jpg', 'PUBLIC', 'o', 2, -1),
+('kfN9ou8', 'asda', 'default_img.jpg', 'PRIVATE', 'o', 0, -1),
+('lggispn', 'sadasd', 'default_img.jpg', 'PUBLIC', 'yan', 1, -1),
+('nM8P3xY', 'otin', 'default_img.jpg', 'PUBLIC', 'o', 1, -1),
+('R4C0WXt', 'asdasd', 'default_img.jpg', 'PRIVATE', 'o', 0, -1),
+('rdb4Q5g', 's', 'default_img.jpg', 'PUBLIC', 'o', 2, -1),
+('Rhuj0BJ', 'asd', 'default_img.jpg', 'PUBLIC', 'yan', 1, -1),
+('unt7sUS', 'asdas', 'default_img.jpg', 'PRIVATE', 'yan', 0, -1),
+('uWGB1rt', 'otikn', 'default_img.jpg', 'PUBLIC', 'o', 1, -1),
+('UzERHpH', 'asda', 'default_img.jpg', 'PUBLIC', 'yan', 0, -1),
+('V6PZb12', 'asfasf', 'default_img.jpg', 'PUBLIC', 'o', 2, 10),
+('WoRpW41', 'dasdasd', '65e3dc6bd7d451.11095861.jpg', 'PUBLIC', 'yan', 0, -1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +130,18 @@ CREATE TABLE `quiz_scores` (
   `username` varchar(300) NOT NULL,
   `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quiz_scores`
+--
+
+INSERT INTO `quiz_scores` (`code`, `username`, `score`) VALUES
+('V6PZb12', 'o', 0),
+('nM8P3xY', 'o', 1),
+('uWGB1rt', 'o', 1),
+('JGa3zy1', 'o', 1),
+('rdb4Q5g', 'o', 2),
+('5TFDsll', 'o', 4);
 
 -- --------------------------------------------------------
 
@@ -126,12 +160,13 @@ CREATE TABLE `user_quiz_attempts` (
 --
 
 INSERT INTO `user_quiz_attempts` (`username`, `quizcode`, `remaining_attempts`) VALUES
-('lai', 'IFJ462c', -3),
-('shit', 'IFJ462c', 0),
-('lai', 'nVoyJ5u', 0),
-('lai', 'eRmxAbv', 0),
-('lai', '9dJyn7x', 0),
-('lai', 'u5leirn', 120);
+('yan', 'Rhuj0BJ', -1),
+('o', '8cte6H2', -1),
+('o', 'lggispn', -1),
+('o', 'V6PZb12', 10),
+('o', 'nM8P3xY', -1),
+('o', 'uWGB1rt', -1),
+('o', 'JGa3zy1', -1);
 
 --
 -- Indexes for dumped tables
@@ -179,7 +214,7 @@ ALTER TABLE `user_quiz_attempts`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- Constraints for dumped tables
@@ -201,7 +236,7 @@ ALTER TABLE `quizlisttable`
 -- Constraints for table `quiz_scores`
 --
 ALTER TABLE `quiz_scores`
-  ADD CONSTRAINT `fk_quiz_code_score` FOREIGN KEY (`code`) REFERENCES `quizlisttable` (`code`),
+  ADD CONSTRAINT `fk_quiz_code_score` FOREIGN KEY (`code`) REFERENCES `questions` (`quizcode`),
   ADD CONSTRAINT `fk_username_score` FOREIGN KEY (`username`) REFERENCES `account` (`username`);
 
 --
