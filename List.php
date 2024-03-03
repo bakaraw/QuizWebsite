@@ -196,28 +196,25 @@
     <br>
 
     <form class="d-flex justify-content-center" role="search" method="post">
-        <input class="form-control me-2" style="width: 15rem;" type="search" name="quizCode" placeholder="Quiz Code"
+        <input class="form-control me-2" style="width: 15rem;" type="search" name="search" placeholder="Quiz Code"
             aria-label="Search">
         <button class="btn btn-primary border-dark" type="submit">Search</button>
     </form>
 
     <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quizCode'])) {
-    $_SESSION['quizCode'] = $_POST['quizCode'];
-}
 
-if (isset($_SESSION['quizCode'])) {
-    $quizCode = $_SESSION['quizCode'];
+if (isset($_POST['search'])) {
+    $search = $_POST['search'];
 
-    $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE (title LIKE '%$quizCode%' OR code LIKE '%$quizCode%') AND accessibility <> 'PRIVATE'");
+    $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE (title LIKE '%$search%' OR code LIKE '%$search%') AND accessibility <> 'PRIVATE'");
     $stmt->execute();
     $result = $stmt->get_result();
 
     echo '<div class="container mt-4">';
     echo '<div class="row">';
     if ($result->num_rows > 0) {
-        echo '<h5 class="card-subtitle" style="color: black;">Quiz found with ' . $quizCode . '</h5>';
+        echo '<h5 class="card-subtitle" style="color: black;">Quiz found with ' . $search . '</h5>';
         while ($row = $result->fetch_assoc()) {
             $thumbnailPath = 'assets/img/uploads/' . htmlspecialchars($row["thumbnail"]);
             if ($row["thumbnail"] === 'default_img.jpg' || !file_exists($thumbnailPath)) {
@@ -244,16 +241,16 @@ if (isset($_SESSION['quizCode'])) {
             echo '</div>';
         
     
-            unset($_SESSION['quizCode']);
+            unset($_POST['search']);
 
 
         }
 
     } else {
-        echo '<div class="col-12 text-center">' 
-            . '<h5 class="card-subtitle" style="color: black;">No quiz found with code: ' . $quizCode . '</h5>'
+        echo '<div class="col-12 text-center mb-5">' 
+            . '<h5 class="card-subtitle" style="color: black;">No quiz found with code: ' . $search . '</h5>'
             . '</div>';
-            unset($_SESSION['quizCode']);
+            unset($_POST['search']);
 
     }
 
