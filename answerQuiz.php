@@ -93,22 +93,29 @@ include('assets/php/ModalSubmitQ.php');
         }
 
         .choice-button {
-            background-color: white; /* Set background color to white */
-            color: black !important; /* Set text color to black */
-            border: none !important; /* Remove button borders */
+            background-color: white;
+            /* Set background color to white */
+            color: black !important;
+            /* Set text color to black */
+            border: none !important;
+            /* Remove button borders */
         }
 
         /* Style for identification question textbox */
         .iden-answer {
             border: none !important;
-            border-radius: 1.5rem !important; /* Set more rounded border-radius */
-            color: white !important; /* Set text color to white */
+            border-radius: 1.5rem !important;
+            /* Set more rounded border-radius */
+            color: white !important;
+            /* Set text color to white */
         }
 
         /* Style for "Your answer:" text */
         .your-answer-label {
-            font-weight: bold; /* Set font-weight to bold */
-            color: white !important; /* Set text color to white */
+            font-weight: bold;
+            /* Set font-weight to bold */
+            color: white !important;
+            /* Set text color to white */
         }
     </style>
 </head>
@@ -201,7 +208,7 @@ include('assets/php/ModalSubmitQ.php');
 
                 // Close the form after all questions have been output
                 echo '<div class="d-grid gap-2 d-md-flex justify-content-center mt-3">';
-                echo '<button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" type="submit">Submit Quiz</button>';
+                echo '<button class="btn btn-success text-light border-dark btn-md btn-submit-quiz" id="submitQuiz" type="button">Submit Quiz</button>';
                 echo '</div>';
                 echo '</form>';
             } else {
@@ -219,8 +226,7 @@ include('assets/php/ModalSubmitQ.php');
     <?php include('assets/php/modalSubmitQ.php'); ?>
 
     <!-- modal popup when the user is out of tab -->
-    <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -231,8 +237,7 @@ include('assets/php/ModalSubmitQ.php');
                 </div>
                 <div class="modal-footer">
                     <form method="post">
-                        <input type="submit" class="btn btn-primary" name="kick-out-btn" id="kick-out-btn"
-                            value="Omki :(">
+                        <input type="submit" class="btn btn-primary" name="kick-out-btn" id="kick-out-btn" value="Omki :(">
                     </form>
                 </div>
             </div>
@@ -240,14 +245,12 @@ include('assets/php/ModalSubmitQ.php');
     </div>
 
     <!-- score modal -->
-    <div class="modal fade" id="scoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="scoreModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scoreModalLabel">Quiz Score</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        onclick="redirectToQuizList()">
+                    <h5 class="modal-title" id="scoreModalLabel">Submit Quiz?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -255,8 +258,7 @@ include('assets/php/ModalSubmitQ.php');
                     <p id="score-display"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="redirectToQuizList()">Close and Go
-                        Back</button>
+                    <button type="button" id="confirmSubmit" class="btn btn-secondary">Submit Quiz</button>
                 </div>
             </div>
         </div>
@@ -265,10 +267,10 @@ include('assets/php/ModalSubmitQ.php');
     <script>
         var timer;
 
-        $(document).on('visibilitychange', function () {
+        $(document).on('visibilitychange', function() {
             seconds = 3;
             if (document.visibilityState === 'hidden' && !$('#scoreModal').is(':visible')) {
-                timer = setTimeout(function () {
+                timer = setTimeout(function() {
                     $('#unclosableModal').modal('show');
                 }, seconds * 10000);
             } else {
@@ -277,18 +279,18 @@ include('assets/php/ModalSubmitQ.php');
 
         });
 
-        $(window).on('blur', function () {
+        $(window).on('blur', function() {
             console.log('Window is out of focus');
         });
 
-        $(window).on('focus', function () {
+        $(window).on('focus', function() {
             console.log('Window is in focus');
         });
     </script>
 
     <script>
-        $(document).ready(function () {
-            $('.choice-button').click(function () {
+        $(document).ready(function() {
+            $('.choice-button').click(function() {
                 var $parentContainer = $(this).closest('.choices-container');
                 $parentContainer.find('.choice-button').removeClass('selected-choice');
                 $(this).addClass('selected-choice');
@@ -298,16 +300,23 @@ include('assets/php/ModalSubmitQ.php');
                 $parentContainer.find('.selected-answer').val(selectedValue);
             });
 
-            $('#quizForm').submit(function (e) {
+            $('#submitQuiz').click(function(e) {
                 e.preventDefault();
                 $('#scoreModal').modal('show');
-                var quizForm = $('#quizForm').serialize()
+            });
+
+            $('#confirmSubmit').click(function(e) {
+                e.preventDefault();
+                var quizForm = $('#quizForm').serialize();
                 $.ajax({
                     type: "POST",
                     url: "assets/ajax/score_counter.php",
                     data: quizForm,
-                    success: function (response) {
-                        $('#score-display').text("Your score is: " + response);
+                    success: function(response) {
+                        
+                        // Redirect to another page ('success.html') with serialized form data as query parameters
+                        var redirectUrl = 'scoreQuiz.php?' + quizForm;
+                        window.location.href = redirectUrl;
                     }
                 });
             });
