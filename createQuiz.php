@@ -406,9 +406,11 @@ if ($stmt->rowCount() > 0) {
                 let questionform = $('#questionform').serialize();
                 questionform += '&quizcode=<?php echo $quizcode; ?>';
 
-                saveQuestion(questionform);
+                
                 if (questionFormDiv.style.display === 'none') {
                     questionFormDiv.style.display = 'block';
+                } else {
+                    saveQuestion(questionform);
                 }
                 $('html, body').animate({
                     scrollTop: $(document).height()
