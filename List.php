@@ -188,7 +188,7 @@
 
                 // Show the modal
                 $('#modalStartQuiz').modal('show');
-            });
+            }); 
         });
     });
 </script>
