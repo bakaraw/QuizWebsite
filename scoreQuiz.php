@@ -3,9 +3,11 @@ session_start();
 include "assets/php/dbh_quiz.inc.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
-    $newScore = 0; // This will hold the score for the current attempt
     $username = $_SESSION["username"];
     $quizCode = $_GET['quizCode'];
+    $totalQuestions = 0;
+    $correctAnswers = 0;
+
     try {
         if (isset($_GET['answer']) && is_array($_GET['answer'])) {
             foreach ($_GET['answer'] as $questionId => $userAnswer) {
@@ -14,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
                 $question = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($question) {
+                    $totalQuestions++;
+
                     // Assuming 'ChoiceA', 'ChoiceB', etc., are the column names in the database
                     if ($question['questiontype'] == "MCQ") {
                         $correctAnswerColumn = $question['answer']; // e.g., "ChoiceA"
@@ -22,64 +26,125 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
                         $correctAnswer = $question[$correctAnswerColumn]; // Access the content
 
                         if (strcasecmp(trim($userAnswer), trim($correctAnswer)) == 0) {
-                            $newScore++;
+                            $correctAnswers++;
                         }
                     } elseif ($question['questiontype'] == "TOF" || $question['questiontype'] == "IDEN") {
                         if (strcasecmp(trim($userAnswer), trim($question['answer'])) == 0) {
-                            $newScore++;
+                            $correctAnswers++;
                         }
                     }
                 }
             }
         }
 
-        // Fetch the existing score, if any
-        $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
-        $stmt->execute([$username, $quizCode]);
-        if ($stmt->rowCount() > 0) {
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $existingScore = $row['score'];
-            $cumulativeScore = $newScore;
+        // Calculate accuracy
+        $accuracy = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0;
 
-            // Update the cumulative score
-            $updateStmt = $pdo->prepare("UPDATE quiz_scores SET score = ? WHERE username = ? AND code = ?");
-            $updateStmt->execute([$cumulativeScore, $username, $quizCode]);
-        } else {
-            // If no existing score, insert the new score as is
-            $insertStmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
-            $insertStmt->execute([$username, $quizCode, $newScore]);
-        }
+        // Fetch quiz information
+        $quizInfoStmt = $pdo->prepare("SELECT title, code, creator FROM quizlisttable WHERE code = ?");
+        $quizInfoStmt->execute([$quizCode]);
+        $quizInfo = $quizInfoStmt->fetch(PDO::FETCH_ASSOC);
 
-        // decrese attempts when submitting
-        $decrement_value = 1;
-        // Prepare and execute the SELECT query
-        $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
-        $stmt->bindParam(':quizcode', $quizCode);
-        $stmt->execute();
+        // Display the summary using HTML
+        echo '<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Quiz Summary</title>
+            <style>
+                body {
+                    font-family: "Arial", sans-serif;
+                    background-color: #f2f2f2;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    margin: 0;
+                }
 
-        // Check if there are rows returned by the SELECT query
-        if ($stmt->rowCount() > 0) {
-            // Fetch the result
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                .summary-container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
 
-            // Check if max_attempts is not unlimited (-1)
-            if ($row['max_attempts'] != -1) {
-                // Prepare and execute the UPDATE query
-                
-                $updateStmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE username = :username AND quizcode = :quizcode");
-                $updateStmt->bindParam(':username', $username);
-                $updateStmt->bindParam(':quizcode', $quizCode);
-                $updateStmt->bindParam(':decrement_value', $decrement_value);
-                $updateStmt->execute();
-            }
-        }
+                .panel {
+                    width: 400px; /* Set a fixed width for all panels */
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                    padding: 20px;
+                    margin: 10px;
+                    text-align: center;
+                }
 
+                .summary-heading {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                    color: #2ecc71;
+                }
+
+                .summary-text {
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                    color: #333333;
+                }
+
+                .try-again, .retake-quiz, .view-leaderboard {
+                    font-size: 16px;
+                    color: #3498db;
+                    text-decoration: none;
+                    display: inline-block;
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    background-color: #ecf0f1;
+                    transition: background-color 0.3s;
+                }
+
+                .try-again:hover, .retake-quiz:hover, .view-leaderboard:hover {
+                    background-color: #bdc3c7;
+                }
+            </style>
+        </head>
+        <body>
+    
+        <div class="summary-container">
+            <div class="panel">
+                <div class="summary-heading">User Details</div>
+                <div class="summary-text">
+                    <p>User: ' . $username . '</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="summary-heading">Quiz Information</div>
+                <div class="summary-text">
+                    <p>Title: ' . $quizInfo['title'] . '</p>
+                    <p>Code: ' . $quizInfo['code'] . '</p>
+                    <p>Creator: ' . $quizInfo['creator'] . '</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="summary-heading">Quiz Results</div>
+                <div class="summary-text">
+                    <p>Accuracy: ' . number_format($accuracy, 2) . '%</p>
+                    <p>Correct Answers: ' . $correctAnswers . '</p>
+                    <p>Incorrect Answers: ' . ($totalQuestions - $correctAnswers) . '</p>
+                </div>
+                <a href="quizHome.php" class="try-again">Try Another Quiz</a>
+                <a href="quizPage.php?quizCode=' . $quizCode . '" class="retake-quiz">Retake Quiz</a>
+                <a href="leaderboard.php?quizCode=' . $quizCode . '" class="view-leaderboard">View Leaderboard</a>
+            </div>
+        </div>
+    
+        </body>
+        </html>';
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
-
-
-    echo $newScore;
 }
-
 ?>
