@@ -67,9 +67,6 @@ $conn->close();
 ?>
 
 
->
-
-<!-- Bootstrap Modal for Feedback -->
 <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -87,6 +84,7 @@ $conn->close();
       </div>
     </div>
   </div>
+</div>
 <script>
 $(document).ready(function() {
   // Show the modal if there's a message
@@ -94,9 +92,9 @@ $(document).ready(function() {
   $('#alertModal').modal('show');
   <?php endif; ?>
 
-  // Redirect when the close button is clicked
+  // Redirect to index.php when the close button is clicked
   $('#closeButton').click(function() {
-    window.location.href = '<?php echo $redirectLocation; ?>';
+    window.location.href = 'index.php'; // This line redirects to index.php
   });
 });
 </script>
