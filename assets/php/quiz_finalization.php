@@ -134,9 +134,9 @@ function updateQuizAccess($pdo, $quiztitle, $access_option, $quizcode, $max_atte
                 $remaining_attempts = $row['remaining_attempts'];
 
 
-                $updated_remaining_attempts = $max_attempts; // For example, decrementing by 1
+                $remaining_attempts = $max_attempts; // For example, decrementing by 1
                 $update_stmt = $pdo->prepare("UPDATE `user_quiz_attempts` SET remaining_attempts = :updated_remaining_attempts WHERE quizcode = :quizcode");
-                $update_stmt->bindParam(':updated_remaining_attempts', $updated_remaining_attempts);
+                $update_stmt->bindParam(':updated_remaining_attempts', $remaining_attempts);
                 $update_stmt->bindParam(':quizcode', $quizcode);
                 $update_stmt->execute();
             }
