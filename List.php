@@ -248,7 +248,7 @@ if (isset($_POST['search'])) {
 
     } else {
         echo '<div class="col-12 text-center mb-5">' 
-            . '<h5 class="card-subtitle" style="color: black;">No quiz found with code: ' . $search . '</h5>'
+            . '<h5 class="card-subtitle" style="color: black;">No quiz found with ' . $search . '</h5>'
             . '</div>';
             unset($_POST['search']);
 
