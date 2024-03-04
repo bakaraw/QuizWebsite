@@ -90,6 +90,9 @@
         color: #fcbf49; 
         background-color: #ffffff; 
         border-color: #fcbf49; 
+        font-size: 12px;
+        padding: 8px 13px; 
+        border-width: px; 
         
         }
 
@@ -107,8 +110,8 @@
 
         .img-container img {
         width: 100%;
-        height: 100%; /* Change this to 100% to maintain the aspect ratio */
-        object-fit: contain; /* This property ensures the image fits while maintaining aspect ratio */
+        height: 100%; 
+        object-fit: contain; 
         }
 
         .text-content {
@@ -149,7 +152,7 @@
 
 <body>
     <?php
-    session_start();
+  session_start();
   
     if (isset($_GET['logout']) && $_GET['logout'] == '1') {
       session_unset();
@@ -263,7 +266,7 @@ if (isset($_POST['search'])) {
     <?php
 
     $itemsPerPage = 4;
-    $sql = "SELECT COUNT(*) as count FROM quizlisttable WHERE accessibility <> 'PRIVATE'    ";
+    $sql = "SELECT COUNT(*) as count FROM quizlisttable WHERE accessibility <> 'PRIVATE'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $totalItems = $row['count'];
@@ -281,6 +284,7 @@ if (isset($_POST['search'])) {
 
     $result = $conn->query($sql);
 if ($result->num_rows > 0) {
+    echo '<br>';
     echo '<div class="d-flex justify-content-center"><h5 class="card-title text-dark">Quiz List</h5></div>';
     echo '<div class="container mt-4 text-center">'; 
     echo '<div class="row justify-content-center">'; 
@@ -326,10 +330,9 @@ if ($result->num_rows > 0) {
    
     echo '<nav aria-label="page nav">';
     echo '<ul class="pagination pagination-lg">';
-    $hasQuizzesOnPreviousPage = $offset > 0; // True i  f offset is greater than 0, indicating quizzes exist on the previous page
-
-    // Previous button - only show if there are quizzes on the previous page and current page is greater than 1
-    if ($currentPage > 1 && $hasQuizzesOnPreviousPage) {
+    
+    // Previous button
+    if ($currentPage > 1) {
         echo '<li class="page-item"><a class="page-link" href="?page=' . ($currentPage - 1) . '">Previous</a></li>';
     }
     
