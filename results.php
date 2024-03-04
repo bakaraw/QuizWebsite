@@ -51,19 +51,19 @@ $stmt->execute();
             </h5>
 
 
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Remaining Attempts</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($stmt->rowCount() > 0):
+            <?php
+            if ($stmt->rowCount() > 0): ?>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Remaining Attempts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
                             $number = 1;
                             $username = $row['username'];
@@ -103,8 +103,12 @@ $stmt->execute();
                             <?php
                             $number++;
                         endwhile;
-                    endif;
-                    ?>
+            else:
+                ?>
+                        <div class="alert alert-danger" role="alert">No users have attempted this quiz yet.</div>
+                        <?php
+            endif;
+            ?>
                 </tbody>
             </table>
         </div>
