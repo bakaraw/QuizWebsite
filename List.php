@@ -263,7 +263,7 @@ if (isset($_POST['search'])) {
     <?php
 
     $itemsPerPage = 4;
-    $sql = "SELECT COUNT(*) as count FROM quizlisttable";
+    $sql = "SELECT COUNT(*) as count FROM quizlisttable WHERE accessibility <> 'PRIVATE'    ";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $totalItems = $row['count'];
@@ -326,9 +326,10 @@ if ($result->num_rows > 0) {
    
     echo '<nav aria-label="page nav">';
     echo '<ul class="pagination pagination-lg">';
-    
-    // Previous button
-    if ($currentPage > 1) {
+    $hasQuizzesOnPreviousPage = $offset > 0; // True i  f offset is greater than 0, indicating quizzes exist on the previous page
+
+    // Previous button - only show if there are quizzes on the previous page and current page is greater than 1
+    if ($currentPage > 1 && $hasQuizzesOnPreviousPage) {
         echo '<li class="page-item"><a class="page-link" href="?page=' . ($currentPage - 1) . '">Previous</a></li>';
     }
     
