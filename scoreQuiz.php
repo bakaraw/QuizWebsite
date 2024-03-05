@@ -86,13 +86,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
                 $updateStmt->execute();
             }
         }
-
-
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
-
-
 }
 ?>
 
@@ -132,15 +128,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         }
 
         .panel {
-            background-color: #FCBF49;
+            background-color: white;
+            /* Change to white */
             border-radius: 1.5rem;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin: 10px;
             text-align: center;
             color: black;
-            width: 48%;
-            /* Adjust the width for panels */
+            width: calc(50% - 20px);
+            /* Make all panels the same width as the user details panel */
+            box-sizing: border-box;
+            /* Include padding in the width */
+        }
+
+        .user-details,
+        .quiz-results {
+            width: 100%;
+            /* Full width for user details and quiz results panels */
         }
 
         .summary-heading {
@@ -160,22 +165,55 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         .retake-quiz,
         .view-leaderboard {
             font-size: 16px;
-            color: #3498db;
             text-decoration: none;
-            display: inline-block;
+            display: block;
+            /* Display buttons as block elements */
             margin-top: 20px;
             padding: 10px 20px;
             border-radius: 5px;
-            background-color: #ecf0f1;
             transition: background-color 0.3s;
+            width: 100%;
+            /* Make all buttons the same width */
         }
 
-        .try-again:hover,
-        .retake-quiz:hover,
+        .try-again {
+            background-color: #fbbb4b;
+            /* Change to desired color */
+            color: white;
+            /* Text color for better contrast */
+        }
+
+        .try-again:hover {
+            background-color: #ec9424;
+            /* Hover color for "Try Another Quiz" */
+        }
+
+        .retake-quiz {
+            background-color: #198653;
+            /* Change to desired color */
+            color: white;
+            /* Text color for better contrast */
+        }
+
+        .retake-quiz:hover {
+            background-color: #0b633a;
+            /* Hover color for "Retake Quiz" */
+        }
+
+        .view-leaderboard {
+            background-color: #3498db;
+            /* Default color */
+            color: white;
+            /* Text color for better contrast */
+        }
+
         .view-leaderboard:hover {
             background-color: #bdc3c7;
         }
     </style>
+
+
+
 </head>
 
 <body>
