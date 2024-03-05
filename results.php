@@ -89,7 +89,7 @@ $stmt->execute();
                             }
                             $attemptresult = $attemptstmt->fetch(PDO::FETCH_ASSOC);
 
-                            $remaining_attempts = $attemptresult['remaining_attempts'];
+                            $remaining_attempts = $attemptresult;
 
                             ?>
                             <tr>

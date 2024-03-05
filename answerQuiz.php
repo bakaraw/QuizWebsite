@@ -8,6 +8,67 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 
+if (isset($_GET['code_for_quiz'])) {
+    $code = $_GET['code_for_quiz'];
+    $user = $_SESSION['username'];
+
+    $stmt = $pdo->prepare("SELECT * FROM user_quiz_attempts WHERE username = :username AND  quizcode = :quizcode");
+    // Bind parameters (if needed)
+    $stmt->bindParam(':username', $user);
+    $stmt->bindParam(':quizcode', $code);
+    // Execute the query
+    $stmt->execute();
+
+    // Fetch the result
+    if ($stmt->rowCount() > 0) {
+        // Fetch the result
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['remaining_attempts'] == 0) {
+            header("Location: assets/php/no_attempts_left.php");
+            exit();
+        }
+    } else {
+        $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
+        $stmt->bindParam(':quizcode', $code);
+        $stmt->execute();
+        // Fetch the result and store it in a PHP variable
+        $max_attempts_row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $max_attempts = $max_attempts_row['max_attempts'];
+
+        $stmt = $pdo->prepare("INSERT INTO user_quiz_attempts (username, quizcode, remaining_attempts) VALUES (:username, :quizcode, :remaining_attempts)");
+        $stmt->bindParam(':username', $user);
+        $stmt->bindParam(':quizcode', $code);
+        $stmt->bindParam(':remaining_attempts', $max_attempts);
+        $stmt->execute();
+    }
+}
+
+if (isset($_POST['kick-out-btn'])) {
+    $decrement_value = 1;
+
+    $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
+    // Bind parameters (if needed)
+    $stmt->bindParam(':quizcode', $code);
+    // Execute the query
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        // Fetch the result
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['max_attempts'] != -1) {
+            $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode");
+            // Bind parameters
+            $stmt->bindParam(':decrement_value', $decrement_value, PDO::PARAM_INT);
+            $stmt->bindParam(':quizcode', $code);
+            // Execute the prepared statement
+            $stmt->execute();
+        }
+
+        header("Location: List.php");
+        exit();
+    }
+}
+
 // Include necessary files
 require('assets/php/head.inc.php');
 include('assets/php/navbar.inc.php');
