@@ -44,9 +44,55 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         $quizInfoStmt = $pdo->prepare("SELECT title, code, creator FROM quizlisttable WHERE code = ?");
         $quizInfoStmt->execute([$quizCode]);
         $quizInfo = $quizInfoStmt->fetch(PDO::FETCH_ASSOC);
+
+
+        // Fetch the existing score, if any
+        $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
+        $stmt->execute([$username, $quizCode]);
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $existingScore = $row['score'];
+            $cumulativeScore = $correctAnswers;
+
+            // Update the cumulative score
+            $updateStmt = $pdo->prepare("UPDATE quiz_scores SET score = ? WHERE username = ? AND code = ?");
+            $updateStmt->execute([$cumulativeScore, $username, $quizCode]);
+        } else {
+            // If no existing score, insert the new score as is
+            $insertStmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
+            $insertStmt->execute([$username, $quizCode, $correctAnswers]);
+        }
+
+        // decrese attempts when submitting
+        $decrement_value = 1;
+        // Prepare and execute the SELECT query
+        $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
+        $stmt->bindParam(':quizcode', $quizCode);
+        $stmt->execute();
+
+        // Check if there are rows returned by the SELECT query
+        if ($stmt->rowCount() > 0) {
+            // Fetch the result
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Check if max_attempts is not unlimited (-1)
+            if ($row['max_attempts'] != -1) {
+                // Prepare and execute the UPDATE query
+
+                $updateStmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE username = :username AND quizcode = :quizcode");
+                $updateStmt->bindParam(':username', $username);
+                $updateStmt->bindParam(':quizcode', $quizCode);
+                $updateStmt->bindParam(':decrement_value', $decrement_value);
+                $updateStmt->execute();
+            }
+        }
+
+
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
+
+
 }
 ?>
 
@@ -73,7 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 800px; /* Adjust the max-width as needed */
+            max-width: 800px;
+            /* Adjust the max-width as needed */
             width: 90%;
         }
 
@@ -91,7 +138,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             margin: 10px;
             text-align: center;
             color: black;
-            width: 48%; /* Adjust the width for panels */
+            width: 48%;
+            /* Adjust the width for panels */
         }
 
         .summary-heading {
@@ -136,16 +184,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             <div class="panel">
                 <div class="summary-heading">User Details</div>
                 <div class="summary-text">
-                    <p>User: <?= $username ?></p>
+                    <p>User:
+                        <?= $username ?>
+                    </p>
                 </div>
             </div>
 
             <div class="panel">
                 <div class="summary-heading">Quiz Information</div>
                 <div class="summary-text">
-                    <p>Title: <?= $quizInfo['title'] ?></p>
-                    <p>Code: <?= $quizInfo['code'] ?></p>
-                    <p>Creator: <?= $quizInfo['creator'] ?></p>
+                    <p>Title:
+                        <?= $quizInfo['title'] ?>
+                    </p>
+                    <p>Code:
+                        <?= $quizInfo['code'] ?>
+                    </p>
+                    <p>Creator:
+                        <?= $quizInfo['creator'] ?>
+                    </p>
                 </div>
             </div>
         </div>
@@ -153,13 +209,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         <div class="panel">
             <div class="summary-heading">Quiz Results</div>
             <div class="summary-text">
-                <p>Accuracy: <?= number_format($accuracy, 2) ?>%</p>
-                <p>Correct Answers: <?= $correctAnswers ?></p>
-                <p>Incorrect Answers: <?= $totalQuestions - $correctAnswers ?></p>
+                <p>Accuracy:
+                    <?= number_format($accuracy, 2) ?>%
+                </p>
+                <p>Correct Answers:
+                    <?= $correctAnswers ?>
+                </p>
+                <p>Incorrect Answers:
+                    <?= $totalQuestions - $correctAnswers ?>
+                </p>
             </div>
             <a href="List.php" class="btn btn-primary try-again">Try Another Quiz</a>
             <a href="answerQuiz.php?code_for_quiz=<?= $quizCode ?>" class="btn btn-success retake-quiz">Retake Quiz</a>
-            <a href="leaderboard.php?quizCode=<?= $quizCode ?>" class="btn btn-info view-leaderboard">View Leaderboard</a>
+            <a href="leaderboard.php?quizCode=<?= $quizCode ?>" class="btn btn-info view-leaderboard">View
+                Leaderboard</a>
         </div>
     </div>
 
