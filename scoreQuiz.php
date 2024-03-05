@@ -222,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             </div>
             <a href="List.php" class="btn btn-primary try-again">Try Another Quiz</a>
             <a href="answerQuiz.php?code_for_quiz=<?= $quizCode ?>" class="btn btn-success retake-quiz">Retake Quiz</a>
-            <a href="index.php>" class="btn btn-info view-leaderboard">Go to Homepage</a>
+            <a href="index.php" class="btn btn-info view-leaderboard">Go to Homepage</a>
         </div>
     </div>
 
