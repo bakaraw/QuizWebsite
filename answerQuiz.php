@@ -183,8 +183,6 @@ if (isset($_GET['code_for_quiz'])) {
 
     <script>
         var timer;
-
-        $(document).on('visibilitychange', function () {
         $(document).on('visibilitychange', function () {
             seconds = 3;
             if (document.visibilityState === 'hidden' && !$('#scoreModal').is(':visible')) {
@@ -194,7 +192,9 @@ if (isset($_GET['code_for_quiz'])) {
             } else {
                 clearTimeout(timer);
             }
+        });
 
+        $(document).ready(function () {
             $('.choice-button').click(function () {
                 var $parentContainer = $(this).closest('.choices-container');
                 $parentContainer.find('.choice-button').removeClass('selected-choice');
@@ -225,6 +225,8 @@ if (isset($_GET['code_for_quiz'])) {
                 });
             });
         });
+
+
 
         $(window).on('blur', function () {
             console.log('Window is out of focus');
