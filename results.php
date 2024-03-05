@@ -14,11 +14,11 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $title = $result['title'];
 $max_attempts = $result['max_attempts'];
 
+
 $sql = "SELECT * FROM quiz_scores WHERE code=:quizcode ORDER BY score DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':quizcode', $quizcode);
 $stmt->execute();
-
 
 ?>
 
@@ -64,7 +64,7 @@ $stmt->execute();
                     </thead>
                     <tbody>
                         <?php
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
+                        for ($num = 1; $row = $stmt->fetch(PDO::FETCH_ASSOC); $num++) {
                             $number = 1;
                             $username = $row['username'];
                             $score = $row['score'];
@@ -82,7 +82,7 @@ $stmt->execute();
                             ?>
                             <tr>
                                 <th scope="row">
-                                    <?php echo $number; ?>
+                                    <?php echo $num; ?>
                                 </th>
                                 <td>
                                     <?php echo $username; ?>
@@ -101,8 +101,8 @@ $stmt->execute();
                                 </td>
                             </tr>
                             <?php
-                            $number++;
-                        endwhile;
+
+                        }
             else:
                 ?>
                         <div class="alert alert-danger" role="alert">No users have attempted this quiz yet.</div>

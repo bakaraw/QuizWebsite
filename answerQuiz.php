@@ -177,7 +177,7 @@ include('assets/php/ModalSubmitQ.php');
                     echo '<div class="container ms-auto me-auto" style="width: 90%; max-width: 1000px;">'; // Adjust the width as needed
                     echo '<div class="rounded p-3 mt-3 shadow shadow-4 border border-light text-light container-fluid" style="--bs-bg-opacity: .2; --bs-border-opacity: .2; --bs-text-opacity: .70; background-color: #FCBF49; padding: 20px;">'; // Added padding for internal spacing
                     echo '<h5 style="color: black; ' . $fontStyle . '; min-height: 60px;">' . $questionNumber . '. ' . $question['question'] . '</h5>'; // Adjust min-height as needed
-
+    
                     switch ($question['questiontype']) {
                         case "MCQ":
                         case "TOF":
@@ -201,7 +201,7 @@ include('assets/php/ModalSubmitQ.php');
                             break;
                     }
                     echo "</div>"; // Close question div
-
+    
                     echo "</div>"; // Close question div
                     $questionNumber++;
                 }
@@ -226,7 +226,8 @@ include('assets/php/ModalSubmitQ.php');
     <?php include('assets/php/modalSubmitQ.php'); ?>
 
     <!-- modal popup when the user is out of tab -->
-    <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="unclosableModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -237,7 +238,8 @@ include('assets/php/ModalSubmitQ.php');
                 </div>
                 <div class="modal-footer">
                     <form method="post">
-                        <input type="submit" class="btn btn-primary" name="kick-out-btn" id="kick-out-btn" value="Omki :(">
+                        <input type="submit" class="btn btn-primary" name="kick-out-btn" id="kick-out-btn"
+                            value="Omki :(">
                     </form>
                 </div>
             </div>
@@ -267,30 +269,17 @@ include('assets/php/ModalSubmitQ.php');
     <script>
         var timer;
 
-        $(document).on('visibilitychange', function() {
+        $(document).on('visibilitychange', function () {
             seconds = 3;
             if (document.visibilityState === 'hidden' && !$('#scoreModal').is(':visible')) {
-                timer = setTimeout(function() {
+                timer = setTimeout(function () {
                     $('#unclosableModal').modal('show');
                 }, seconds * 10000);
             } else {
                 clearTimeout(timer);
             }
 
-        });
-
-        $(window).on('blur', function() {
-            console.log('Window is out of focus');
-        });
-
-        $(window).on('focus', function() {
-            console.log('Window is in focus');
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.choice-button').click(function() {
+            $('.choice-button').click(function () {
                 var $parentContainer = $(this).closest('.choices-container');
                 $parentContainer.find('.choice-button').removeClass('selected-choice');
                 $(this).addClass('selected-choice');
@@ -300,20 +289,20 @@ include('assets/php/ModalSubmitQ.php');
                 $parentContainer.find('.selected-answer').val(selectedValue);
             });
 
-            $('#submitQuiz').click(function(e) {
+            $('#submitQuiz').click(function (e) {
                 e.preventDefault();
                 $('#scoreModal').modal('show');
             });
 
-            $('#confirmSubmit').click(function(e) {
+            $('#confirmSubmit').click(function (e) {
                 e.preventDefault();
                 var quizForm = $('#quizForm').serialize();
                 $.ajax({
                     type: "POST",
                     url: "assets/ajax/score_counter.php",
                     data: quizForm,
-                    success: function(response) {
-                        
+                    success: function (response) {
+
                         // Redirect to another page ('success.html') with serialized form data as query parameters
                         var redirectUrl = 'scoreQuiz.php?' + quizForm;
                         window.location.href = redirectUrl;
@@ -322,6 +311,14 @@ include('assets/php/ModalSubmitQ.php');
             });
 
 
+        });
+
+        $(window).on('blur', function () {
+            console.log('Window is out of focus');
+        });
+
+        $(window).on('focus', function () {
+            console.log('Window is in focus');
         });
 
         function redirectToQuizList() {
