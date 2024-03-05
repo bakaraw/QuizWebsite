@@ -215,7 +215,6 @@ if (isset($_GET['code_for_quiz'])) {
                 var quizForm = $('#quizForm').serialize();
                 $.ajax({
                     type: "POST",
-                    url: "assets/ajax/score_counter.php",
                     data: quizForm,
                     success: function (response) {
                         // Redirect to another page ('success.html') with serialized form data as query parameters

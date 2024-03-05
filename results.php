@@ -74,7 +74,19 @@ $stmt->execute();
                             $attemptstmt->bindParam(':quizcode', $quizcode);
                             $attemptstmt->bindParam(':username', $username);
                             $attemptstmt->execute();
-
+                            if (!$attemptstmt) {
+                                // Handle the error, e.g., print error message or log it
+                                echo "Error executing query: " . print_r($pdo->errorInfo(), true);
+                            } else {
+                                $attemptresult = $attemptstmt->fetch(PDO::FETCH_ASSOC);
+                                if ($attemptresult === false) {
+                                    // No rows found, handle this scenario
+                                    echo "No rows found for the given query.";
+                                } else {
+                                    // Rows found, proceed with your logic
+                                    $remaining_attempts = $attemptresult['remaining_attempts'];
+                                }
+                            }
                             $attemptresult = $attemptstmt->fetch(PDO::FETCH_ASSOC);
 
                             $remaining_attempts = $attemptresult['remaining_attempts'];
