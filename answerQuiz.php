@@ -185,6 +185,7 @@ if (isset($_GET['code_for_quiz'])) {
         var timer;
 
         $(document).on('visibilitychange', function () {
+        $(document).on('visibilitychange', function () {
             seconds = 3;
             if (document.visibilityState === 'hidden' && !$('#scoreModal').is(':visible')) {
                 timer = setTimeout(function () {
@@ -193,17 +194,7 @@ if (isset($_GET['code_for_quiz'])) {
             } else {
                 clearTimeout(timer);
             }
-        });
 
-        $(window).on('blur', function () {
-            console.log('Window is out of focus');
-        });
-
-        $(window).on('focus', function () {
-            console.log('Window is in focus');
-        });
-
-        $(document).ready(function () {
             $('.choice-button').click(function () {
                 var $parentContainer = $(this).closest('.choices-container');
                 $parentContainer.find('.choice-button').removeClass('selected-choice');
@@ -234,6 +225,19 @@ if (isset($_GET['code_for_quiz'])) {
                 });
             });
         });
+
+        $(window).on('blur', function () {
+            console.log('Window is out of focus');
+        });
+
+        $(window).on('focus', function () {
+            console.log('Window is in focus');
+        });
+
+        function redirectToQuizList() {
+            // Redirect to list.php
+            window.location.href = 'list.php';
+        }
     </script>
 
     <?php require('assets/php/footer.inc.php'); ?>
