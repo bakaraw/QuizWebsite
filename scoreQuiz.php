@@ -57,9 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Summary</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         body {
-            font-family: "Arial", sans-serif;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #f2f2f2;
             display: flex;
             align-items: center;
@@ -72,32 +73,43 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             display: flex;
             flex-direction: column;
             align-items: center;
+            max-width: 800px; /* Adjust the max-width as needed */
+            width: 90%;
+        }
+
+        .user-quiz-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
 
         .panel {
-            width: 400px; /* Set a fixed width for all panels */
-            background-color: #ffffff;
-            border-radius: 8px;
+            background-color: #FCBF49;
+            border-radius: 1.5rem;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin: 10px;
             text-align: center;
+            color: black;
+            width: 48%; /* Adjust the width for panels */
         }
 
         .summary-heading {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            color: #2ecc71;
+            color: black;
         }
 
         .summary-text {
             font-size: 18px;
             margin-bottom: 20px;
-            color: #333333;
+            color: black;
         }
 
-        .try-again, .retake-quiz, .view-leaderboard {
+        .try-again,
+        .retake-quiz,
+        .view-leaderboard {
             font-size: 16px;
             color: #3498db;
             text-decoration: none;
@@ -109,7 +121,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             transition: background-color 0.3s;
         }
 
-        .try-again:hover, .retake-quiz:hover, .view-leaderboard:hover {
+        .try-again:hover,
+        .retake-quiz:hover,
+        .view-leaderboard:hover {
             background-color: #bdc3c7;
         }
     </style>
@@ -117,35 +131,38 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
 
 <body>
 
-<div class="summary-container">
-    <div class="panel">
-        <div class="summary-heading">User Details</div>
-        <div class="summary-text">
-            <p>User: <?= $username ?></p>
-        </div>
-    </div>
+    <div class="summary-container">
+        <div class="user-quiz-info">
+            <div class="panel">
+                <div class="summary-heading">User Details</div>
+                <div class="summary-text">
+                    <p>User: <?= $username ?></p>
+                </div>
+            </div>
 
-    <div class="panel">
-        <div class="summary-heading">Quiz Information</div>
-        <div class="summary-text">
-            <p>Title: <?= $quizInfo['title'] ?></p>
-            <p>Code: <?= $quizInfo['code'] ?></p>
-            <p>Creator: <?= $quizInfo['creator'] ?></p>
+            <div class="panel">
+                <div class="summary-heading">Quiz Information</div>
+                <div class="summary-text">
+                    <p>Title: <?= $quizInfo['title'] ?></p>
+                    <p>Code: <?= $quizInfo['code'] ?></p>
+                    <p>Creator: <?= $quizInfo['creator'] ?></p>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="panel">
-        <div class="summary-heading">Quiz Results</div>
-        <div class="summary-text">
-            <p>Accuracy: <?= number_format($accuracy, 2) ?>%</p>
-            <p>Correct Answers: <?= $correctAnswers ?></p>
-            <p>Incorrect Answers: <?= $totalQuestions - $correctAnswers ?></p>
+        <div class="panel">
+            <div class="summary-heading">Quiz Results</div>
+            <div class="summary-text">
+                <p>Accuracy: <?= number_format($accuracy, 2) ?>%</p>
+                <p>Correct Answers: <?= $correctAnswers ?></p>
+                <p>Incorrect Answers: <?= $totalQuestions - $correctAnswers ?></p>
+            </div>
+            <a href="List.php" class="btn btn-primary try-again">Try Another Quiz</a>
+            <a href="answerQuiz.php?code_for_quiz=<?= $quizCode ?>" class="btn btn-success retake-quiz">Retake Quiz</a>
+            <a href="leaderboard.php?quizCode=<?= $quizCode ?>" class="btn btn-info view-leaderboard">View Leaderboard</a>
         </div>
-        <a href="quizHome.php" class="try-again">Try Another Quiz</a>
-        <a href="quizPage.php?quizCode=<?= $quizCode ?>" class="retake-quiz">Retake Quiz</a>
-        <a href="leaderboard.php?quizCode=<?= $quizCode ?>" class="view-leaderboard">View Leaderboard</a>
     </div>
-</div>
 
 </body>
+
 </html>
