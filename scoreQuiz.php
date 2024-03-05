@@ -18,12 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
                 if ($question) {
                     $totalQuestions++;
 
-                    // Assuming 'ChoiceA', 'ChoiceB', etc., are the column names in the database
                     if ($question['questiontype'] == "MCQ") {
-                        $correctAnswerColumn = $question['answer']; // e.g., "ChoiceA"
-                        $correctAnswerColumn = strtolower($correctAnswerColumn); // to lowercase
-                        $correctAnswerColumn = substr($correctAnswerColumn, 0, -1) . strtoupper(substr($correctAnswerColumn, -1)); // Capitalize last letter
-                        $correctAnswer = $question[$correctAnswerColumn]; // Access the content
+                        $correctAnswerColumn = $question['answer'];
+                        $correctAnswerColumn = strtolower($correctAnswerColumn);
+                        $correctAnswerColumn = substr($correctAnswerColumn, 0, -1) . strtoupper(substr($correctAnswerColumn, -1));
+                        $correctAnswer = $question[$correctAnswerColumn];
 
                         if (strcasecmp(trim($userAnswer), trim($correctAnswer)) == 0) {
                             $correctAnswers++;
@@ -37,48 +36,36 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             }
         }
 
-        // Calculate accuracy
         $accuracy = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0;
 
-        // Fetch quiz information
         $quizInfoStmt = $pdo->prepare("SELECT title, code, creator FROM quizlisttable WHERE code = ?");
         $quizInfoStmt->execute([$quizCode]);
         $quizInfo = $quizInfoStmt->fetch(PDO::FETCH_ASSOC);
 
-
-        // Fetch the existing score, if any
         $stmt = $pdo->prepare("SELECT score FROM quiz_scores WHERE username = ? AND code = ?");
         $stmt->execute([$username, $quizCode]);
+
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $existingScore = $row['score'];
             $cumulativeScore = $correctAnswers;
 
-            // Update the cumulative score
             $updateStmt = $pdo->prepare("UPDATE quiz_scores SET score = ? WHERE username = ? AND code = ?");
             $updateStmt->execute([$cumulativeScore, $username, $quizCode]);
         } else {
-            // If no existing score, insert the new score as is
             $insertStmt = $pdo->prepare("INSERT INTO quiz_scores (username, code, score) VALUES (?, ?, ?)");
             $insertStmt->execute([$username, $quizCode, $correctAnswers]);
         }
 
-        // decrese attempts when submitting
         $decrement_value = 1;
-        // Prepare and execute the SELECT query
         $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
         $stmt->bindParam(':quizcode', $quizCode);
         $stmt->execute();
 
-        // Check if there are rows returned by the SELECT query
         if ($stmt->rowCount() > 0) {
-            // Fetch the result
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Check if max_attempts is not unlimited (-1)
             if ($row['max_attempts'] != -1) {
-                // Prepare and execute the UPDATE query
-
                 $updateStmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE username = :username AND quizcode = :quizcode");
                 $updateStmt->bindParam(':username', $username);
                 $updateStmt->bindParam(':quizcode', $quizCode);
@@ -117,19 +104,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             flex-direction: column;
             align-items: center;
             max-width: 800px;
-            /* Adjust the max-width as needed */
             width: 90%;
         }
 
         .user-quiz-info {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             width: 100%;
         }
 
         .panel {
             background-color: white;
-            /* Change to white */
             border-radius: 1.5rem;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -137,15 +123,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             text-align: center;
             color: black;
             width: calc(50% - 20px);
-            /* Make all panels the same width as the user details panel */
             box-sizing: border-box;
-            /* Include padding in the width */
         }
 
         .user-details,
-        .quiz-results {
-            width: 100%;
-            /* Full width for user details and quiz results panels */
+        .leaderboard-panel,
+        .quiz-results,
+        .quiz-details {
+            width: calc(50% - 20px);
+            box-sizing: border-box;
         }
 
         .summary-heading {
@@ -167,100 +153,129 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             font-size: 16px;
             text-decoration: none;
             display: block;
-            /* Display buttons as block elements */
             margin-top: 20px;
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s;
             width: 100%;
-            /* Make all buttons the same width */
         }
 
         .try-again {
             background-color: #fbbb4b;
-            /* Change to desired color */
             color: white;
-            /* Text color for better contrast */
         }
 
         .try-again:hover {
             background-color: #ec9424;
-            /* Hover color for "Try Another Quiz" */
         }
 
         .retake-quiz {
             background-color: #198653;
-            /* Change to desired color */
             color: white;
-            /* Text color for better contrast */
         }
 
         .retake-quiz:hover {
             background-color: #0b633a;
-            /* Hover color for "Retake Quiz" */
         }
 
         .view-leaderboard {
             background-color: #3498db;
-            /* Default color */
             color: white;
-            /* Text color for better contrast */
         }
 
         .view-leaderboard:hover {
             background-color: #bdc3c7;
         }
+
+        .leaderboard-table {
+            width: 100%;
+        }
     </style>
-
-
-
 </head>
 
 <body>
 
     <div class="summary-container">
         <div class="user-quiz-info">
-            <div class="panel">
+            <div class="panel user-details">
                 <div class="summary-heading">User Details</div>
                 <div class="summary-text">
-                    <p>User:
-                        <?= $username ?>
-                    </p>
+                    <p>User: <?= $username ?></p>
                 </div>
             </div>
 
-            <div class="panel">
-                <div class="summary-heading">Quiz Information</div>
+            <div class="panel quiz-details">
+                <div class="summary-heading">Quiz Details</div>
                 <div class="summary-text">
-                    <p>Title:
-                        <?= $quizInfo['title'] ?>
-                    </p>
-                    <p>Code:
-                        <?= $quizInfo['code'] ?>
-                    </p>
-                    <p>Creator:
-                        <?= $quizInfo['creator'] ?>
-                    </p>
+                    <p>Title: <?= $quizInfo['title'] ?></p>
+                    <p>Code: <?= $quizInfo['code'] ?></p>
+                    <p>Creator: <?= $quizInfo['creator'] ?></p>
                 </div>
             </div>
-        </div>
 
-        <div class="panel">
-            <div class="summary-heading">Quiz Results</div>
-            <div class="summary-text">
-                <p>Accuracy:
-                    <?= number_format($accuracy, 2) ?>%
-                </p>
-                <p>Correct Answers:
-                    <?= $correctAnswers ?>
-                </p>
-                <p>Incorrect Answers:
-                    <?= $totalQuestions - $correctAnswers ?>
-                </p>
+            <div class="panel leaderboard-panel">
+                <div class="summary-heading">Leaderboard</div>
+                <div class="summary-text">
+                    <?php
+                    $quizcode = $quizInfo['code'];
+
+                    $sql = "SELECT username, score,
+                            DENSE_RANK() OVER (ORDER BY score DESC) AS rank
+                            FROM quiz_scores WHERE code=:quizcode LIMIT 5";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':quizcode', $quizcode);
+                    $stmt->execute();
+
+                    if ($stmt->rowCount() > 0): ?>
+                        <table class="table leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Rank</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $rank = $row['rank'];
+                                    $username = $row['username'];
+                                    $score = $row['score'];
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $rank; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $username; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $score; ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No users have attempted this quiz yet.</p>
+                    <?php endif; ?>
+                </div>
             </div>
-            <a href="List.php" class="btn btn-primary try-again">Try Another Quiz</a>
-            <a href="answerQuiz.php?code_for_quiz=<?= $quizCode ?>" class="btn btn-success retake-quiz">Retake Quiz</a>
-            <a href="index.php" class="btn btn-info view-leaderboard">Go to Homepage</a>
+
+            <div class="panel quiz-results">
+                <div class="summary-heading">Quiz Results</div>
+                <div class="summary-text">
+                    <p>Accuracy: <?= number_format($accuracy, 2) ?>%</p>
+                    <p>Correct Answers: <?= $correctAnswers ?></p>
+                    <p>Incorrect Answers: <?= $totalQuestions - $correctAnswers ?></p>
+                </div>
+                <a href="List.php" class="btn btn-primary try-again">Try Another Quiz</a>
+                <a href="answerQuiz.php?code_for_quiz=<?= $quizCode ?>" class="btn btn-success retake-quiz">Retake Quiz</a>
+                <a href="index.php" class="btn btn-info view-leaderboard">Go to Homepage</a>
+            </div>
         </div>
     </div>
 
