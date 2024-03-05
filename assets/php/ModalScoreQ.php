@@ -9,10 +9,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="score-display"></p>
+                <p id="score-display">Would you like to submit this quiz?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="confirmSubmit" class="btn btn-secondary">Submit Quiz</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" id="confirmSubmit" class="btn btn-success text-light border-dark btn-md btn-submit-quiz">Submit Quiz</button>
             </div>
         </div>
     </div>

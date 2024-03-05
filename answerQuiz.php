@@ -115,6 +115,7 @@ if (isset($_GET['code_for_quiz'])) {
 }
 ?>
 
+<!-- Include the modals -->
 <?php include('assets/php/ModalScoreQ.php'); ?>
 <?php include('assets/php/ModalOOT.php'); ?>
 
@@ -126,6 +127,7 @@ if (isset($_GET['code_for_quiz'])) {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Include Bootstrap JS from CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Your other scripts and styles -->
     <style>
         /* Add any additional styles here */
         .selected-choice {
@@ -160,9 +162,25 @@ if (isset($_GET['code_for_quiz'])) {
             /* Set text color to white */
         }
     </style>
+
+    <!-- Include the redirectToQuizList function here -->
+    <script>
+        function redirectToQuizList() {
+            // Redirect to List.php
+            window.location.href = 'List.php';
+        }
+
+        // Add an event listener for the Omki:( button
+        $(document).on('click', '#kick-out-btn', function (e) {
+            e.preventDefault();
+            redirectToQuizList();
+        });
+    </script>
 </head>
 
 <body>
+    <!-- Your existing content -->
+
     <script>
         var timer;
 
@@ -216,11 +234,6 @@ if (isset($_GET['code_for_quiz'])) {
                 });
             });
         });
-
-        function redirectToQuizList() {
-            // Redirect to list.php
-            window.location.href = 'list.php';
-        }
     </script>
 
     <?php require('assets/php/footer.inc.php'); ?>

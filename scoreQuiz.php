@@ -44,107 +44,108 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         $quizInfoStmt = $pdo->prepare("SELECT title, code, creator FROM quizlisttable WHERE code = ?");
         $quizInfoStmt->execute([$quizCode]);
         $quizInfo = $quizInfoStmt->fetch(PDO::FETCH_ASSOC);
-
-        // Display the summary using HTML
-        echo '<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Quiz Summary</title>
-            <style>
-                body {
-                    font-family: "Arial", sans-serif;
-                    background-color: #f2f2f2;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    margin: 0;
-                }
-
-                .summary-container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                .panel {
-                    width: 400px; /* Set a fixed width for all panels */
-                    background-color: #ffffff;
-                    border-radius: 8px;
-                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                    padding: 20px;
-                    margin: 10px;
-                    text-align: center;
-                }
-
-                .summary-heading {
-                    font-size: 24px;
-                    font-weight: bold;
-                    margin-bottom: 20px;
-                    color: #2ecc71;
-                }
-
-                .summary-text {
-                    font-size: 18px;
-                    margin-bottom: 20px;
-                    color: #333333;
-                }
-
-                .try-again, .retake-quiz, .view-leaderboard {
-                    font-size: 16px;
-                    color: #3498db;
-                    text-decoration: none;
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 10px 20px;
-                    border-radius: 5px;
-                    background-color: #ecf0f1;
-                    transition: background-color 0.3s;
-                }
-
-                .try-again:hover, .retake-quiz:hover, .view-leaderboard:hover {
-                    background-color: #bdc3c7;
-                }
-            </style>
-        </head>
-        <body>
-    
-        <div class="summary-container">
-            <div class="panel">
-                <div class="summary-heading">User Details</div>
-                <div class="summary-text">
-                    <p>User: ' . $username . '</p>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="summary-heading">Quiz Information</div>
-                <div class="summary-text">
-                    <p>Title: ' . $quizInfo['title'] . '</p>
-                    <p>Code: ' . $quizInfo['code'] . '</p>
-                    <p>Creator: ' . $quizInfo['creator'] . '</p>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="summary-heading">Quiz Results</div>
-                <div class="summary-text">
-                    <p>Accuracy: ' . number_format($accuracy, 2) . '%</p>
-                    <p>Correct Answers: ' . $correctAnswers . '</p>
-                    <p>Incorrect Answers: ' . ($totalQuestions - $correctAnswers) . '</p>
-                </div>
-                <a href="quizHome.php" class="try-again">Try Another Quiz</a>
-                <a href="quizPage.php?quizCode=' . $quizCode . '" class="retake-quiz">Retake Quiz</a>
-                <a href="leaderboard.php?quizCode=' . $quizCode . '" class="view-leaderboard">View Leaderboard</a>
-            </div>
-        </div>
-    
-        </body>
-        </html>';
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Summary</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .summary-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .panel {
+            width: 400px; /* Set a fixed width for all panels */
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .summary-heading {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2ecc71;
+        }
+
+        .summary-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        .try-again, .retake-quiz, .view-leaderboard {
+            font-size: 16px;
+            color: #3498db;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ecf0f1;
+            transition: background-color 0.3s;
+        }
+
+        .try-again:hover, .retake-quiz:hover, .view-leaderboard:hover {
+            background-color: #bdc3c7;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="summary-container">
+    <div class="panel">
+        <div class="summary-heading">User Details</div>
+        <div class="summary-text">
+            <p>User: <?= $username ?></p>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="summary-heading">Quiz Information</div>
+        <div class="summary-text">
+            <p>Title: <?= $quizInfo['title'] ?></p>
+            <p>Code: <?= $quizInfo['code'] ?></p>
+            <p>Creator: <?= $quizInfo['creator'] ?></p>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="summary-heading">Quiz Results</div>
+        <div class="summary-text">
+            <p>Accuracy: <?= number_format($accuracy, 2) ?>%</p>
+            <p>Correct Answers: <?= $correctAnswers ?></p>
+            <p>Incorrect Answers: <?= $totalQuestions - $correctAnswers ?></p>
+        </div>
+        <a href="quizHome.php" class="try-again">Try Another Quiz</a>
+        <a href="quizPage.php?quizCode=<?= $quizCode ?>" class="retake-quiz">Retake Quiz</a>
+        <a href="leaderboard.php?quizCode=<?= $quizCode ?>" class="view-leaderboard">View Leaderboard</a>
+    </div>
+</div>
+
+</body>
+</html>
