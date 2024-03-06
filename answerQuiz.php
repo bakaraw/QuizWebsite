@@ -43,7 +43,7 @@ if (isset($_GET['code_for_quiz'])) {
     }
 }
 
-if (isset($_POST['kick-out-btn'])) {
+if (isset($_POST['kick-out-btn']) || (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'answerQuiz.php') !== false)) {
     $decrement_value = 1;
 
     $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
@@ -149,7 +149,7 @@ if (isset($_GET['code_for_quiz'])) {
                     case "IDEN":
                         echo "<div class='form-group'>";
                         echo "<label class='your-answer-label'>Your answer:</label>";
-                        echo "<input type='text' class='form-control iden-answer' name='answer[{$question['qid']}]' style='height: 50px;'>";
+                        echo "<input type='text' class='form-control iden-answer' name='answer[{$question['qid']}]' autocomplete='off'>";
                         echo "</div>";
                         break;
                 }
@@ -223,20 +223,6 @@ if (isset($_GET['code_for_quiz'])) {
             /* Set text color to white */
         }
     </style>
-
-    <!-- Include the redirectToQuizList function here -->
-    <script>
-        function redirectToQuizList() {
-            // Redirect to List.php
-            window.location.href = 'List.php';
-        }
-
-        // Add an event listener for the Omki:( button
-        $(document).on('click', '#kick-out-btn', function (e) {
-            e.preventDefault();
-            redirectToQuizList();
-        });
-    </script>
 </head>
 
 <body>
@@ -244,19 +230,25 @@ if (isset($_GET['code_for_quiz'])) {
 
     <script>
         var timer;
-        $(document).on('visibilitychange', function () {
-            seconds = 3;
+        $(document).on('visibilitychange', function() {
+            seconds = 10;
             if (document.visibilityState === 'hidden' && !$('#scoreModal').is(':visible')) {
-                timer = setTimeout(function () {
+                timer = setTimeout(function() {
                     $('#unclosableModal').modal('show');
-                }, seconds * 10000);
+                }, seconds * 1000);
             } else {
                 clearTimeout(timer);
             }
         });
 
-        $(document).ready(function () {
-            $('.choice-button').click(function () {
+        $(document).ready(function() {
+            $(window).on('beforeunload', function() {
+                // Submit the form before leaving the page
+                submitForm();
+                
+            });
+
+            $('.choice-button').click(function() {
                 var $parentContainer = $(this).closest('.choices-container');
                 $parentContainer.find('.choice-button').removeClass('selected-choice');
                 $(this).addClass('selected-choice');
@@ -266,18 +258,18 @@ if (isset($_GET['code_for_quiz'])) {
                 $parentContainer.find('.selected-answer').val(selectedValue);
             });
 
-            $('#submitQuiz').click(function (e) {
+            $('#submitQuiz').click(function(e) {
                 e.preventDefault();
                 $('#scoreModal').modal('show');
             });
 
-            $('#confirmSubmit').click(function (e) {
+            $('#confirmSubmit').click(function(e) {
                 e.preventDefault();
                 var quizForm = $('#quizForm').serialize();
                 $.ajax({
                     type: "POST",
                     data: quizForm,
-                    success: function (response) {
+                    success: function(response) {
                         // Redirect to another page ('success.html') with serialized form data as query parameters
                         var redirectUrl = 'scoreQuiz.php?' + quizForm;
                         window.location.href = redirectUrl;
@@ -288,11 +280,11 @@ if (isset($_GET['code_for_quiz'])) {
 
 
 
-        $(window).on('blur', function () {
+        $(window).on('blur', function() {
             console.log('Window is out of focus');
         });
 
-        $(window).on('focus', function () {
+        $(window).on('focus', function() {
             console.log('Window is in focus');
         });
 
@@ -300,6 +292,22 @@ if (isset($_GET['code_for_quiz'])) {
             // Redirect to list.php
             window.location.href = 'list.php';
         }
+    </script>
+
+    <script>
+        // Replace the current history entry with a new one
+        history.replaceState({}, document.title, window.location.href);
+
+        // Disable the back button functionality
+        history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function() {
+            history.pushState(null, document.title, window.location.href);
+        });
+
+        window.onpopstate = function(event) {
+        // Set a flag or perform an action when the back button is pressed
+        document.cookie = "backButtonPressed=true";
+    };
     </script>
 
     <?php require('assets/php/footer.inc.php'); ?>
