@@ -1,10 +1,9 @@
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2024 at 03:52 AM
+-- Generation Time: Mar 06, 2024 at 07:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,6 +38,8 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`pass`, `username`) VALUES
 ('$2y$10$MQ4CsnAygZMgTLLWg53XAe6AmQHnY2uGOnaU5et5rcXbodw66vzai', 'o'),
+('$2y$10$tEjZQpWgN4Vtdz8ITPtWQeQ8rkTuUcZ9Eiq4rFLRxKOnMdKpqsnse', 'QuizHero'),
+('$2y$10$e3mp8oS91pQgF/uKluanYu8WxbmMQJpCB6j1WHEgvjOzntC/Q1uw6', 'Trojan'),
 ('$2y$10$q9ahwziDtGCIyD/S8ICqD.ltuKc/vqAze4RqAHajSgefG2dw0nWeK', 'yan');
 
 -- --------------------------------------------------------
@@ -64,22 +65,29 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`qid`, `quizcode`, `question`, `questiontype`, `answer`, `choiceA`, `choiceB`, `choiceC`, `choiceD`) VALUES
-(106, 'Rhuj0BJ', 'asdasd', 'TOF', 'TRUE', '', '', '', ''),
-(107, 'R4C0WXt', 'asdasd', 'IDEN', 'o', '', '', '', ''),
-(108, 'V6PZb12', 'asfasfa', 'TOF', 'TRUE', '', '', '', ''),
-(109, 'nM8P3xY', 'is it?', 'TOF', 'TRUE', '', '', '', ''),
-(110, 'nM8P3xY', 'asdasdas', 'MCQ', 'choiceB', 'sdasdasd', 'yes', 'asdasd', 'asdasdasda'),
-(111, 'nM8P3xY', 'asfasf', 'IDEN', 'yes', '', '', '', ''),
-(112, 'uWGB1rt', 'asdasd', 'IDEN', 'yes', '', '', '', ''),
-(113, 'JGa3zy1', 'fasfasfa', 'IDEN', 'yes', '', '', '', ''),
-(114, 'JGa3zy1', 'asfasdasd', 'MCQ', 'choiceB', 'asdasd', 'yes', 'asdasdas', 'dasdasd'),
-(115, 'JGa3zy1', 'asdasdasd', 'TOF', 'TRUE', '', '', '', ''),
-(116, 'rdb4Q5g', 'asdas', 'TOF', 'TRUE', '', '', '', ''),
-(117, 'rdb4Q5g', 'asdasd', 'IDEN', 'yes', '', '', '', ''),
-(118, 'rdb4Q5g', 'asdasdasd', 'MCQ', 'choiceD', 'asdasdasd', 'asdas', 'asdasdas', 'yes'),
-(119, '5TFDsll', 'yesasdasd', 'TOF', 'TRUE', '', '', '', ''),
-(120, '5TFDsll', 'asdasda', 'IDEN', 'yes', '', '', '', ''),
-(121, '5TFDsll', 'asdasdas', 'MCQ', 'choiceA', 'yes', 'dasfas', 'fasfasdf', 'asfasfa');
+(122, 'K49cIav', '\"Pac-Man\" was first released in the 1980s as an arcade game and later became one of the most recognizable and iconic video game characters.', 'TOF', 'TRUE', '', '', '', ''),
+(123, 'K49cIav', 'The popular game \"The Legend of Zelda: Breath of the Wild\" was released for the Nintendo Switch before the Wii U.', 'TOF', 'TRUE', '', '', '', ''),
+(124, 'K49cIav', 'The video game \"Minecraft\" was initially created by Markus Persson and was later developed and published by Mojang Studios.\r\n\r\n', 'TOF', 'TRUE', '', '', '', ''),
+(125, 'K49cIav', 'The character \"Mario\" first appeared in the game \"Super Mario Bros.\" released in 1985.', 'TOF', 'TRUE', '', '', '', ''),
+(126, 'K49cIav', 'The game \"Fortnite\" was originally released as a single-player, cooperative, zombie survival game.', 'TOF', 'TRUE', '', '', '', ''),
+(127, 'QHLEzEc', 'What does the acronym \"HTML\" stand for in web development?', 'MCQ', 'choiceB', 'Hyperlink and Text Markup Language', 'Hypertext Markup Language', 'High-Level Text Manipulation Language', 'Hyper Transferable Markup Linguistics'),
+(128, 'QHLEzEc', 'What programming language was developed by Microsoft and is often used for creating dynamic web pages and web applications?', 'MCQ', 'choiceC', 'Java', 'Python', 'C#', 'Ruby'),
+(129, 'QHLEzEc', 'In JavaScript, what is the purpose of the \"document.getElementById()\" function?', 'MCQ', 'choiceA', 'Access a specific HTML element by its ID', 'Retrieve the document\'s URL', 'Create a new HTML document', 'Style a group of HTML elements'),
+(130, 'QHLEzEc', 'What does the acronym \"CSS\" stand for in web development?', 'MCQ', 'choiceC', 'Computer Style Sheets', 'Centralized Style System', 'Cascading Style Sheets', 'Code Syntax System'),
+(131, 'QHLEzEc', 'In Python, what is the purpose of the \"elif\" keyword?', 'MCQ', 'choiceD', 'Define a new function', 'Execute a block of code only if the specified condition is true', 'Represent a loop in Python', 'Combine multiple conditions in an \"if-else\" statement'),
+(132, 'cp9KL08', 'Known as the \"Sublime Paralytic\" and the \"Brains of the Katipunan,\" this hero wrote the constitution for the first Philippine Republic. Who is he?', 'IDEN', 'Apolinario Mabini', '', '', '', ''),
+(133, 'cp9KL08', 'This hero, also known as the \"Great Plebeian,\" founded the Katipunan, a secret society that played a crucial role in the Philippine Revolution against Spanish colonization. Who is he?', 'IDEN', 'Andres Bonifacio', '', '', '', ''),
+(134, 'cp9KL08', 'A revolutionary leader and military general, he is often referred to as the \"Supremo\" and played a key role in initiating the Philippine Revolution in 1896. Who is this hero?', 'IDEN', 'Andres Bonifacio', '', '', '', ''),
+(135, 'cp9KL08', 'Known as the \"Mother of the Philippine Revolution,\" she provided support and care to the Katipunan and its members. What is her name?', 'IDEN', 'Gregoria de Jesus', '', '', '', ''),
+(136, 'cp9KL08', 'This hero, also known as the \"Brains of the Katipunan,\" was a writer, lawyer, and nationalistic leader. He authored \"Noli Me Tangere\" and \"El Filibusterismo.\" Who is he?', 'IDEN', 'Jose Rizal', '', '', '', ''),
+(137, '3oOkt09', 'Who is credited with the invention of the telephone in 1876?', 'MCQ', 'choiceB', 'Thomas Edison', 'Alexander Graham Bell', 'Nikola Tesla', 'Samuel Morse'),
+(138, '3oOkt09', 'In what year did Sir Isaac Newton publish his groundbreaking work \"Philosophiæ Naturalis Principia Mathematica,\" which laid the foundation for classical mechanics?', 'MCQ', 'choiceB', '1605', '1687', '1752', '1810'),
+(139, '3oOkt09', 'Which scientist is known for the discovery of penicillin, a breakthrough in the development of antibiotics?', 'MCQ', 'choiceB', 'Louis Pasteur', 'Alexander Fleming', 'Maire Curie', 'Jonas Salk'),
+(140, '3oOkt09', 'What everyday item did Swiss engineer George de Mestral invent in the 1940s after observing burrs sticking to his clothing during a walk?', 'MCQ', 'choiceA', 'Velcro', 'Zipper', 'Safety Pins', 'Buttons'),
+(141, '3oOkt09', 'Which inventor is associated with the development of the World Wide Web in the late 20th century?', 'MCQ', 'choiceB', 'Bill Gates', 'Tim Berners-Lee', 'Steve Jobs', 'Mark Zuckerberg'),
+(142, 'xtHzfol', 'In which city is the main campus of the University of Mindanao located?', 'MCQ', 'choiceA', 'Davao City', 'Cagayan De Oro City', 'General Santos City', 'Tagum City'),
+(143, 'xtHzfol', 'What year was the University of Mindanao established?', 'IDEN', '1945', '', '', '', ''),
+(144, 'xtHzfol', 'No Permit, No Exam', 'TOF', 'TRUE', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -102,23 +110,11 @@ CREATE TABLE `quizlisttable` (
 --
 
 INSERT INTO `quizlisttable` (`code`, `title`, `thumbnail`, `accessibility`, `creator`, `views`, `max_attempts`) VALUES
-('5TFDsll', 'asd', 'default_img.jpg', 'PUBLIC', 'o', 3, -1),
-('8cte6H2', 'asdasdasd', '65e3def5e242a7.43845216.jpg', 'PUBLIC', 'o', 2, -1),
-('AuNvxIa', 'asdasd', 'default_img.jpg', 'PRIVATE', 'o', 0, -1),
-('b4lr6c3', 'asdasd', 'default_img.jpg', 'PRIVATE', 'yan', 0, -1),
-('F7aJBJ0', 'asdasd', 'default_img.jpg', 'PRIVATE', 'yan', 0, -1),
-('JGa3zy1', 'Yawas', 'default_img.jpg', 'PUBLIC', 'o', 2, -1),
-('kfN9ou8', 'asda', 'default_img.jpg', 'PRIVATE', 'o', 0, -1),
-('lggispn', 'sadasd', 'default_img.jpg', 'PUBLIC', 'yan', 1, -1),
-('nM8P3xY', 'otin', 'default_img.jpg', 'PUBLIC', 'o', 1, -1),
-('R4C0WXt', 'asdasd', 'default_img.jpg', 'PRIVATE', 'o', 0, -1),
-('rdb4Q5g', 's', 'default_img.jpg', 'PUBLIC', 'o', 2, -1),
-('Rhuj0BJ', 'asd', 'default_img.jpg', 'PUBLIC', 'yan', 1, -1),
-('unt7sUS', 'asdas', 'default_img.jpg', 'PRIVATE', 'yan', 0, -1),
-('uWGB1rt', 'otikn', 'default_img.jpg', 'PUBLIC', 'o', 1, -1),
-('UzERHpH', 'asda', 'default_img.jpg', 'PUBLIC', 'yan', 0, -1),
-('V6PZb12', 'asfasf', 'default_img.jpg', 'PUBLIC', 'o', 2, 10),
-('WoRpW41', 'dasdasd', '65e3dc6bd7d451.11095861.jpg', 'PUBLIC', 'yan', 0, -1);
+('3oOkt09', 'Famous Inventions and Discoveries', '65e80e94c13749.68499177.jpg', 'PRIVATE', 'QuizHero', 0, -1),
+('cp9KL08', 'Philippine Heroes', '65e80d85294254.60117303.jpg', 'PUBLIC', 'QuizHero', 0, -1),
+('K49cIav', 'Video Game True or False', '65e80bd5b941e5.48291205.jpg', 'PUBLIC', 'QuizHero', 1, -1),
+('QHLEzEc', 'Coding Trivia', '65e80ce167f328.89352583.jpg', 'PUBLIC', 'QuizHero', 1, 1),
+('xtHzfol', 'UM Quiz', '65e80f90724a33.69436659.png', 'PUBLIC', 'QuizHero', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -131,18 +127,6 @@ CREATE TABLE `quiz_scores` (
   `username` varchar(300) NOT NULL,
   `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `quiz_scores`
---
-
-INSERT INTO `quiz_scores` (`code`, `username`, `score`) VALUES
-('V6PZb12', 'o', 0),
-('nM8P3xY', 'o', 1),
-('uWGB1rt', 'o', 1),
-('JGa3zy1', 'o', 1),
-('rdb4Q5g', 'o', 2),
-('5TFDsll', 'o', 4);
 
 -- --------------------------------------------------------
 
@@ -161,13 +145,8 @@ CREATE TABLE `user_quiz_attempts` (
 --
 
 INSERT INTO `user_quiz_attempts` (`username`, `quizcode`, `remaining_attempts`) VALUES
-('yan', 'Rhuj0BJ', -1),
-('o', '8cte6H2', -1),
-('o', 'lggispn', -1),
-('o', 'V6PZb12', 10),
-('o', 'nM8P3xY', -1),
-('o', 'uWGB1rt', -1),
-('o', 'JGa3zy1', -1);
+('Trojan', 'QHLEzEc', 1),
+('Trojan', 'K49cIav', -1);
 
 --
 -- Indexes for dumped tables
@@ -215,7 +194,7 @@ ALTER TABLE `user_quiz_attempts`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- Constraints for dumped tables
@@ -251,4 +230,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

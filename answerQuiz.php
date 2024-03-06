@@ -56,11 +56,11 @@ if (isset($_POST['kick-out-btn'])) {
         // Fetch the result
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row['max_attempts'] != -1) {
-            $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode, username=:username");
+            $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode AND username=:username");
             // Bind parameters
             $stmt->bindParam(':decrement_value', $decrement_value, PDO::PARAM_INT);
             $stmt->bindParam(':quizcode', $code);
-            $stmt->bindParam(':username', $code);
+            $stmt->bindParam(':username', $user);
             // Execute the prepared statement
             $stmt->execute();
         }
