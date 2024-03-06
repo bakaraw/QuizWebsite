@@ -210,7 +210,7 @@
     <?php
 
 
-    if (isset($_POST['search'])) {
+    if (isset($_POST['search']) && !empty($_POST['search'])) {
         $search = $_POST['search'];
 
         $stmt = $conn->prepare("SELECT * FROM quizlisttable WHERE (title LIKE '%$search%' OR code LIKE '%$search%') AND accessibility <> 'PRIVATE'");
