@@ -43,7 +43,7 @@ if (isset($_GET['code_for_quiz'])) {
     }
 }
 
-if (isset($_POST['kick-out-btn']) || (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'answerQuiz.php') !== false)) {
+if (isset($_POST['kick-out-btn'])) {
     $decrement_value = 1;
 
     $stmt = $pdo->prepare("SELECT max_attempts FROM quizlisttable WHERE code = :quizcode");
@@ -56,10 +56,11 @@ if (isset($_POST['kick-out-btn']) || (isset($_SERVER['HTTP_REFERER']) && strpos(
         // Fetch the result
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row['max_attempts'] != -1) {
-            $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode");
+            $stmt = $pdo->prepare("UPDATE user_quiz_attempts SET remaining_attempts = remaining_attempts - :decrement_value WHERE quizcode = :quizcode, username=:username");
             // Bind parameters
             $stmt->bindParam(':decrement_value', $decrement_value, PDO::PARAM_INT);
             $stmt->bindParam(':quizcode', $code);
+            $stmt->bindParam(':username', $code);
             // Execute the prepared statement
             $stmt->execute();
         }
@@ -304,10 +305,6 @@ if (isset($_GET['code_for_quiz'])) {
             history.pushState(null, document.title, window.location.href);
         });
 
-        window.onpopstate = function(event) {
-        // Set a flag or perform an action when the back button is pressed
-        document.cookie = "backButtonPressed=true";
-    };
     </script>
 
     <?php require('assets/php/footer.inc.php'); ?>
