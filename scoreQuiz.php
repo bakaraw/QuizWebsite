@@ -2,6 +2,7 @@
 session_start();
 include "assets/php/dbh_quiz.inc.php";
 
+
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $quizCode = $_GET['quizCode'];
@@ -92,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #f2f2f2;
-            display: flex;
+            /* display: flex; */
             align-items: center;
             justify-content: center;
             height: 100vh;
@@ -100,11 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         }
 
         .summary-container {
-            display: flex;
+            /* display: flex; */
             flex-direction: column;
             align-items: center;
             max-width: 800px;
             width: 90%;
+            box-sizing: border-box;
         }
 
         .user-quiz-info {
@@ -122,15 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
             margin: 10px;
             text-align: center;
             color: black;
-            width: calc(50% - 20px);
-            box-sizing: border-box;
-        }
-
-        .user-details,
-        .leaderboard-panel,
-        .quiz-results,
-        .quiz-details {
-            width: calc(50% - 20px);
+            width: 100%;
             box-sizing: border-box;
         }
 
@@ -190,12 +184,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION["username"])) {
         .leaderboard-table {
             width: 100%;
         }
+
+        @media (min-width: 768px) {
+            .panel {
+                width: calc(50% - 20px);
+            }
+        }
     </style>
 </head>
 
 <body>
+    
 
-    <div class="summary-container">
+    <div class="summary-container container">
         <div class="user-quiz-info">
             <div class="panel user-details">
                 <div class="summary-heading">User Details</div>
